@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mapFragment">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.ggd.zendee.feature.map.MapFragment"
+        android:label="MapFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ggd.zendee.feature.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/rankingFragment"
+        android:name="com.ggd.zendee.feature.ranking.RankingFragment"
+        android:label="RankingFragment" />
+</navigation>
