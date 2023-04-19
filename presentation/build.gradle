@@ -64,6 +64,9 @@ dependencies {
     annotationProcessor 'androidx.annotation:annotation:1.6.0'
     kapt 'androidx.annotation:annotation:1.6.0'
 
+    implementation 'com.naver.maps:map-sdk:3.16.2'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
     implementation project(":data")
     implementation project(":domain")
 

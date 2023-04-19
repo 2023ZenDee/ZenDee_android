@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
-        android:name=".utils.HiltApplication"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,6 +17,7 @@
         android:roundIcon="@mipmap/ic_zendee_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZENDEE"
+        android:name=".utils.HiltApplication"
         tools:targetApi="33">
         <activity
             android:name="com.ggd.zendee.feature.main.MainActivity"
@@ -26,6 +32,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="8j111t4iq1"/>
+
     </application>
 
 </manifest>

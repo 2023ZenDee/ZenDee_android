@@ -1,5 +1,6 @@
 package com.ggd.zendee.feature.main
 
+
 import androidx.lifecycle.viewModelScope
 import com.ggd.zendee.base.BaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -11,4 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(): BaseViewModel() {}
+class MainViewModel @Inject constructor(): BaseViewModel() {
+
+}
+
