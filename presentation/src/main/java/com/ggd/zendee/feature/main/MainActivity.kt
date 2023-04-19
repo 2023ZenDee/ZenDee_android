@@ -1,5 +1,6 @@
 package com.ggd.zendee.feature.main
 
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -8,6 +9,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.fragment.app.FragmentTransaction
+import com.ggd.zendee.feature.signup.SignupFragment
+import dagger.hilt.android.AndroidEntryPoint
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseActivity
 import com.ggd.zendee.databinding.ActivityMainBinding
@@ -32,7 +36,17 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.ac
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
+        
+        //
+//        val num: Int = 1
+//
+//        if (num == 1) {
+//            val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+//            fragmentTransaction.add(R.id.fragment, SignupFragment())
+//            fragmentTransaction.commit()
+//        } else {
+//
+//        }
 
     }
 

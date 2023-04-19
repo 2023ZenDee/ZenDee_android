@@ -2,13 +2,12 @@ package com.ggd.zendee.feature.map
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.Bundle
 import android.util.Log
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.UiThread
 import androidx.fragment.app.viewModels
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
@@ -194,6 +193,5 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 //
 //            MapViewModel.Event.UnknownException ->
 //        }
-
 
 }
