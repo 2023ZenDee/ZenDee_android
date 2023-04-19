@@ -1,20 +1,14 @@
 package com.ggd.zendee.feature.main
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ggd.zendee.base.BaseViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
-    private val _isLoading = MutableStateFlow(true)
-    var isLoading = _isLoading.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            delay(3000)
-            _isLoading.value = false
-        }
-    }
-}
+@HiltViewModel
+class MainViewModel @Inject constructor(): BaseViewModel() {}
