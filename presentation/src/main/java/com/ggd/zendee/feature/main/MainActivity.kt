@@ -17,6 +17,9 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.ac
     override val viewModel: MainViewModel by viewModels()
 
     override fun start() {
+        val actionBar = supportActionBar
+        actionBar!!.hide()
+
         val navView: BottomNavigationView = binding.navView
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

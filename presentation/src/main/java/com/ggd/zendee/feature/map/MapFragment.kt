@@ -20,6 +20,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import java.time.LocalDate
 
 class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragment_map),OnMapReadyCallback {
 
@@ -128,9 +129,10 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
         naverMap.minZoom = 16.0
 
-        naverMap.addOnCameraChangeListener { i, b ->
+        naverMap.addOnCameraChangeListener { reason, animated ->
 
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+            Log.d("젠디","reason : $reason, animated : $animated")
+            if (reason == -1 || reason == -3) naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
         }
 
@@ -161,10 +163,18 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
             marker.setOnClickListener {
 
-                Log.d("클릭됨", "${i.title}")
+                val cameraUpdate = CameraUpdate.scrollTo( i.positon )
+                    .animate(CameraAnimation.Linear,300)
+                    .finishCallback {
+                        val dialog = IssueDialog(requireContext())
+                        dialog.showDialog()
+
+                    }
+
+
+                naverMap.moveCamera(cameraUpdate)
 
                 return@setOnClickListener(true)
-
             }
 
             markerList.add(marker)
