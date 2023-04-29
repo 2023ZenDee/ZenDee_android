@@ -70,13 +70,12 @@ dependencies {
     implementation project(":domain")
 
     // Splash
-    implementation "androidx.core:core-splashscreen:1.0.0-alpha01"
+    implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
-
 kapt {
     correctErrorTypes = true
 }
