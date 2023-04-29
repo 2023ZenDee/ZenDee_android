@@ -13,4 +13,13 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.ZENDEE.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_inset</item>
+<!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_zendee_foreground</item>-->
+<!--        <item name="splashScreenIconSize">600dp</item>-->
+        <item name="postSplashScreenTheme">@style/Theme.ZENDEE</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+    </style>
 </resources>

@@ -15,9 +15,12 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     protected lateinit var mViewModel: VM
     protected abstract val viewModel: VM
 
+    protected abstract fun preLoad()
     protected abstract fun start()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        preLoad()
         prepareDataBinding()
         start()
     }
