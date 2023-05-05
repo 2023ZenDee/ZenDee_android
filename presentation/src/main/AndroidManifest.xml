@@ -21,13 +21,9 @@
         tools:node="merge"
         tools:targetApi="33">
         <activity
-            android:name=".feature.login.LoginActivity"
+            android:name=".feature.signup.SignupActivity"
             android:exported="false"
-            android:theme="@style/Theme.ZENDEE" />
-        <activity
-            android:name=".feature.start.StartActivity"
-            android:exported="false"
-            android:theme="@style/Theme.ZENDEE" />
+            android:theme="@style/Theme.ZENDEE"/>
         <activity
             android:name=".feature.main.MainActivity"
             android:exported="true">
@@ -41,6 +37,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".feature.login.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ZENDEE"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
+        <activity
+            android:name=".feature.start.StartActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ZENDEE" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

@@ -3,27 +3,28 @@ package com.ggd.zendee.feature.start
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.viewModels
 import com.ggd.zendee.R
-import com.ggd.zendee.base.BaseActivity
-import com.ggd.zendee.databinding.ActivityMainBinding
-import com.ggd.zendee.databinding.ActivityStartBinding
 import com.ggd.zendee.feature.login.LoginActivity
+import com.ggd.zendee.feature.signup.SignupActivity
 
 class StartActivity : AppCompatActivity() {
 
-    private val btn_register: Button by lazy {
+    private val btnRegister: Button by lazy {
         findViewById(R.id.btn_register)
     }
 
-    private val btn_google: Button by lazy {
+    private val btnGoogle: Button by lazy {
         findViewById(R.id.btn_google)
     }
 
-    private val tv_login: TextView by lazy {
+    private val tvLogin: TextView by lazy {
         findViewById(R.id.tv_login)
     }
 
@@ -31,21 +32,17 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        btn_register.setOnClickListener {
+        btnRegister.setOnClickListener {
+            startActivity(Intent(applicationContext, SignupActivity::class.java))
+        }
+
+        btnGoogle.setOnClickListener {
             //TODO
         }
 
-        btn_google.setOnClickListener {
-            //TODO
+        tvLogin.setOnClickListener {
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
         }
 
-        tv_login.setOnClickListener {
-            startActivity(LoginActivity::class.java)
-        }
-
-    }
-
-    fun AppCompatActivity.startActivity(activity: Class<*>) {
-        startActivity(Intent(applicationContext, activity).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
     }
 }

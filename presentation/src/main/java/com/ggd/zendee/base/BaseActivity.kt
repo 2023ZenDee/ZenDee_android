@@ -20,8 +20,8 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         preLoad()
-//        prepareDataBinding()
-//        start()
+        prepareDataBinding()
+        start()
     }
 
     private fun prepareDataBinding() {
