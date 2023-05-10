@@ -5,6 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.ggd.zendee.utils.KeyboardEventListener
 
 abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutRes: Int
@@ -16,6 +17,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
 
     protected abstract fun preLoad()
     protected abstract fun start()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

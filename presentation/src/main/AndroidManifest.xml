@@ -19,7 +19,8 @@
         android:theme="@style/Theme.ZENDEE.SplashScreen"
         android:usesCleartextTraffic="true"
         tools:node="merge"
-        tools:targetApi="33">
+        tools:targetApi="33"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".feature.signup.SignupActivity"
             android:exported="false"
@@ -41,7 +42,7 @@
             android:name=".feature.login.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.ZENDEE"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".feature.start.StartActivity"
             android:exported="false"
