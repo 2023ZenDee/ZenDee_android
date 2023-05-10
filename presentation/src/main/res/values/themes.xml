@@ -14,8 +14,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="dialog_shadow" parent="Theme.AppCompat.Dialog">
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:elevation">20dp</item>
-    </style>
 </resources>
