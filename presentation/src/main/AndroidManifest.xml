@@ -9,20 +9,20 @@
 
     <application
         android:usesCleartextTraffic="true"
+        android:name=".utils.HiltApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        tools:node="replace"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_zendee"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_zendee_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ZENDEE"
-        android:name=".utils.HiltApplication"
+        android:theme="@style/Theme.ZENDEE.SplashScreen"
         tools:targetApi="33">
         <activity
             android:name="com.ggd.zendee.feature.main.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.ZENDEE">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.UiThread
 import androidx.fragment.app.viewModels
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
@@ -111,7 +112,6 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
-
 
         this.naverMap = naverMap
 
