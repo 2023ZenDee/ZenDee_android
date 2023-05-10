@@ -16,6 +16,8 @@ import com.ggd.zendee.databinding.FragmentMapBinding
 import com.ggd.zendee.utils.repeatOnStarted
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.CameraUpdate.REASON_GESTURE
+import com.naver.maps.map.CameraUpdate.REASON_LOCATION
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
@@ -118,6 +120,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
         naverMap.buildingHeight = 0.5F
         naverMap.cameraPosition = cameraPosition
+        naverMap.lightness = -0.03F
 
         val uiSettings = naverMap.uiSettings
         uiSettings.isZoomControlEnabled = false
@@ -132,7 +135,9 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
         naverMap.addOnCameraChangeListener { reason, animated ->
 
             Log.d("젠디","reason : $reason, animated : $animated")
-            if (reason == -1 || reason == -3) naverMap.locationTrackingMode = LocationTrackingMode.Follow
+            if (reason == REASON_GESTURE || reason == REASON_LOCATION) {
+                naverMap.locationTrackingMode = LocationTrackingMode.Follow
+            }
 
         }
 
@@ -150,6 +155,8 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
             marker.isIconPerspectiveEnabled = true
             marker.position = i.positon
             marker.map = naverMap
+            marker.height = 240
+            marker.width = 201
 
             when(i.tag){
 
@@ -163,14 +170,34 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
             marker.setOnClickListener {
 
-                val cameraUpdate = CameraUpdate.scrollTo( i.positon )
+                marker.height = 400
+                marker.width = 335
+
+                val cameraUpdate = CameraUpdate.scrollAndZoomTo( i.positon, 18.0 )
                     .animate(CameraAnimation.Linear,300)
                     .finishCallback {
                         val dialog = IssueDialog(requireContext())
                         dialog.showDialog()
 
-                    }
+                        dialog.setOnClicklistener(object : IssueDialog.OnDialogClickListener{
+                            override fun onClicked() {
 
+                            }
+
+                            override fun onDismissed() {
+                                Log.d("최희건", "$marker")
+
+                                val cameraZoomUpdate = CameraUpdate.scrollAndZoomTo(LatLng(locationSource.lastLocation!!.latitude,locationSource.lastLocation!!.longitude),16.0 )
+                                    .animate(CameraAnimation.Linear,300)
+
+                                marker.height = 240
+                                marker.width = 201
+
+                                naverMap.moveCamera(cameraZoomUpdate)
+                            }
+                        })
+
+                    }
 
                 naverMap.moveCamera(cameraUpdate)
 
