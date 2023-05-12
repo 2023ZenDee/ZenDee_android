@@ -1,25 +1,11 @@
 package com.ggd.zendee.feature.main
 
 import android.content.Intent
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
-import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.fragment.app.FragmentTransaction
-import com.ggd.zendee.feature.signup.SignupFragment
-import dagger.hilt.android.AndroidEntryPoint
-import com.ggd.zendee.R
-import com.ggd.zendee.base.BaseActivity
-import com.ggd.zendee.databinding.ActivityMainBinding
 import com.ggd.zendee.feature.start.StartActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 

@@ -13,5 +13,6 @@
     <color name="text_gray">#FFA5A5A5</color>
     <color name="container_gray">#FFEBEBEB</color>
     <color name="Transparent">#00000000</color>
+    <color name="warning">#FFED3A3A</color>
 </resources>
 
