@@ -6,8 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".feature.signup.SignupActivity">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.ggd.zendee.feature.signup.NicknameFragment"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

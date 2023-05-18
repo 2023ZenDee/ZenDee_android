@@ -11,7 +11,7 @@
         android:background="@color/white">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_nickname"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="?attr/colorPrimary"
@@ -22,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_backarrow_30" />
+            app:navigationIcon="@drawable/ic_back_arrow" />
 
         <TextView
             android:id="@+id/tv_nickname_title"
@@ -31,11 +31,11 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/pretendard_bold"
-            android:text="닉네임을\n입력해주세요"
+            android:text="아이디를\n입력해주세요"
             android:textColor="@color/light_black"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_nickname" />
 
         <LinearLayout
             android:id="@+id/et_nickname"
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="닉네임"
+                android:text="아이디"
                 android:textColor="@color/text_gray"
                 android:textSize="13sp"/>
 
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
-            android:text="닉네임을 입력해주세요!"
+            android:text="아이디를 입력해주세요!"
             android:textColor="@color/warning"
             android:textSize="12sp"
             android:layout_marginTop="5dp"
@@ -95,7 +95,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/button_container_shadow"
+            android:background="@drawable/button_container"
             android:backgroundTint="@color/mint"
             android:backgroundTintMode="screen"
             android:fontFamily="@font/pretendard_semibold"

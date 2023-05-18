@@ -103,12 +103,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        KeyboardEventListener(this) { isOpen ->
-            if (isOpen) {
-                binding.btnLogin.setBackgroundResource(R.drawable.on_click_edittext_button_container_shadow)
-            }
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        KeyboardEventListener(this) { isOpen ->
+//            if (isOpen) {
+//                binding.btnLogin.setBackgroundResource(R.drawable.on_click_edittext_button_container_shadow)
+//            }
+//        }
+//    }
 }
