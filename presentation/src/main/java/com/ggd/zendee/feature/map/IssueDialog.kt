@@ -30,12 +30,18 @@ class IssueDialog(private val context : Context) {
         dialog.setContentView(binding.root)
         dialog.show()
 
-        context.dialogResize(dialog,0.9F,0.145F)
+        context.dialogResize(dialog,0.9F,0.15F)
         dialog.getWindow()!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         dialog.window!!.setBackgroundDrawable( ColorDrawable(Color.TRANSPARENT))
         val params = dialog.window!!.attributes
         params.y = 200
         dialog.window!!.setGravity(Gravity.CENTER)
+
+        binding.root.setOnClickListener {
+            onClickListener.onClicked()
+            dialog.dismiss()
+
+        }
 
         dialog.setOnDismissListener {
 

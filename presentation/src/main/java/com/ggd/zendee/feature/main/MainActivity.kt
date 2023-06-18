@@ -1,27 +1,27 @@
 package com.ggd.zendee.feature.main
 
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.os.Looper
-import androidx.activity.viewModels
+import android.os.Parcel
+import android.os.Parcelable
+import android.view.View
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.fragment.app.FragmentTransaction
-import com.ggd.zendee.feature.signup.SignupFragment
-import dagger.hilt.android.AndroidEntryPoint
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseActivity
 import com.ggd.zendee.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.activity_main) {
+class MainActivity() : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.activity_main),
+    Parcelable {
 
     override val viewModel: MainViewModel by viewModels()
+
+    constructor(parcel: Parcel) : this() {
+    }
 
     override fun preLoad() {
         var keepSplashOnScreen = true
@@ -48,5 +48,27 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.ac
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MainActivity> {
+        override fun createFromParcel(parcel: Parcel): MainActivity {
+            return MainActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MainActivity?> {
+            return arrayOfNulls(size)
+        }
+    }
+    fun handleBottomNavigation(state : Boolean){
+        if (state)binding.navView.visibility = View.VISIBLE
+        else binding.navView.visibility = View.INVISIBLE
     }
 }

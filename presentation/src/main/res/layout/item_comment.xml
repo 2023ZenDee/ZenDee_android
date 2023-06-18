@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/profile_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            android:background="@drawable/jimmy_butler"
+
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/profile_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:text="지미 버틀러"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:layout_marginStart="10dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile_img"
+            app:layout_constraintTop_toTopOf="@+id/profile_img" />
+
+        <TextView
+            android:id="@+id/comment_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:text="버틀러가 수성못에 ㄷㄷ"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/pretendard_regular"
+            android:layout_marginStart="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile_img"
+            app:layout_constraintTop_toBottomOf="@+id/profile_txt" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
