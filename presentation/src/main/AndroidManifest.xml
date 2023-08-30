@@ -37,6 +37,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
         </activity>
         <activity
             android:name=".feature.login.LoginActivity"
@@ -49,8 +50,11 @@
             android:theme="@style/Theme.ZENDEE" />
 
         <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="8j111t4iq1" />
+            android:name="com.naver.maps.map.CLIENT_ID" tools:replace="android:value"
+            android:value="8j111t4iq1"/>
+
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>

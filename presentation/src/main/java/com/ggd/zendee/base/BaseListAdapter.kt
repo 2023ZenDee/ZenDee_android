@@ -23,23 +23,23 @@ abstract class BaseListAdapter<T : Any, VDB : ViewDataBinding>(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
 
-        holder.itemView.setOnClickListener{
-            itemClickListener.onClick(it,position)
-        }
+//        holder.itemView.setOnClickListener{
+//            itemClickListener.onClick(it,position)
+//        }
 
         return holder.bind(getItem(position))
     }
 
-    interface OnItemClickListener {
-        fun onClick(v: View, position: Int)
-    }
-
-    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
-        this.itemClickListener = onItemClickListener
-    }
-
-    private lateinit var itemClickListener : OnItemClickListener
-
+//    interface OnItemClickListener {
+//        fun onClick(v: View, position: Int)
+//    }
+//
+//    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+//        this.itemClickListener = onItemClickListener
+//    }
+//
+//    private lateinit var itemClickListener : OnItemClickListener
+//
 }
 
 class BaseItemCallback<T : Any> : DiffUtil.ItemCallback<T>() {

@@ -7,7 +7,13 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.ggd.zendee.feature.map.MapFragment"
-        android:label="MapFragment" />
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_issueFragment"
+            app:destination="@id/issueFragment"
+            app:enterAnim="@anim/anim_down_first"
+            app:popExitAnim="@anim/anim_up_before" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ggd.zendee.feature.profile.ProfileFragment"
@@ -16,4 +22,8 @@
         android:id="@+id/rankingFragment"
         android:name="com.ggd.zendee.feature.ranking.RankingFragment"
         android:label="RankingFragment" />
+    <fragment
+        android:id="@+id/issueFragment"
+        android:name="com.ggd.zendee.feature.issue.IssueFragment"
+        android:label="IssueFragment" />
 </navigation>
