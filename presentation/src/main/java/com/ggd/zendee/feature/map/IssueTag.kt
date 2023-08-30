@@ -7,6 +7,7 @@ enum class IssueTag {
     HAPPY,
     NOTICE,
     ACTIVE,
-    LOVE
+    LOVE,
+    LUCKY
 
 }

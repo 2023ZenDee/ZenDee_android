@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.ggd.zendee.feature.issue.IssueViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".feature.issue.IssueFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/review_layout"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/back_btn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/back_arrow"
+
+                    android:contentDescription="back button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+
+                <TextView
+                    android:id="@+id/title_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:text="지금 수성못에 아이유 떳다!"
+                    android:layout_marginTop="10dp"
+
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/back_btn" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/three_dot_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+
+                    android:layout_marginEnd="20dp"
+
+                    android:background="@drawable/three_dot"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_txt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/title_txt"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+
+                    android:src="@mipmap/ic_launcher_round"
+                    android:contentDescription="profile photo"
+
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="@+id/title_txt"
+                    app:layout_constraintTop_toBottomOf="@+id/title_txt" />
+
+                <TextView
+                    android:id="@+id/profile_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="조승완인뎁쇼"
+                    android:textColor="#707070"
+                    android:textSize="14.5sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/profile_img"
+                    app:layout_constraintStart_toEndOf="@+id/profile_img"
+                    app:layout_constraintTop_toTopOf="@+id/profile_img"
+                    tools:ignore="TextSizeCheck" />
+
+                <TextView
+                    android:id="@+id/extra_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_black"
+
+                    android:text="·"
+                    android:textColor="@color/text_gray"
+                    android:textSize="15sp"
+
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/profile_txt"
+                    app:layout_constraintStart_toEndOf="@+id/profile_txt"
+                    app:layout_constraintTop_toTopOf="@+id/profile_txt"/>
+
+                <TextView
+                    android:id="@+id/location_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+
+                    android:text="대구 수성구 두산동"
+                    android:textColor="@color/text_gray"
+                    android:textSize="14.5sp"
+
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/extra_txt"
+                    app:layout_constraintStart_toEndOf="@+id/extra_txt"
+                    app:layout_constraintTop_toTopOf="@+id/extra_txt" />
+
+                <TextView
+                    android:id="@+id/extra_txt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_black"
+
+                    android:text="·"
+                    android:textColor="@color/text_gray"
+                    android:textSize="15sp"
+
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/location_txt"
+                    app:layout_constraintStart_toEndOf="@+id/location_txt"
+                    app:layout_constraintTop_toTopOf="@+id/location_txt" />
+
+                <TextView
+                    android:id="@+id/time_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+
+                    android:text="30분 전"
+                    android:textColor="@color/text_gray"
+                    android:textSize="14.5sp"
+
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/extra_txt2"
+                    app:layout_constraintStart_toEndOf="@+id/extra_txt2"
+                    app:layout_constraintTop_toTopOf="@+id/extra_txt2" />
+
+                <ImageView
+                    android:id="@+id/image_img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="photo"
+
+                    android:src="@drawable/jimmy_bulter_gungun"
+
+                    android:layout_margin="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_img" />
+
+                <TextView
+                    android:id="@+id/content_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:paddingHorizontal="20dp"
+                    android:text="사실 지미 버틀러지롱\n아이유는 여기 업따"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/pretendard_medium"
+
+                    android:layout_marginTop="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image_img" />
+
+                <TextView
+                    android:id="@+id/view_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="조회수 102회"
+                    android:textColor="@color/text_gray"
+                    android:textSize="16sp"
+
+                    android:layout_marginTop="25dp"
+                    app:layout_constraintStart_toStartOf="@+id/title_txt"
+                    app:layout_constraintTop_toBottomOf="@+id/content_txt" />
+
+                <TextView
+                    android:id="@+id/extra_txt3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_black"
+
+                    android:text="·"
+                    android:textColor="@color/text_gray"
+                    android:textSize="17sp"
+
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_txt"
+                    app:layout_constraintStart_toEndOf="@+id/view_txt"
+                    app:layout_constraintTop_toTopOf="@+id/view_txt" />
+
+                <TextView
+                    android:id="@+id/comment_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+
+                    android:text="댓글 12"
+                    android:textColor="@color/text_gray"
+                    android:textSize="16sp"
+
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/extra_txt3"
+                    app:layout_constraintStart_toEndOf="@+id/extra_txt3"
+                    app:layout_constraintTop_toTopOf="@+id/extra_txt3" />
+
+
+                <CheckedTextView
+                    android:id="@+id/dislike_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+
+                    android:text="13"
+                    android:textColor="@drawable/dislike_color"
+                    android:textSize="17sp"
+
+                    app:layout_constraintBottom_toBottomOf="@+id/comment_txt"
+                    app:layout_constraintEnd_toEndOf="@+id/three_dot_btn"
+                    app:layout_constraintTop_toTopOf="@+id/comment_txt" />
+
+                <CheckBox
+                    android:id="@+id/dislike_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="2dp"
+                    android:contentDescription="dislike button"
+                    android:button="@null"
+
+                    android:background="@drawable/dislike_checkbox"
+                    app:layout_constraintBottom_toBottomOf="@+id/dislike_txt"
+                    app:layout_constraintEnd_toStartOf="@+id/dislike_txt"
+                    app:layout_constraintTop_toTopOf="@+id/dislike_txt"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+                <CheckedTextView
+                    android:id="@+id/like_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+
+                    android:text="102"
+                    android:textColor="@drawable/like_color"
+                    android:textSize="17sp"
+
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/dislike_btn"
+                    app:layout_constraintEnd_toStartOf="@+id/dislike_btn"
+                    app:layout_constraintTop_toTopOf="@+id/dislike_btn" />
+
+                <CheckBox
+                    android:id="@+id/like_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/like_checkbox"
+                    android:button="@null"
+
+
+                    android:contentDescription="like button"
+                    app:layout_constraintBottom_toBottomOf="@+id/like_txt"
+                    app:layout_constraintEnd_toStartOf="@+id/like_txt"
+                    app:layout_constraintTop_toTopOf="@+id/like_txt"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:id="@+id/line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+
+                    android:background="@color/gray"
+                    android:contentDescription="seperating line"
+
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_txt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/comment_recyclerview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="vertical"
+                    android:nestedScrollingEnabled="false"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/line"
+                    android:paddingBottom="20dp"
+                    tools:listitem="@layout/item_comment"
+                    tools:itemCount="5"
+                     />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/review_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/review_edittxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/review_frame"
+                android:fontFamily="@font/pretendard_medium"
+
+                android:hint="댓글을 입력해주세요"
+
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="14dp"
+                android:textColorHint="@color/text_gray"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/review_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/send_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/review_edittxt"
+                app:layout_constraintEnd_toEndOf="@+id/review_edittxt"
+                app:layout_constraintTop_toTopOf="@+id/review_edittxt"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

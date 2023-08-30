@@ -8,11 +8,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.UiThread
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentMapBinding
+import com.ggd.zendee.feature.main.MainViewModel
 import com.ggd.zendee.utils.repeatOnStarted
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -23,47 +30,72 @@ import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import java.time.LocalDate
+import kotlin.math.log
 
 class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragment_map),OnMapReadyCallback {
 
     override val viewModel: MapViewModel by viewModels()
-    lateinit var mapView: MapView
-    private lateinit var locationSource: FusedLocationSource
-    private lateinit var naverMap: NaverMap
+    private val mainViewModel: MainViewModel by activityViewModels()
 
-
-    var markerList = mutableListOf<Marker>()
-    var markerInfoList = mutableListOf<MarkerData>().apply {
-
-        add(MarkerData(LatLng(35.6671544479555,128.41228388669293),IssueTag.ACTIVE,"제목1제목1제목1제목1제목1","내용내용내용내용111111111"))
-        add(MarkerData(LatLng(35.65921381734496,128.41452606589644),IssueTag.ALERT,"제목2제목2제목2제목2제목2","내용내용내용내용222"))
-        add(MarkerData(LatLng(35.66182930293654,128.41207875255645),IssueTag.HOT,"제목3제목3제목3제목3제목3","내용내용내3333"))
-        add(MarkerData(LatLng(35.66571029401473,128.42015694863517),IssueTag.LOVE,"제목4444제목4","내용44용내용4"))
-        add(MarkerData(LatLng(35.65911940329519,128.42505583496046),IssueTag.NOTICE,"제목5제목5제5","내용내용내용내55"))
-        add(MarkerData(LatLng(35.65738970652595,128.40768258127332),IssueTag.HAPPY,"제목6제목666","내용내용66666666"))
-        add(MarkerData(LatLng(35.66088517739557,128.4068763134518),IssueTag.HOT,"제목777제목77","내용내용내77777"))
-
+    val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            findNavController().popBackStack()
+        }
     }
-
-    val cameraPosition = CameraPosition(
-        LatLng(37.5666102, 126.9783881), // 대상 지점
-        16.0, // 줌 레벨
-        90.0, // 기울임 각도
-        0.0 // 베어링 각도
-    )
 
     override fun start() {
 
 //        repeatOnStarted {
 //            viewModel.eventFlow.collect{ event -> handleEvent(event) }
 //        }
-        binding.mapView.foregroundTintList = ColorStateList.valueOf(Color.parseColor("#55000000"))
-        mapView = binding.mapView
-        mapView.getMapAsync(this)
 
-        locationSource =
+        binding.mapView.foregroundTintList = ColorStateList.valueOf(Color.parseColor("#55000000"))
+        viewModel.mapView = binding.mapView
+        viewModel.mapView.getMapAsync(this)
+
+        viewModel.locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
+        binding.writeBtn.setOnClickListener {
+            setDialog()
+        }
+
+    }
+
+    fun setDialog(){
+
+        val dialog = TagSelectorDialog(requireContext())
+        dialog.setDialog()
+
+        dialog.setRecyclerview(viewModel.tagDataSet)
+
+        dialog.setOnClicklistener(object : TagSelectorDialog.OnDialogClickListener{
+
+            override fun onClicked(position: Int) {
+                Log.d("젠디", "onClicked: tag - ${viewModel.tagDataSet[position]} ")
+            }
+
+        })
+
+        dialog.showDialog()
+
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+
+        if (savedInstanceState == null) {
+            viewModel.mapView.onCreate(null)
+        } else {
+            viewModel.mapView.onCreate(savedInstanceState)
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -77,48 +109,54 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
     override fun onStart() {
         super.onStart()
-        mapView.onStart()
+        viewModel.mapView.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume()
+        viewModel.mapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView.onPause()
+
+        viewModel.mapView.onPause()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
+        viewModel.mapView.onSaveInstanceState(outState)
     }
 
     override fun onStop() {
         super.onStop()
-        mapView.onStop()
+        viewModel.mapView.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy()
+        viewModel.mapView.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onBackPressedCallback.remove()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView.onLowMemory()
+        viewModel.mapView.onLowMemory()
     }
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
 
-        this.naverMap = naverMap
+        viewModel.naverMap = naverMap
 
-        naverMap.locationSource = locationSource
+        naverMap.locationSource = viewModel.locationSource
 
         naverMap.buildingHeight = 0.5F
-        naverMap.cameraPosition = cameraPosition
+        naverMap.cameraPosition = viewModel.cameraPosition
         naverMap.lightness = -0.03F
 
         val uiSettings = naverMap.uiSettings
@@ -140,7 +178,12 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
         }
 
-        setMark(markerInfoList)
+        naverMap.setOnMapClickListener { pointF, latLng ->
+
+            Log.d("젠디", "pointF - ${pointF}, latLng - ${latLng}")
+        }
+
+        setMark(viewModel.markerInfoList)
 
         naverMap.uiSettings
     }
@@ -153,7 +196,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
             val marker = Marker()
             marker.isIconPerspectiveEnabled = true
             marker.position = i.positon
-            marker.map = naverMap
+            marker.map = viewModel.naverMap
             marker.height = 240
             marker.width = 201
 
@@ -165,6 +208,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
                 IssueTag.NOTICE -> marker.icon = OverlayImage.fromResource(R.drawable.notice_marker)
                 IssueTag.ACTIVE -> marker.icon = OverlayImage.fromResource(R.drawable.active_marker)
                 IssueTag.LOVE -> marker.icon = OverlayImage.fromResource(R.drawable.love_marker)
+                IssueTag.LUCKY -> marker.icon = OverlayImage.fromResource(R.drawable.lucky_marker)
             }
 
             marker.setOnClickListener {
@@ -175,35 +219,45 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
                 val cameraUpdate = CameraUpdate.scrollAndZoomTo( i.positon, 18.0 )
                     .animate(CameraAnimation.Linear,300)
                     .finishCallback {
+
+                        binding.writeBtn.visibility = View.GONE
+
                         val dialog = IssueDialog(requireContext())
                         dialog.showDialog()
 
                         dialog.setOnClicklistener(object : IssueDialog.OnDialogClickListener{
+
                             override fun onClicked() {
 
+                                mainViewModel.previousPosition = i.positon
+                                findNavController().navigate(R.id.action_mapFragment_to_issueFragment)
                             }
 
                             override fun onDismissed() {
                                 Log.d("최희건", "$marker")
 
-                                val cameraZoomUpdate = CameraUpdate.scrollAndZoomTo(LatLng(locationSource.lastLocation!!.latitude,locationSource.lastLocation!!.longitude),16.0 )
+                                binding.writeBtn.visibility = View.VISIBLE
+
+                                val cameraZoomUpdate = CameraUpdate.scrollAndZoomTo(
+                                    LatLng(viewModel.locationSource.lastLocation!!.latitude,viewModel.locationSource.lastLocation!!.longitude),
+                                    16.0 )
                                     .animate(CameraAnimation.Linear,300)
 
                                 marker.height = 240
                                 marker.width = 201
 
-                                naverMap.moveCamera(cameraZoomUpdate)
+                                viewModel.naverMap.moveCamera(cameraZoomUpdate)
                             }
                         })
 
                     }
 
-                naverMap.moveCamera(cameraUpdate)
+                viewModel.naverMap.moveCamera(cameraUpdate)
 
                 return@setOnClickListener(true)
             }
 
-            markerList.add(marker)
+            viewModel.markerList.add(marker)
 
         }
 

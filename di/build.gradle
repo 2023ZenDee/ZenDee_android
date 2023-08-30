@@ -54,6 +54,9 @@ dependencies {
     annotationProcessor "androidx.annotation:annotation:$annotation_version"
     kapt "androidx.annotation:annotation:$annotation_version"
 
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
     implementation project(":data")
     implementation project(":domain")
     //implementation project(":presentation")

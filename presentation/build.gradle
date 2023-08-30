@@ -47,6 +47,7 @@ dependencies {
     implementation project(":di")
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
     implementation "androidx.core:core-ktx:$android_core_version"
     implementation "androidx.appcompat:appcompat:$android_appcompat_version"
     implementation "com.google.android.material:material:$android_material_version"
@@ -62,6 +63,16 @@ dependencies {
 
     annotationProcessor "androidx.annotation:annotation:$annotation_version"
     kapt "androidx.annotation:annotation:$annotation_version"
+    kapt"com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    annotationProcessor "androidx.annotation:annotation:$annotation_version"
+    kapt "androidx.annotation:annotation:$annotation_version"
+
+    implementation 'com.naver.maps:map-sdk:3.16.2'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+    implementation project(":data")
+    implementation project(":domain")
 
     // Naver Map
     implementation 'com.naver.maps:map-sdk:3.17.0'
@@ -87,6 +98,16 @@ dependencies {
     // DataBinding Error
     //kapt "com.android.databinding:compiler:3.1.4"
     //implementation 'com.android.databinding:viewbinding:8.0.2'
+    
+    // Add android lifecycle libraries
+//    implementation "androidx.lifecycle:lifecycle-common:2.6.1"
+//    implementation "androidx.lifecycle:lifecycle-extensions:2.6.1"
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    kapt "androidx.lifecycle:lifecycle-compiler:2.6.1"
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 kapt {
