@@ -14,8 +14,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
+class MainViewModel @Inject constructor(
 
-class MainViewModel: BaseViewModel() {
+): BaseViewModel() {
 
     var isPreviousExist = false
     var previousPosition : LatLng? = null
