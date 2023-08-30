@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import com.ggd.zendee.utils.extention.getRootView
+import com.ggd.zendee.utils.extention.isKeyboardOpen
 
 class KeyboardEventListener(
     private val activity: AppCompatActivity,

@@ -7,9 +7,13 @@
     tools:context=".feature.signup.SignupActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment"
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.ggd.zendee.feature.signup.NicknameFragment"/>
+        tools:layout="@layout/fragment_signup_nickname"
+
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
+        android:name="androidx.navigation.fragment.NavHostFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

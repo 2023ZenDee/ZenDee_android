@@ -18,7 +18,7 @@ class SignupPwdFragment : BaseFragment<FragmentSignupPwdBinding, SignupViewModel
     override val viewModel: SignupViewModel by viewModels()
 
     override fun start() {
-        binding.toolbarNickname.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             //TODO : Start Activity 로 넘어가기
 
         }

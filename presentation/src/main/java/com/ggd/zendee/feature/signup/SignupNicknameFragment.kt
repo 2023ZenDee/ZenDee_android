@@ -1,51 +1,48 @@
 package com.ggd.zendee.feature.signup
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isEmpty
+import android.util.Log
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentSignupNicknameBinding
+
+
+//fun NavController.safeNavigate(direction: NavDirections) {
+//    currentDestination?.getAction(direction.actionId)?.run {
+//        navigate(direction)
+//    }
+//}
 
 class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding, SignupViewModel>(R.layout.fragment_signup_nickname) {
 
     override val viewModel: SignupViewModel by viewModels()
 
     override fun start() {
-        binding.toolbarNickname.setNavigationOnClickListener {
-            //TODO : Start Activity 로 넘어가기
-
+        binding.toolbar.setNavigationOnClickListener {
+//            SignupActivity().finish()
         }
 
-        //        if (binding.etNickname.isEmpty()) {
-//            binding.tvInsertCheck.visibility = View.VISIBLE
-//        } else {
-//            binding.tvEtNicknameTitle.visibility = View.INVISIBLE
-//        }
+        binding.btnNext.setOnClickListener { view ->
+//            changeFragment(SignupIdFragment())
+            val navController = Navigation.findNavController(view)
+            navController.navigate(R.id.action_signupNicknameFragment_to_signupIdFragment)
 
-        binding.btnNext.setOnClickListener {
-            if (binding.etNickname.isEmpty()) {
-                binding.tvInsertCheck.visibility = View.VISIBLE
-            }
+            //view.findNavController().navigate(R.id.action_signupNicknameFragment_to_signupIdFragment)
+//            findNavController().safeNavigate(SignupNicknameFragmentDirections.actionSignupNicknameFragmentToSignupIdFragment())
+
+//            if (binding.etNickname.isEmpty()) {
+//                binding.tvInsertCheck.visibility = View.VISIBLE
+//            } else {
+//                SignupActivity().navigateAnotherFragment(R.id.action_signupNicknameFragment_to_signupIdFragment)
+//            }
         }
 
     }
-
-//    override fun onBackPressed() {
-//        val navHost = supportFragmentManager.findFragmentById(R.id.nav_login_fragment)
-//        navHost?.let { navFragment ->
-//            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-//                if (fragment is LandingFragment) {
-//                    finish()
-//                } else {
-//                    super.onBackPressed()
-//                }
-//            }
-//        }
-//    }
 
 }

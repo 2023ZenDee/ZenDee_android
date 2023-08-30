@@ -10,6 +10,15 @@ import com.ggd.zendee.feature.start.StartActivity
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var keepSplashOnScreen = true
+        val delay = 1000L // 아무리 늘려도 길어지지 않음..
+
+        installSplashScreen().setKeepVisibleCondition() { keepSplashOnScreen }
+        android.os.Handler(Looper.getMainLooper()).postDelayed({ keepSplashOnScreen = false }, delay)
+
+        startActivityWithFinishAll(StartActivity::class.java) // 임시
+
+        super.onCreate(savedInstanceState)
 
 //        checkUpdate()
 //
@@ -20,18 +29,9 @@ class MainActivity : AppCompatActivity() {
 //            super.onCreate(savedInstanceState)
 //            startForMainActivity()
 //        }
-
-        var keepSplashOnScreen = true
-        val delay = 1000L // 아무리 늘려도 길어지지 않음..
-
-        installSplashScreen().setKeepVisibleCondition() { keepSplashOnScreen }
-        android.os.Handler(Looper.getMainLooper()).postDelayed({ keepSplashOnScreen = false }, delay)
-
-        startActivityWithFinishAll(StartActivity::class.java)
-        super.onCreate(savedInstanceState)
     }
 
-    fun AppCompatActivity.startActivityWithFinishAll(activity: Class<*>) {
+    private fun AppCompatActivity.startActivityWithFinishAll(activity: Class<*>) {
         val intent = Intent(applicationContext, activity)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)

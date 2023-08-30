@@ -17,36 +17,17 @@ class SignupIdFragment : BaseFragment<FragmentSignupIdBinding, SignupViewModel>(
     override val viewModel: SignupViewModel by viewModels()
 
     override fun start() {
-        binding.toolbarNickname.setNavigationOnClickListener {
-            //TODO : Start Activity 로 넘어가기
-
+        binding.toolbar.setNavigationOnClickListener {
+            changeFragment(SignupNicknameFragment())
         }
 
-        //        if (binding.etNickname.isEmpty()) {
-//            binding.tvInsertCheck.visibility = View.VISIBLE
-//        } else {
-//            binding.tvEtNicknameTitle.visibility = View.INVISIBLE
-//        }
-
         binding.btnNext.setOnClickListener {
-            if (binding.etNickname.isEmpty()) {
-                binding.tvInsertCheck.visibility = View.VISIBLE
-            }
+            changeFragment(SignupPwdFragment())
+//            if (binding.etNickname.isEmpty()) {
+//                binding.tvInsertCheck.visibility = View.VISIBLE
+//            }
         }
 
     }
-
-//    override fun onBackPressed() {
-//        val navHost = supportFragmentManager.findFragmentById(R.id.nav_login_fragment)
-//        navHost?.let { navFragment ->
-//            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-//                if (fragment is LandingFragment) {
-//                    finish()
-//                } else {
-//                    super.onBackPressed()
-//                }
-//            }
-//        }
-//    }
 
 }
