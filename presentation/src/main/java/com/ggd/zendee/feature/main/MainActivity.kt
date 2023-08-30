@@ -48,6 +48,10 @@ class MainActivity() : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.
 //            startForMainActivity()
 //        }
 
-
     }
+    fun handleBottomNavigation(state : Boolean){
+        if (state)binding.navView.visibility = View.VISIBLE
+        else binding.navView.visibility = View.INVISIBLE
+    }
+
 }

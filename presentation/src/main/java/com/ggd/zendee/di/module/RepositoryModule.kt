@@ -18,29 +18,28 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideIssueRepository(
+    abstract fun provideIssueRepository(
 
         impl: IssueRepositoryImpl
 
-    ): IssueRepository = impl
+    ): IssueRepository
 
-    @Provides
+
+    @Binds
     @Singleton
-    fun provideCommentRepository(
+    abstract fun provideCommentRepository(
 
         impl: CommentRepositoryImpl
 
-    ): CommentRepository = impl
+    ): CommentRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideLoginRepository(
-        api: LoginApi
-    ): LoginRepository {
-        return LoginRepositoryImpl(api)
-    }
+    abstract fun provideLoginRepository(
+        impl : LoginRepositoryImpl
+    ): LoginRepository
 }

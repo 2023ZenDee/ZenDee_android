@@ -20,4 +20,3 @@ rootProject.name = "ZENDEE"
 include ':presentation'
 include ':domain'
 include ':data'
-include ':di'
