@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import java.util.concurrent.atomic.AtomicBoolean
 
 interface EventFlow<out T> : Flow<T> {
+
     companion object {
+
         const val DEFAULT_REPLAY: Int = 3
     }
 }

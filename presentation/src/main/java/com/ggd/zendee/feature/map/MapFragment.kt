@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.ggd.model.Issue.PostIssueDto
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentMapBinding
@@ -29,9 +30,11 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import kotlin.math.log
 
+@AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragment_map),OnMapReadyCallback {
 
     override val viewModel: MapViewModel by viewModels()
@@ -45,9 +48,9 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
     override fun start() {
 
-//        repeatOnStarted {
-//            viewModel.eventFlow.collect{ event -> handleEvent(event) }
-//        }
+        repeatOnStarted {
+            viewModel.eventFlow.collect{ event -> handleEvent(event) }
+        }
 
         binding.mapView.foregroundTintList = ColorStateList.valueOf(Color.parseColor("#55000000"))
         viewModel.mapView = binding.mapView
@@ -59,6 +62,9 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
         binding.writeBtn.setOnClickListener {
             setDialog()
         }
+
+        viewModel.getIssuesByLocation(lat = 8.20F, lng = 8.20F)
+        viewModel.postIssue(PostIssueDto("최히건 왔따감", "하하ㅏ핳","ㅁㄴㅇ",5.20F,5.20F, "위험"))
 
     }
 
@@ -73,12 +79,14 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
             override fun onClicked(position: Int) {
                 Log.d("젠디", "onClicked: tag - ${viewModel.tagDataSet[position]} ")
+                mainViewModel.selectedTag = viewModel.tagDataSet[position]
+                findNavController().navigate(R.id.action_mapFragment_to_writeFragment)
             }
 
         })
 
         dialog.showDialog()
-
+0
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -176,6 +184,8 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
                 naverMap.locationTrackingMode = LocationTrackingMode.Follow
             }
 
+            
+
         }
 
         naverMap.setOnMapClickListener { pointF, latLng ->
@@ -268,11 +278,12 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
     }
 
-    //    private fun handleEvent(event: MapViewModel.Event) =
-//        when (event) {
-//
-//
-//            MapViewModel.Event.UnknownException ->
-//        }
+        private fun handleEvent(event: MapViewModel.Event) =
+        when (event) {
+
+            is MapViewModel.Event.SuccessGetIssuesByLocation -> Log.d("젠디", "SuccessGetIssuesByLocation - ${event}")
+            is MapViewModel.Event.UnknownException -> Log.d("젠디", "ERROR - ${event.error}")
+            MapViewModel.Event.SuccessPostIssue -> Log.d("젠디", "SuccessPostIssue - ${event}")
+        }
 
 }

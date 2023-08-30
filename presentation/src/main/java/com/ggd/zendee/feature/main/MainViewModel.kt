@@ -2,6 +2,7 @@ package com.ggd.zendee.feature.main
 
 import androidx.lifecycle.viewModelScope
 import com.ggd.zendee.base.BaseViewModel
+import com.ggd.zendee.feature.map.IssueTag
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
@@ -19,5 +20,8 @@ class MainViewModel: BaseViewModel() {
     var isPreviosExist = false
     var previousPosition : LatLng? = null
     var previousCameraUpdate : CameraUpdate? = null
+
+
+    var selectedTag : IssueTag = IssueTag.ALERT
 
 }
