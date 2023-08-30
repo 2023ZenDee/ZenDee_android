@@ -1,5 +1,6 @@
 package com.ggd.zendee.feature.main
 
+<<<<<<< HEAD
 import androidx.activity.viewModels
 import android.os.Looper
 import android.os.Parcel
@@ -19,6 +20,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity() : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.activity_main),
     Parcelable {
+=======
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Looper
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.ggd.zendee.feature.start.StartActivity
+>>>>>>> #12_register_screen
 
     override val viewModel: MainViewModel by viewModels()
 
@@ -39,9 +48,24 @@ class MainActivity() : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.
 
         val navView: BottomNavigationView = binding.navView
 
+<<<<<<< HEAD
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
+=======
+//        checkUpdate()
+//
+//        if (!SharedPreferenceManager.getIsLogin(this)) {
+//            startActivityWithFinishAll(StartActivity::class.java)
+//            super.onCreate(savedInstanceState)
+//        } else {
+//            super.onCreate(savedInstanceState)
+//            startForMainActivity()
+//        }
+
+
+    }
+>>>>>>> #12_register_screen
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -50,27 +74,5 @@ class MainActivity() : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<MainActivity> {
-        override fun createFromParcel(parcel: Parcel): MainActivity {
-            return MainActivity(parcel)
-        }
-
-        override fun newArray(size: Int): Array<MainActivity?> {
-            return arrayOfNulls(size)
-        }
-    }
-    fun handleBottomNavigation(state : Boolean){
-        if (state)binding.navView.visibility = View.VISIBLE
-        else binding.navView.visibility = View.INVISIBLE
     }
 }
