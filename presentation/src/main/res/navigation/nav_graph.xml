@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mapFragment">
+    app:startDestination="@id/signupNicknameFragment">
 
     <fragment
         android:id="@+id/mapFragment"
@@ -23,6 +24,59 @@
         android:name="com.ggd.zendee.feature.ranking.RankingFragment"
         android:label="RankingFragment" />
     <fragment
+        android:id="@+id/signupNicknameFragment"
+        android:name="com.ggd.zendee.feature.signup.SignupNicknameFragment"
+        android:label="SignupNicknameFragment"
+        tools:layout="@layout/fragment_signup_nickname">
+        <action
+            android:id="@+id/action_signupNicknameFragment_to_signupIdFragment"
+            app:destination="@id/signupIdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupIdFragment"
+        android:name="com.ggd.zendee.feature.signup.SignupIdFragment"
+        android:label="SignupIdFragment"
+        tools:layout="@layout/fragment_signup_id">
+        <action
+            android:id="@+id/action_signupIdFragment_to_signupPwdFragment"
+            app:destination="@id/signupPwdFragment" />
+        <action
+            android:id="@+id/action_signupIdFragment_to_signupNicknameFragment"
+            app:destination="@id/signupNicknameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupPwdFragment"
+        android:name="com.ggd.zendee.feature.signup.SignupPwdFragment"
+        android:label="SignupPwdFragment"
+        tools:layout="@layout/fragment_signup_pwd">
+        <action
+            android:id="@+id/action_signupPwdFragment_to_signupEmailFragment"
+            app:destination="@id/signupEmailFragment" />
+        <action
+            android:id="@+id/action_signupPwdFragment_to_signupIdFragment"
+            app:destination="@id/signupIdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupEmailFragment"
+        android:name="com.ggd.zendee.feature.signup.SignupEmailFragment"
+        android:label="SignupEmailFragment"
+        tools:layout="@layout/fragment_signup_email">
+        <action
+            android:id="@+id/action_signupEmailFragment_to_signupEmailCheckFragment"
+            app:destination="@id/signupEmailCheckFragment" />
+        <action
+            android:id="@+id/action_signupEmailFragment_to_signupPwdFragment"
+            app:destination="@id/signupPwdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupEmailCheckFragment"
+        android:name="com.ggd.zendee.feature.signup.SignupEmailCheckFragment"
+        android:label="SignupEmailCheckFragment"
+        tools:layout="@layout/fragment_signup_email_check">
+        <action
+            android:id="@+id/action_signupEmailCheckFragment_to_signupEmailFragment"
+            app:destination="@id/signupEmailFragment" />
+    </fragment>
         android:id="@+id/issueFragment"
         android:name="com.ggd.zendee.feature.issue.IssueFragment"
         android:label="IssueFragment" />
