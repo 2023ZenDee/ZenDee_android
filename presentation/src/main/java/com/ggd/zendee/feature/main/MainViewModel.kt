@@ -21,5 +21,3 @@ class MainViewModel: BaseViewModel() {
     var previousCameraUpdate : CameraUpdate? = null
 
 }
-
-// test 1
