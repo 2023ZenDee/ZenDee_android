@@ -1,6 +1,10 @@
 package com.ggd.zendee.feature.map
 
 import androidx.lifecycle.viewModelScope
+import com.ggd.model.Issue.IssueModel
+import com.ggd.model.Issue.PostIssueDto
+import com.ggd.repository.IssueRepository
+import com.ggd.repository.IssueRepositoryImpl
 import com.ggd.zendee.base.BaseViewModel
 import com.ggd.zendee.utils.MutableEventFlow
 import com.ggd.zendee.utils.asEventFlow
@@ -10,9 +14,17 @@ import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MapViewModel : BaseViewModel() {
+@HiltViewModel
+class MapViewModel @Inject constructor(
+
+    private val issueRepository: IssueRepository
+
+    ): BaseViewModel() {
 
     private val _eventFlow = MutableEventFlow<Event>()
     val eventFlow = _eventFlow.asEventFlow()
@@ -20,6 +32,13 @@ class MapViewModel : BaseViewModel() {
     lateinit var mapView: MapView
     lateinit var locationSource: FusedLocationSource
     lateinit var naverMap: NaverMap
+
+    var IssueList = mutableListOf<IssueModel>()
+
+
+
+
+
 
 
     var markerList = mutableListOf<Marker>()
@@ -151,7 +170,33 @@ class MapViewModel : BaseViewModel() {
         }
     }
 
+    fun getIssuesByLocation(lat : Float, lng : Float) = viewModelScope.launch(Dispatchers.IO){
+
+        kotlin.runCatching {
+            issueRepository.getIssuesByLocation(lat, lng)
+        }.onSuccess {
+            event(Event.SuccessGetIssuesByLocation(it))
+        }.onFailure {
+            event(Event.UnknownException(it))
+        }
+    }
+
+    fun postIssue(issue : PostIssueDto) = viewModelScope.launch(Dispatchers.IO){
+
+        kotlin.runCatching {
+            issueRepository.postIssue(issue)
+        }.onSuccess {
+            event(Event.SuccessPostIssue)
+        }.onFailure {
+            event(Event.UnknownException(it))
+        }
+    }
+
+
     sealed class Event {
-        object UnknownException : Event()
+
+        data class SuccessGetIssuesByLocation(val issueModels : List<IssueModel>?) : Event()
+        object SuccessPostIssue : Event()
+        data class UnknownException(val error : Throwable) : Event()
     }
 }
