@@ -16,8 +16,10 @@ import javax.inject.Inject
 
 class MainViewModel: BaseViewModel() {
 
-    var isPreviosExist = false
+    var isPreviousExist = false
     var previousPosition : LatLng? = null
     var previousCameraUpdate : CameraUpdate? = null
 
 }
+
+// test 1
