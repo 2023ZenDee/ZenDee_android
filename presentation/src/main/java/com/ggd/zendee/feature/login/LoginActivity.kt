@@ -1,114 +1,62 @@
 package com.ggd.zendee.feature.login
 
-import android.annotation.SuppressLint
-import android.graphics.Color
+import android.content.Intent
 import android.util.Log
-import android.view.View
-import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.view.marginBottom
+import com.ggd.model.login.LoginDto
+import com.ggd.model.login.TokenDto
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseActivity
 import com.ggd.zendee.databinding.ActivityLoginBinding
-import com.ggd.zendee.utils.KeyboardEventListener
+import com.ggd.zendee.feature.main.MainActivity
+import com.ggd.zendee.utils.repeatOnStarted
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layout.activity_login) {
+
 
     override val viewModel: LoginViewModel by viewModels()
 
-    override fun preLoad() {}
-
-    @SuppressLint("ResourceAsColor")
     override fun start() {
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
-//        binding.etId.isFocusableInTouchMode = true
-//        binding.etPwd.isFocusableInTouchMode = true
+        binding.etId.requestFocus()
 
-        binding.etId.requestFocus() // linearLayout 안에 editText를 넣어도 작동된다!
+        binding.btnLogin.setOnClickListener {
+            val typedId = binding.etId.text.toString()
+            val typedPwd = binding.etPwd.text.toString()
 
-        // Observer
-        val etId = binding.etId
-        val etPwd = binding.etPwd
+            repeatOnStarted { viewModel.eventFlow.collect { event -> handleEvent(event) } }
 
-        etId.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                Log.d("EditText", "isFocused Checked")
-                binding.tvEtIdTitle.setTextColor(Color.parseColor("#FFA9ECE3"))
-            } else {
-                Log.d("EditText", "isNotFocused Checked")
-                binding.tvEtIdTitle.setTextColor(Color.parseColor("#FFA5A5A5"))
-            }
-        }
-
-        etId.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                Log.d("EditText", "isFocused Checked")
-                binding.tvEtPwdTitle.setTextColor(Color.parseColor("#FFA9ECE3"))
-            } else {
-                Log.d("EditText", "isNotFocused Checked")
-                binding.tvEtPwdTitle.setTextColor(Color.parseColor("#FFA5A5A5"))
-            }
-        }
-
-
-//        etId.setOnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus) {
-//                Log.d("EditText", "isFocused Checked")
-//                binding.tvEtIdTitle.setTextColor(Color.parseColor("#FFA9ECE3"))
-//            } else {
-//                Log.d("EditText", "isNotFocused Checked")
-//                binding.tvEtIdTitle.setTextColor(Color.parseColor("#FFA5A5A5"))
-//            }
-//        }
-
-//        etPwd.setOnFocusChangeListener { v, hasFocus ->
-//            if(hasFocus) {
-//                Log.d("EditText", "isFocused Checked")
-//                binding.tvEtPwdTitle.setTextColor(Color.parseColor("#FFA9ECE3"))
-//            } else {
-//                Log.d("EditText", "isNotFocused Checked")
-//                binding.tvEtPwdTitle.setTextColor(Color.parseColor("#FFA5A5A5"))
-//            }
-//        }
-
-//        etId.setOnClickListener { etIdIsFocused = true }
-
-
-        // tvCount가 바뀔 때마다 tvCount.text를 tvCount로 변환시킴
-//        etIdIsFocused.observe(this) {  isFocused ->
-//            if (isFocused) {
-//                Log.d("EditText", "isFocused Checked")
-//                binding.tvEtIdTitle.setTextColor(Color.parseColor("#FFA9ECE3"))
-//            } else if (!isFocused) {
-//                Log.d("EditText", "isNotFocused Checked")
-//                binding.tvEtIdTitle.setTextColor(Color.parseColor("#FFA5A5A5"))
-//            }
-//        }
-//
-//        etPwdIsFocused.observe(this) {  isFocused ->
-//            if(isFocused) {
-//                Log.d("EditText", "isFocused Checked")
-//                binding.tvEtPwdTitle.setTextColor(Color.parseColor("#FFA9ECE3"))
-//            } else if (!isFocused) {
-//                Log.d("EditText", "isNotFocused Checked")
-//                binding.tvEtPwdTitle.setTextColor(Color.parseColor("#FFA5A5A5"))
-//            }
-//        }
-//
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        KeyboardEventListener(this) { isOpen ->
-            if (isOpen) {
-                binding.btnLogin.setBackgroundResource(R.drawable.on_click_edittext_button_container_shadow)
+            binding.btnLogin.setOnClickListener {
+                viewModel.login(LoginDto(typedId, typedPwd))
             }
         }
     }
+
+    private fun handleEvent(event: LoginViewModel.Event): Any =
+        when (event) {
+            is LoginViewModel.Event.SuccessLogin -> {
+                Log.d(TAG, "handleEvent: Login Success!!")
+//                viewModel.token(TokenDto(event.code.authCode))
+            }
+            is LoginViewModel.Event.SuccessToken -> {
+                Log.d(TAG, "handleEvent: Token Success!!")
+//                startActivity(Intent(LoginActivity(), MainActivity::class.java))
+//                finish()
+            }
+            is LoginViewModel.Event.UnkownException -> shortToast("알 수 없는 오류가 발생했습니다.")
+        }
+
+    private fun shortToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+    
+    companion object {
+        const val TAG = "LoginActivity"
+    }
+
 }
+

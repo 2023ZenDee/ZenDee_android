@@ -20,13 +20,6 @@
         <item name="backgroundTint">@color/edittext_focused</item>
     </style>
 
-    <style name="Theme.ZENDEE.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_inset</item>
-        <item name="postSplashScreenTheme">@style/Theme.ZENDEE</item>
-        <item name="windowSplashScreenAnimationDuration">1000</item>
-    </style>
-
     <style name="Button.White" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@android:color/white</item>
     </style>

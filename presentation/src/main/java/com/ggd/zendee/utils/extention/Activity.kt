@@ -1,11 +1,22 @@
-package com.ggd.zendee.utils
+package com.ggd.zendee.utils.extention
 
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
 import android.util.TypedValue
 import android.view.View
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
+    lifecycleScope.launch {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED, block)
+    }
+}
 
 fun Activity.getRootView(): View {
     return findViewById<View>(android.R.id.content)

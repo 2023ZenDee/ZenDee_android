@@ -16,7 +16,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     protected lateinit var mViewModel: VM
     protected abstract val viewModel: VM
 
-    protected abstract fun preLoad()
+    open fun preLoad() {}
     protected abstract fun start()
 
 
