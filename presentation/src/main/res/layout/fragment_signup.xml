@@ -29,7 +29,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/button_container"
+            android:background="@drawable/button_container_shadow"
             android:backgroundTint="@color/mint"
             android:text="시작하기"
             style="?android:attr/borderlessButtonStyle"
@@ -45,7 +45,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/button_container"
+            android:background="@drawable/button_container_shadow"
             android:text="구글로 시작하기"
 
             android:textColor="@color/light_black"

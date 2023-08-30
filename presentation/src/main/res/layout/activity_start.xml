@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".feature.start.StartActivity">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="58dp"
+            android:layout_marginEnd="58dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btn_register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주변에서 일어나는 모든 일은 젠디와 함께"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="14sp"
+                android:textColor="@color/dark_mint"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="157dp" />
+
+            <ImageView
+                android:id="@+id/iv_zendee"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:src="@drawable/iv_zendee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="24dp"
+            android:text="시작하기"
+            android:textSize="18sp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/mint"
+            app:backgroundTintMode="screen"
+            android:backgroundTint="@color/mint"
+            android:backgroundTintMode="screen"
+            android:background="@drawable/button_container_shadow"
+            app:layout_constraintBottom_toTopOf="@+id/btn_google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_google"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="24dp"
+            android:text="구글로 시작하기"
+            app:backgroundTint="@color/white"
+            app:backgroundTintMode="screen"
+            android:backgroundTint="@color/white"
+            android:backgroundTintMode="screen"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="18sp"
+            android:textColor="@color/light_black"
+            android:elevation="50dp"
+            android:background="@drawable/button_container_shadow"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv_checking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="14sp"
+                android:textColor="@color/text_gray"
+                android:text="이미 ZENDEE 회원이라면?" />
+
+            <TextView
+                android:id="@+id/tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/light_black"
+                android:text="로그인" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
