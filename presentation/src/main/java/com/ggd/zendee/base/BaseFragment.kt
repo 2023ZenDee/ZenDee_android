@@ -8,10 +8,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.fragment.NavHostFragment
-import com.ggd.zendee.R
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutRes: Int
@@ -22,14 +18,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     protected abstract val viewModel: VM
 //    protected open val hasBottomNavigation: Boolean = false
 
-    private val transaction: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
-
-    fun changeFragment(fragment : Fragment) {
-        transaction?.replace(R.id.fragment_container, fragment)
-        transaction?.commit()
-    }
-
-
     protected abstract fun start()
 
     override fun onCreateView(
@@ -38,7 +26,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
-
         return binding.root
     }
 
