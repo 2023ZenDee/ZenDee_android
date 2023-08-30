@@ -11,6 +11,18 @@
     <color name="dark_mint">#FF76D2AD</color>
     <color name="light_black">#FF2F2F2F</color>
     <color name="text_gray">#FFA5A5A5</color>
+    <color name="gray">#FFE0E0E0</color>
+    <color name="red">#FFF05F5F</color>
+    <color name="blue">#FF6066EB</color>
+
+
+    <color name="alert">#FFFF1818</color>
+    <color name="hot">#FFFF9900</color>
+    <color name="happy">#FFFFD600</color>
+    <color name="lucky">#FF46D223</color>
+    <color name="notice">#FF3C4DEA</color>
+    <color name="active">#FF8235FF</color>
+    <color name="love">#FFFF44B4</color>
     <color name="container_gray">#FFEBEBEB</color>
     <color name="Transparent">#00000000</color>
     <color name="warning">#FFED3A3A</color>

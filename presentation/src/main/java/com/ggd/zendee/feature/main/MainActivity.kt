@@ -4,8 +4,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import androidx.activity.viewModels
+import android.os.Looper
+import android.os.Parcel
+import android.os.Parcelable
+import android.view.View
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.ggd.zendee.R
+import com.ggd.zendee.base.BaseActivity
+import com.ggd.zendee.databinding.ActivityMainBinding
 import com.ggd.zendee.feature.start.StartActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,5 +49,27 @@ class MainActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         this.finishAffinity()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MainActivity> {
+        override fun createFromParcel(parcel: Parcel): MainActivity {
+            return MainActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MainActivity?> {
+            return arrayOfNulls(size)
+        }
+    }
+    fun handleBottomNavigation(state : Boolean){
+        if (state)binding.navView.visibility = View.VISIBLE
+        else binding.navView.visibility = View.INVISIBLE
     }
 }
