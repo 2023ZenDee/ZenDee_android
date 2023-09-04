@@ -1,4 +1,4 @@
-package com.ggd.module
+package com.ggd.zendee.di.module
 
 import com.ggd.network.api.IssueService
 import com.ggd.network.api.LoginApi
@@ -27,7 +27,6 @@ abstract class RepositoryModule {
         impl: IssueRepositoryImpl
 
     ): IssueRepository
-
 
     @Binds
     @Singleton

@@ -1,9 +1,8 @@
-package com.ggd.module
+package com.ggd.zendee.di.module
 
 import com.ggd.network.api.CommentService
 import com.ggd.network.api.IssueService
 import com.ggd.network.api.LoginApi
-import com.ggd.qualifier.BasicRetrofit
 import com.ggd.utils.BASE_URL
 import com.ggd.zendee.utils.HiltApplication
 import dagger.Module
@@ -23,6 +22,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /* LoginApi Type의 객체 생성 */
+
     @Provides
     @Singleton
     fun provideIssueApi( retrofit: Retrofit): IssueService =
@@ -33,6 +34,25 @@ object NetworkModule {
     @Singleton
     fun provideCommentApi(retrofit: Retrofit): CommentService =
         retrofit.create(CommentService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideLoginApi(retrofit: Retrofit): LoginApi =
+        retrofit.create(LoginApi::class.java)
+
+    /* Retrofit Object 생성 */
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+    /* OkHttp로 세부적인 네트워크 구성요소를 설정 */
 
     @Singleton
     @Provides
@@ -54,22 +74,6 @@ object NetworkModule {
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-    }
-
-    // Retrofit Client 인스턴스 생성
-    @Provides
-    @Singleton
-    fun provideLoginApi(retrofit: Retrofit): LoginApi =
-        retrofit.create(LoginApi::class.java)
 
     @Provides
     @Singleton
