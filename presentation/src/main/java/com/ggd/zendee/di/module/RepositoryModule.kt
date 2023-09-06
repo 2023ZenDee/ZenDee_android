@@ -13,6 +13,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.internal.immutableListOf
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -42,3 +43,21 @@ abstract class RepositoryModule {
         impl : LoginRepositoryImpl
     ): LoginRepository
 }
+
+//@Module
+//@InstallIn(SingletonComponent::class)
+//class RepositoryModule {
+//
+//    @Binds
+//    @Singleton
+//    fun provideIssueRepository(impl: IssueRepositoryImpl): IssueRepository = impl
+//
+//
+//    @Binds
+//    @Singleton
+//    fun provideCommentRepository(impl: CommentRepositoryImpl) : CommentRepository = impl
+//
+//    @Binds
+//    @Singleton
+//    fun provideLoginRepository(impl : LoginRepositoryImpl): LoginRepository = impl
+//}
