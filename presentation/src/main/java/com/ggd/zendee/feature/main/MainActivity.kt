@@ -1,11 +1,15 @@
 package com.ggd.zendee.feature.main
 
+import android.app.Activity
+import android.os.Build
 import androidx.activity.viewModels
 import android.os.Looper
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
+import android.view.WindowManager
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity() : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.activity_main) {
+class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.activity_main) {
 
     override val viewModel: MainViewModel by viewModels()
 
@@ -47,11 +51,23 @@ class MainActivity() : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.
 //            super.onCreate(savedInstanceState)
 //            startForMainActivity()
 //        }
-
+        setStatusBarTransparent()
     }
     fun handleBottomNavigation(state : Boolean){
         if (state)binding.navView.visibility = View.VISIBLE
         else binding.navView.visibility = View.INVISIBLE
+    }
+
+    private fun Activity.setStatusBarTransparent() {
+        window.apply {
+            setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+        }
+        if(Build.VERSION.SDK_INT >= 30) {	// API 30 에 적용
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+        }
     }
 
 }
