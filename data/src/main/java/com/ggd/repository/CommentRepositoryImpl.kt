@@ -29,13 +29,13 @@ class CommentRepositoryImpl @Inject constructor(
         return response.data
     }
 
-    override suspend fun getComments(id: Int): CommentModel? {
+    override suspend fun getComments(id: Int): List<CommentModel>? {
 
         val response = zendeeApiCall { commentService.getComments(id) }
 
         Log.d("젠디", "getComments: ${response.status} - ${response.message} ")
 
-        return response.data?.toModel()
+        return response.data?.map{ it.toModel() }
 
     }
 

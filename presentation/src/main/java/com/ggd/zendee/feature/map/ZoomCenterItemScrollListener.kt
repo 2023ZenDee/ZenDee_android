@@ -11,7 +11,6 @@ class ZoomCenterItemScrollListener(private val layoutManager: LinearLayoutManage
         super.onScrolled(recyclerView, dx, dy)
 
         val visibleItemCount = recyclerView.childCount
-        val totalItemCount = layoutManager.itemCount
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
         val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
 

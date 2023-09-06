@@ -15,7 +15,7 @@ interface CommentRepository {
 
     suspend fun getComments(
         id : Int
-    ) : CommentModel?
+    ) : List<CommentModel>?
 
     suspend fun fixComment(
         id : Int,

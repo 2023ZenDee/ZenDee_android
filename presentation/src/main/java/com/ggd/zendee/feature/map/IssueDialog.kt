@@ -23,7 +23,7 @@ class IssueDialog(private val context : Context) {
         onClickListener = listener
     }
 
-    fun showDialog(){
+    fun showDialog(title : String, address : String, time : String, views : Int, comment : Int){
 
         binding = DialogIssueBinding.inflate(LayoutInflater.from(context))
 
@@ -36,6 +36,12 @@ class IssueDialog(private val context : Context) {
         val params = dialog.window!!.attributes
         params.y = 200
         dialog.window!!.setGravity(Gravity.CENTER)
+
+        binding.titleTxt.text = title
+        binding.locationTxt.text = address
+        binding.timeTxt.text = time
+        binding.viewTxt.text = "조회수 ${views}회"
+        binding.commentTxt.text = "댓글 ${comment}개"
 
         binding.root.setOnClickListener {
             onClickListener.onClicked()
