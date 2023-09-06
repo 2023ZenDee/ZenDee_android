@@ -1,6 +1,7 @@
 package com.ggd.zendee.feature.main
 
 import androidx.lifecycle.viewModelScope
+import com.ggd.model.Issue.IssueModel
 import com.ggd.zendee.base.BaseViewModel
 import com.ggd.zendee.feature.map.IssueTag
 import com.naver.maps.geometry.LatLng
@@ -23,7 +24,11 @@ class MainViewModel @Inject constructor(
     var previousPosition : LatLng? = null
     var previousCameraUpdate : CameraUpdate? = null
 
+    var issueId : String = ""
+    var issue : IssueModel = IssueModel("","","","","",0.0F,0.0F,"",0,"",0)
 
     var selectedTag : IssueTag = IssueTag.ALERT
+
+    var isFirst : Boolean = true
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,15 +10,53 @@
 
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".feature.ranking.RankingFragment">
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="#F2F4F6"
+       >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+       <Button
+           android:id="@+id/filter_btn"
+           android:layout_width="24dp"
+           android:layout_height="24dp"
+           android:layout_margin="16dp"
+           android:background="@drawable/filter_icon"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    </FrameLayout>
+       <TextView
+           android:id="@+id/ranking_txt"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+
+           android:layout_marginTop="20dp"
+           android:layout_marginStart="16dp"
+           android:textSize="22dp"
+           android:fontFamily="@font/pretendard_bold"
+           android:textColor="@color/black"
+
+           android:text="랭킹"
+
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/filter_btn" />
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+
+           android:layout_marginTop="36dp"
+           tools:listitem="@layout/item_ranking"
+
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/ranking_txt" />
+
+
+
+
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -23,7 +23,7 @@ interface CommentService{
    @GET("/comments/get/{id}")
    suspend fun getComments(
        @Path("id") id : Int
-   ) : BaseResponse<CommentResponse>
+   ) : BaseResponse<List<CommentResponse>>
 
 
     @GET("/comments/fix/{id}")

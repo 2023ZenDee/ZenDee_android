@@ -35,12 +35,6 @@ class MapViewModel @Inject constructor(
 
     var IssueList = mutableListOf<IssueModel>()
 
-
-
-
-
-
-
     var markerList = mutableListOf<Marker>()
     var markerInfoList = mutableListOf<MarkerData>().apply {
 
@@ -143,14 +137,6 @@ class MapViewModel @Inject constructor(
 
     }
 
-    val cameraPosition = CameraPosition(
-        LatLng(37.5666102, 126.9783881), // 대상 지점
-        16.0, // 줌 레벨
-        90.0, // 기울임 각도
-        0.0 // 베어링 각도
-    )
-
-
 
     val tagDataSet = mutableListOf<IssueTag>(
         IssueTag.ALERT,
@@ -172,13 +158,25 @@ class MapViewModel @Inject constructor(
 
     fun getIssuesByLocation(lat : Float, lng : Float) = viewModelScope.launch(Dispatchers.IO){
 
-        kotlin.runCatching {
-            issueRepository.getIssuesByLocation(lat, lng)
-        }.onSuccess {
-            event(Event.SuccessGetIssuesByLocation(it))
-        }.onFailure {
-            event(Event.UnknownException(it))
+//        kotlin.runCatching {
+//            issueRepository.getIssuesByLocation(lat, lng)
+//        }.onSuccess {
+//            event(Event.SuccessGetIssuesByLocation(it))
+//        }.onFailure {
+//            event(Event.UnknownException(it))
+//        }
+
+        var markerInfoList = mutableListOf<IssueModel>().apply {
+            add(IssueModel("1","여기 아이유 떳다","허허ㅓ허허허","2023-05-12","2023-05-12",35.661438F,128.415958F,"0",0,"",0))
+            add(IssueModel("2","여기 떳...냐?","아이유가 온다고???","2023-05-12","2023-05-12",35.664385F,128.417770F,"0",0,"",0))
+            add(IssueModel("3","아몰랑","말도 안된다 진짜","2023-05-12","2023-05-12",35.662674F,128.413362F,"0",0,"",0))
+            add(IssueModel("4","알아서 하시오","헤헤헤ㅔㅎ","2023-05-12","2023-05-12",35.663853F,128.412446F,"0",0,"",0))
         }
+
+        event(Event.SuccessGetIssuesByLocation(
+            markerInfoList
+        ))
+
     }
 
     fun postIssue(issue : PostIssueDto) = viewModelScope.launch(Dispatchers.IO){
