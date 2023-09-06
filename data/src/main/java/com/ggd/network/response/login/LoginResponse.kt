@@ -1,5 +1,9 @@
 package com.ggd.network.response.login
 
 data class LoginResponse(
-    val authCode: String
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val accessToken: String,
+    val refreshToken: String
 )
