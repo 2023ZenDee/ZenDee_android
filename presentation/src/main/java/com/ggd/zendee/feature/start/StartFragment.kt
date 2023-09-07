@@ -23,6 +23,10 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_loginFragment)
         }
+
+        binding.tvJoin.setOnClickListener {
+            findNavController().navigate(R.id.action_startFragment_to_signupNicknameFragment)
+        }
     }
 
 }

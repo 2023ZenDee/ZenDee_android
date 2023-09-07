@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_startFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_signupNicknameFragment"
+            app:destination="@id/signupNicknameFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -52,6 +55,51 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signupNicknameFragment"
+        android:name="com.ggd.zendee.feature.signup.screen.SignupNicknameFragment"
+        android:label="SignupNicknameFragment" >
+        <action
+            android:id="@+id/action_signupNicknameFragment_to_signupIdFragment"
+            app:destination="@id/signupIdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupIdFragment"
+        android:name="com.ggd.zendee.feature.signup.screen.SignupIdFragment"
+        android:label="fragment_signup_id"
+        tools:layout="@layout/fragment_signup_id" >
+        <action
+            android:id="@+id/action_signupIdFragment_to_signupPwdFragment"
+            app:destination="@id/signupPwdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupPwdFragment"
+        android:name="com.ggd.zendee.feature.signup.screen.SignupPwdFragment"
+        android:label="fragment_signup_pwd"
+        tools:layout="@layout/fragment_signup_pwd" >
+        <action
+            android:id="@+id/action_signupPwdFragment_to_signupEmailFragment"
+            app:destination="@id/signupEmailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupEmailFragment"
+        android:name="com.ggd.zendee.feature.signup.screen.SignupEmailFragment"
+        android:label="fragment_signup_email"
+        tools:layout="@layout/fragment_signup_email" >
+        <action
+            android:id="@+id/action_signupEmailFragment_to_signupCheckFragment"
+            app:destination="@id/signupCheckFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupCheckFragment"
+        android:name="com.ggd.zendee.feature.signup.screen.SignupCheckFragment"
+        android:label="fragment_signup_check"
+        tools:layout="@layout/fragment_signup_check" >
+        <action
+            android:id="@+id/action_signupCheckFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

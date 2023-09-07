@@ -40,7 +40,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
                     findNavController().navigate(R.id.action_loginFragment_to_mapFragment)
                 }
                 LoginViewModel.Event.LoginFailed -> {
-                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "아이디나 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
                 }
                 else -> { }
             }
