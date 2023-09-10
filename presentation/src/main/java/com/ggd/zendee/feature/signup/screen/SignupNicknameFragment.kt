@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentSignupNicknameBinding
-import com.ggd.zendee.feature.signup.SignupViewModel
+import com.ggd.zendee.feature.signup.viewmodel.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,9 +16,9 @@ class SignupNicknameFragment : BaseFragment<FragmentSignupNicknameBinding, Signu
 
     override fun start() {
         binding.btnNext.setOnClickListener {
-            val etNick = binding.etNickname.editText.toString()
+            val etNick = binding.etNick.text.toString()
             if (etNick.isNotEmpty()) {
-                viewModel.nick = etNick
+                viewModel.setNick(etNick)
                 findNavController().navigate(R.id.action_signupNicknameFragment_to_signupIdFragment)
             } else {
                 Toast.makeText(context, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()

@@ -1,17 +1,12 @@
 package com.ggd.zendee.feature.signup.screen
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentSignupEmailBinding
-import com.ggd.zendee.feature.signup.SignupViewModel
+import com.ggd.zendee.feature.signup.viewmodel.SignupViewModel
 
 class SignupEmailFragment : BaseFragment<FragmentSignupEmailBinding, SignupViewModel>(R.layout.fragment_signup_email) {
 
@@ -19,11 +14,11 @@ class SignupEmailFragment : BaseFragment<FragmentSignupEmailBinding, SignupViewM
 
     override fun start() {
         binding.btnEmailCheck.setOnClickListener {
-            val etEmail = binding.etEmail.editText.toString()
-            if (etEmail.isNotEmpty()) {
-                viewModel.email = etEmail
-                sendEmailCode(etEmail)
+            val etEmail = binding.etEmail.tag.toString()
 
+            if (etEmail.isNotEmpty()) {
+                viewModel.setEmail(etEmail)
+                //sendEmailCode(etEmail)
                 findNavController().navigate(R.id.action_signupEmailFragment_to_signupCheckFragment)
             } else {
                 Toast.makeText(context, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()

@@ -1,17 +1,12 @@
 package com.ggd.zendee.feature.signup.screen
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentSignupCheckBinding
-import com.ggd.zendee.feature.signup.SignupViewModel
+import com.ggd.zendee.feature.signup.viewmodel.SignupViewModel
 
 class SignupCheckFragment : BaseFragment<FragmentSignupCheckBinding, SignupViewModel>(R.layout.fragment_signup_check) {
 
@@ -19,7 +14,8 @@ class SignupCheckFragment : BaseFragment<FragmentSignupCheckBinding, SignupViewM
 
     override fun start() {
         binding.btnStartZendee.setOnClickListener {
-            val etCheck = binding.etCheck.editText.toString()
+            val etCheck = binding.etCheckNumber.text.toString()
+
             if (etCheck.isNotEmpty()) {
                 if (etCheck == "true") { // todo : 이메일 인증번호 확인 필요
                     findNavController().navigate(R.id.action_signupCheckFragment_to_mapFragment)

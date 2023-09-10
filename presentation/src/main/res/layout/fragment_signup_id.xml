@@ -35,28 +35,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/et_id"
-            style="@style/Widget.Design.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="아이디 입력"
+            android:textColor="@color/black"
+            android:textColorHint="@color/text_gray"
+            android:textSize="20sp"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="50dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="아이디"
-                android:textColor="@color/black"
-                android:textColorHint="@color/text_gray"
-                android:textSize="20sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
 
         <Button
             android:id="@+id/btn_next"

@@ -40,7 +40,7 @@
             android:fontFamily="@font/pretendard_semibold"
             android:textSize="18sp"
             android:stateListAnimator="@null"
-            android:drawableLeft="@drawable/camera_icon"
+            android:drawableLeft="@drawable/ic_google"
             android:textColor="@color/light_black"
             android:background="@drawable/button_radious_stroke"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
