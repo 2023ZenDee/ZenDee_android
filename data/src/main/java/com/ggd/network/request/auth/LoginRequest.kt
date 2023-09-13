@@ -1,4 +1,4 @@
-package com.ggd.network.request.login
+package com.ggd.network.request.auth
 
 data class LoginRequest(
     val userId: String,

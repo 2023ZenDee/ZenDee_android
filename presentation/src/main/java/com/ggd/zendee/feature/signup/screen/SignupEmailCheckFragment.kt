@@ -1,15 +1,10 @@
-package com.ggd.zendee.feature.signup
+package com.ggd.zendee.feature.signup.screen
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentSignupEmailCheckBinding
-import com.ggd.zendee.databinding.FragmentSignupNickBinding
+import com.ggd.zendee.feature.signup.viewmodel.SignupViewModel
 
 class SignupEmailCheckFragment: BaseFragment<FragmentSignupEmailCheckBinding, SignupViewModel>(R.layout.fragment_signup_email_check) {
 

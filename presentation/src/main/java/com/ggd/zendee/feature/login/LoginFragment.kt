@@ -1,15 +1,9 @@
 package com.ggd.zendee.feature.login
 
-import android.content.Context
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ggd.model.login.requests.LoginDto
+import com.ggd.model.auth.LoginRequestModel
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentLoginBinding
@@ -28,7 +22,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
         binding.btnLogin.setOnClickListener {
             val etId = binding.etId.text.toString()
             val etPwd = binding.etPwd.text.toString()
-            viewModel.login(LoginDto(etId, etPwd))
+            viewModel.login(LoginRequestModel(etId, etPwd))
         }
 
     }

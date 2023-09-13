@@ -1,4 +1,4 @@
-package com.ggd.network.response.login
+package com.ggd.network.response.auth
 
 data class LoginResponse(
     val status: Int,

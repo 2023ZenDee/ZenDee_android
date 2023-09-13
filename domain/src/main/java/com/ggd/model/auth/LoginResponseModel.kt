@@ -1,6 +1,6 @@
-package com.ggd.model.login.response
+package com.ggd.model.auth
 
-data class Login(
+data class LoginResponseModel(
     val accessToken: String,
     val refreshToken: String
 )

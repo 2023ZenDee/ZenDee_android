@@ -14,6 +14,7 @@ import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentStartBinding
 import com.ggd.zendee.feature.main.MainActivity
+import com.ggd.zendee.utils.HiltApplication
 import com.ggd.zendee.utils.clientId
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -44,6 +45,9 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
     }
 
     override fun start() {
+        if (HiltApplication.prefs.autoLogin) {
+            findNavController().navigate(R.id.action_startFragment_to_mapFragment)
+        }
 
         (activity as MainActivity).handleBottomNavigation(false)
 
@@ -56,7 +60,7 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
         }
 
         binding.tvJoin.setOnClickListener {
-            findNavController().navigate(R.id.)
+            findNavController().navigate(R.id.action_startFragment_to_signupNickFragment)
         }
     }
 

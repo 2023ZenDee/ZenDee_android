@@ -1,47 +1,38 @@
 package com.ggd.zendee.di.module
 
-import com.ggd.network.api.IssueService
-import com.ggd.network.api.LoginApi
 import com.ggd.repository.CommentRepository
 import com.ggd.repository.CommentRepositoryImpl
 import com.ggd.repository.IssueRepository
 import com.ggd.repository.IssueRepositoryImpl
 import com.ggd.repository.LoginRepository
 import com.ggd.repository.LoginRepositoryImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.internal.immutableListOf
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+class RepositoryModule {
 
-    @Binds
+    @Provides
     @Singleton
-    abstract fun provideIssueRepository(
-
+    fun provideIssueRepository(
         impl: IssueRepositoryImpl
+    ): IssueRepository = impl
 
-    ): IssueRepository
-
-    @Binds
+    @Provides
     @Singleton
-    abstract fun provideCommentRepository(
-
+    fun provideCommentRepository(
         impl: CommentRepositoryImpl
+    ): CommentRepository = impl
 
-    ): CommentRepository
-
-    @Binds
+    @Provides
     @Singleton
-    abstract fun provideLoginRepository(
+    fun provideLoginRepository(
         impl : LoginRepositoryImpl
-    ): LoginRepository
+    ): LoginRepository = impl
 }
 
 //@Module

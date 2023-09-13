@@ -2,7 +2,7 @@ package com.ggd.zendee.di.module
 
 import com.ggd.network.api.CommentService
 import com.ggd.network.api.IssueService
-import com.ggd.network.api.LoginApi
+import com.ggd.network.api.AuthApi
 import com.ggd.utils.BASE_URL
 import com.ggd.zendee.utils.HiltApplication
 import dagger.Module
@@ -37,8 +37,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideLoginApi(retrofit: Retrofit): LoginApi =
-        retrofit.create(LoginApi::class.java)
+    fun provideLoginApi(retrofit: Retrofit): AuthApi =
+        retrofit.create(AuthApi::class.java)
 
     /* Retrofit Object 생성 */
 
