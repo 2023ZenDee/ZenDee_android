@@ -1,11 +1,13 @@
 package com.ggd.zendee.di.module
 
+import com.ggd.repository.AuthRepository
+import com.ggd.repository.AuthRepositoryImpl
 import com.ggd.repository.CommentRepository
 import com.ggd.repository.CommentRepositoryImpl
+import com.ggd.repository.EmailRepository
+import com.ggd.repository.EmailRepositoryImpl
 import com.ggd.repository.IssueRepository
 import com.ggd.repository.IssueRepositoryImpl
-import com.ggd.repository.LoginRepository
-import com.ggd.repository.LoginRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,8 +33,15 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideLoginRepository(
-        impl : LoginRepositoryImpl
-    ): LoginRepository = impl
+        impl : AuthRepositoryImpl
+    ): AuthRepository = impl
+
+    @Provides
+    @Singleton
+    fun provideEmailRepository(
+        impl : EmailRepositoryImpl
+    ): EmailRepository = impl
+
 }
 
 //@Module

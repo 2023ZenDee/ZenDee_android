@@ -45,9 +45,8 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
     }
 
     override fun start() {
-        if (HiltApplication.prefs.autoLogin) {
-            findNavController().navigate(R.id.action_startFragment_to_mapFragment)
-        }
+        /** 자동 로그인 */
+        // if (HiltApplication.prefs.autoLogin) { findNavController().navigate(R.id.action_startFragment_to_mapFragment) }
 
         (activity as MainActivity).handleBottomNavigation(false)
 
