@@ -54,6 +54,10 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
         binding.btnGoogle.setOnClickListener {
             requestGoogleLogin()
         }
+
+        binding.tvJoin.setOnClickListener {
+            findNavController().navigate(R.id.)
+        }
     }
 
     private fun requestGoogleLogin() {
