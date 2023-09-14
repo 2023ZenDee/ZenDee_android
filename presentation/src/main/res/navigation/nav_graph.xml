@@ -103,7 +103,11 @@
         android:id="@+id/signupEmailCheckFragment"
         android:name="com.ggd.zendee.feature.signup.screen.SignupEmailCheckFragment"
         android:label="fragment_signup_email_check"
-        tools:layout="@layout/fragment_signup_email_check" />
+        tools:layout="@layout/fragment_signup_email_check" >
+        <action
+            android:id="@+id/action_signupEmailCheckFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
 
 
 </navigation>

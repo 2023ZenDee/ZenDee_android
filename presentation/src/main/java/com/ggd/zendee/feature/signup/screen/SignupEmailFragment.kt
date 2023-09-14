@@ -23,15 +23,9 @@ class SignupEmailFragment: BaseFragment<FragmentSignupEmailBinding, SignupViewMo
 
             if (etEmail.isNotEmpty()) {
                 viewModel.setEmail(etEmail)
+
                 with(viewModel) {
-                    register(
-                        RegisterRequestModel(
-                            email.value.toString(),
-                            userId.value.toString(),
-                            password.value.toString(),
-                            nick.value.toString()
-                        )
-                    )
+                    getEmailCode(EmailRequestModel(email.value.toString())) // 인증코드 발급
                 }
 
                 findNavController().navigate(R.id.signupEmailFragment_to_signupEmailCheckFragment)
