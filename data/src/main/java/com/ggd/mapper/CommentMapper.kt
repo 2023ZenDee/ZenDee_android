@@ -12,5 +12,7 @@ internal fun CommentResponse.toModel() = CommentModel(
     deleted_at = this.deleted_at,
     authorIdx = this.authorIdx,
     posterIdx = this.posterIdx,
+    user = this.user,
+    userImg = this.userImg
 
 )

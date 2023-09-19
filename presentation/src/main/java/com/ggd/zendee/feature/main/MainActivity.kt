@@ -2,12 +2,10 @@ package com.ggd.zendee.feature.main
 
 import android.app.Activity
 import android.os.Build
-import androidx.activity.viewModels
 import android.os.Looper
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
@@ -34,14 +32,22 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.ac
     }
 
     override fun start() {
-        val actionBar = supportActionBar
-        actionBar!!.hide()
 
         val navView: BottomNavigationView = binding.navView
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
+
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.mapFragment, R.id.rankingFragment, R.id.profileFragment
+            )
+        )
+
+        navView.setupWithNavController(navController)
+
+
 //        checkUpdate()
 //
 //        if (!SharedPreferenceManager.getIsLogin(this)) {
@@ -51,23 +57,23 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.ac
 //            super.onCreate(savedInstanceState)
 //            startForMainActivity()
 //        }
-        setStatusBarTransparent()
+//        setStatusBarTransparent()
     }
     fun handleBottomNavigation(state : Boolean){
         if (state)binding.navView.visibility = View.VISIBLE
-        else binding.navView.visibility = View.INVISIBLE
+        else binding.navView.visibility = View.GONE
     }
 
-    private fun Activity.setStatusBarTransparent() {
-        window.apply {
-            setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-        }
-        if(Build.VERSION.SDK_INT >= 30) {	// API 30 에 적용
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-        }
-    }
+//    private fun Activity.setStatusBarTransparent() {
+//        window.apply {
+//            setFlags(
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+//            )
+//        }
+//        if(Build.VERSION.SDK_INT >= 30) {	// API 30 에 적용
+//            WindowCompat.setDecorFitsSystemWindows(window, false)
+//        }
+//    }
 
 }
