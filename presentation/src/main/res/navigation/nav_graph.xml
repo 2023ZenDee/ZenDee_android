@@ -96,18 +96,14 @@
         android:label="fragment_signup_email"
         tools:layout="@layout/fragment_signup_email" >
         <action
-            android:id="@+id/signupEmailFragment_to_signupEmailCheckFragment"
-            app:destination="@id/signupEmailCheckFragment" />
+            android:id="@+id/action_signupEmailFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupEmailCheckFragment"
         android:name="com.ggd.zendee.feature.signup.screen.SignupEmailCheckFragment"
         android:label="fragment_signup_email_check"
-        tools:layout="@layout/fragment_signup_email_check" >
-        <action
-            android:id="@+id/action_signupEmailCheckFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_signup_email_check" />
 
 
 </navigation>

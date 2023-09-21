@@ -49,13 +49,14 @@
                 android:layout_width="match_parent"
                 android:fontFamily="@font/pretendard_regular"
                 android:hint="이메일"
+                android:singleLine="true"
                 android:textSize="20sp"
                 android:layout_height="match_parent"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_email_check"
+            android:id="@+id/btn_start_zendee"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginBottom="20dp"
@@ -63,7 +64,7 @@
             android:background="@drawable/button_radius"
             app:backgroundTint="@color/mint"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="이메일 인증하기"
+            android:text="젠디 시작하기"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:stateListAnimator="@null"

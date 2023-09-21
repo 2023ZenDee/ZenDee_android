@@ -1,3 +1,4 @@
-package com.ggd.utils
+package com.ggd.zendee.di.utils
 
-const val BASE_URL = "http://10.80.161.164:8070/"
+const val BASE_URL = "http://10.80.162.101:8060/"
+

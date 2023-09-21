@@ -12,6 +12,7 @@ interface EmailRepository {
     ): EmailResponseModel
 
     suspend fun checkEmail(
+        mailToken: String,
         emailCheckRequestModel: EmailCheckRequestModel
     ): EmailCheckResponseModel
 

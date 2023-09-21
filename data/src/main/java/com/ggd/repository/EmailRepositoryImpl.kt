@@ -1,5 +1,6 @@
 package com.ggd.repository
 
+import android.util.Log
 import com.ggd.mapper.toDto
 import com.ggd.mapper.toModel
 import com.ggd.model.email.EmailCheckRequestModel
@@ -16,7 +17,8 @@ class EmailRepositoryImpl @Inject constructor(
     override suspend fun deliverEmail(emailRequestModel: EmailRequestModel): EmailResponseModel
         = emailApi.deliverEmail(emailRequestModel.toDto()).toModel()
 
-    override suspend fun checkEmail(emailCheckRequestModel: EmailCheckRequestModel): EmailCheckResponseModel
-        = emailApi.checkEmail(emailCheckRequestModel.toDto()).toModel()
+    override suspend fun checkEmail(mailToken: String, emailCheckRequestModel: EmailCheckRequestModel): EmailCheckResponseModel {
+        return emailApi.checkEmail(mailToken, emailCheckRequestModel.toDto()).toModel()
+    }
 
 }

@@ -7,13 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.ggd.model.auth.RegisterRequestModel
 import com.ggd.model.email.EmailCheckRequestModel
 import com.ggd.model.email.EmailRequestModel
-import com.ggd.network.request.email.EmailRequest
 import com.ggd.repository.AuthRepository
 import com.ggd.repository.EmailRepository
-import com.ggd.utils.PreferenceManager
 import com.ggd.zendee.base.BaseViewModel
+import com.ggd.zendee.feature.signup.screen.state.SignupState
 import com.ggd.zendee.utils.HiltApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,25 +33,42 @@ class SignupViewModel @Inject constructor(
     private var _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
 
+//    private var _mailToken = MutableLiveData<String>()
+//    val mailToken: LiveData<String> = _mailToken
+
     private var _emailIsChecked = MutableLiveData<Boolean>()
     val emailIsChecked: LiveData<Boolean> = _emailIsChecked
+
+    private val _signupState = MutableSharedFlow<SignupState>()
+    val signupState: SharedFlow<SignupState> = _signupState
 
     fun setNick(nick: String) { _nick.value = nick }
     fun setUserId(userId: String) { _userId.value = userId }
     fun setPassword(password: String) { _password.value = password }
     fun setEmail(email: String) { _email.value = email }
 
-    fun setEmailIsChecked(isChecked: Boolean) {
-        _emailIsChecked.value = isChecked
-    }
+    private fun MutableLiveData<Boolean>.setBoolean(boolean: Boolean) { this.value = boolean }
 
     fun register(registerRequestModel: RegisterRequestModel) = viewModelScope.launch {
         kotlin.runCatching {
             authRepository.register(registerRequestModel)
         }.onSuccess {
-            Log.d(TAG, "register: signupSuccess!!")
+            when(it.status) {
+                201 -> {
+                    Log.d(TAG, "register: signupSuccess!!")
+                    _signupState.emit(SignupState(isSuccess = true))
+                    HiltApplication.prefs.autoLogin = true
+                    HiltApplication.prefs.accessToken = it.accessToken
+                    HiltApplication.prefs.refreshToken = it.refreshToken
+                }
+                400 -> {
+                    Log.d(TAG, "register: same email!!")
+                    _signupState.emit(SignupState(error = it.message))
+                }
+            }
         }.onFailure { e ->
             Log.d(TAG, "register: $e")
+            _signupState.emit(SignupState(error = "$e"))
         }
     }
 
@@ -59,19 +77,20 @@ class SignupViewModel @Inject constructor(
             emailRepository.deliverEmail(emailRequestModel)
         }.onSuccess {
             Log.d(TAG, "deliverEmail: ${it.message}")
+//            _mailToken.value = it.data
         }.onFailure { e ->
             Log.d(TAG, "deliverEmail: $e")
         }
     }
 
-    fun checkEmail(emailCheckRequestModel: EmailCheckRequestModel) = viewModelScope.launch {
+    fun checkEmail(mailToken: String, emailCheckRequestModel: EmailCheckRequestModel) = viewModelScope.launch {
         kotlin.runCatching {
-            emailRepository.checkEmail(emailCheckRequestModel)
+            emailRepository.checkEmail(mailToken, emailCheckRequestModel)
         }.onSuccess {
-            Log.d(TAG, "checkEmail: $it.success")
-            setEmailIsChecked(it.success)
+            Log.d(TAG, "checkEmail Success!!: $it.success")
+            _emailIsChecked.setBoolean(it.success)
         }.onFailure { e ->
-            Log.d(TAG, "checkEmail: $e")
+            Log.d(TAG, "checkEmail Failed..: $e")
         }
     }
 

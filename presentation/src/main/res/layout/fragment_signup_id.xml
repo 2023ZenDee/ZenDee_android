@@ -49,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:fontFamily="@font/pretendard_regular"
                 android:hint="아이디"
+                android:singleLine="true"
                 android:textSize="20sp"
                 android:layout_height="match_parent"/>
 

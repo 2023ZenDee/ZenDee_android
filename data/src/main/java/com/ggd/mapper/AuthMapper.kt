@@ -30,5 +30,7 @@ fun RegisterRequestModel.toDto() = RegisterRequest(
 fun RegisterResponse.toModel() = RegisterResponseModel(
     status = this.status,
     success = this.success,
-    message = this.message
+    message = this.message,
+    accessToken = this.accessToken,
+    refreshToken = this.refreshToken
 )

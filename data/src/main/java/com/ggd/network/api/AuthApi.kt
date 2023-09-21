@@ -2,8 +2,10 @@ package com.ggd.network.api
 
 import com.ggd.network.request.auth.LoginRequest
 import com.ggd.network.request.auth.RegisterRequest
+import com.ggd.network.response.IssueResponse
 import com.ggd.network.response.auth.LoginResponse
 import com.ggd.network.response.auth.RegisterResponse
+import com.ggd.utils.base.BaseResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
