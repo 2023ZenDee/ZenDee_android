@@ -2,11 +2,13 @@ package com.ggd.zendee.di.module
 
 import com.ggd.network.api.CommentService
 import com.ggd.network.api.IssueService
+import com.ggd.network.api.AuthApi
+import com.ggd.network.api.EmailApi
+import com.ggd.zendee.di.utils.BASE_URL
 import com.ggd.network.api.LikeService
 import com.ggd.network.api.LoginApi
 import com.ggd.qualifier.HeaderInterceptor
 import com.ggd.qualifier.LoggingInterceptor
-import com.ggd.utils.BASE_URL
 import com.ggd.zendee.utils.HiltApplication
 import dagger.Module
 import dagger.Provides
@@ -41,9 +43,13 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideLoginApi(retrofit: Retrofit): LoginApi =
-        retrofit.create(LoginApi::class.java)
+    fun provideLoginApi(retrofit: Retrofit): AuthApi =
+        retrofit.create(AuthApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideEmailApi(retrofit: Retrofit): EmailApi =
+        retrofit.create(EmailApi::class.java)
 
     @Provides
     @Singleton
