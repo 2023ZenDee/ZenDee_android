@@ -27,7 +27,7 @@ class ZoomCenterItemScrollListener(private val layoutManager: LinearLayoutManage
 
         for (i in 0 until visibleItemCount) {
             val child = recyclerView.getChildAt(i)
-            val childPosition = recyclerView.getChildAdapterPosition(child)
+            var childPosition = recyclerView.getChildAdapterPosition(child)
 
             if (childPosition != centerItemPosition){
                 child.scaleX = Math.max(0.7F, 0.5f)
@@ -42,7 +42,6 @@ class ZoomCenterItemScrollListener(private val layoutManager: LinearLayoutManage
     }
 
     interface OnChangedListener{
-
         fun onChanged(position : Int)
 
     }
@@ -52,7 +51,5 @@ class ZoomCenterItemScrollListener(private val layoutManager: LinearLayoutManage
     fun setChangedListener(onChangedListener: OnChangedListener){
         this.changedListener = onChangedListener
     }
-
-
 
 }

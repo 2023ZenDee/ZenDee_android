@@ -218,7 +218,7 @@
 
                     android:text="13"
                     android:textColor="@drawable/dislike_color"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
 
                     android:layout_marginEnd="30dp"
                     app:layout_constraintBottom_toBottomOf="@+id/comment_txt"
@@ -227,8 +227,8 @@
 
                 <CheckBox
                     android:id="@+id/dislike_btn"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_marginEnd="2dp"
                     android:contentDescription="dislike button"
                     android:button="@null"
@@ -247,17 +247,17 @@
 
                     android:text="102"
                     android:textColor="@drawable/like_color"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
 
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     app:layout_constraintBottom_toBottomOf="@+id/dislike_btn"
                     app:layout_constraintEnd_toStartOf="@+id/dislike_btn"
                     app:layout_constraintTop_toTopOf="@+id/dislike_btn" />
 
                 <CheckBox
                     android:id="@+id/like_btn"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_marginEnd="2dp"
                     android:background="@drawable/like_checkbox"
                     android:button="@null"

@@ -2,7 +2,7 @@ package com.ggd.model.Issue
 
 data class IssueModel(
 
-    val postIdx : String,
+    val postIdx : Int,
     val title : String,
     val content: String,
     val created_at : String,
@@ -11,7 +11,13 @@ data class IssueModel(
     val longitude : Float,
     val deleted_at : String,
     val authorIdx : Int,
-    val postImg : String,
-    val views : Int
+    val postImg : String?,
+    val views : Int,
+    val tags : String,
+    val user : String,
+    val likes : Int,
+    val bads : Int,
+    val comments : Int,
+    val address : String?
 
 )

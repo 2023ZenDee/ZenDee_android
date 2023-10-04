@@ -15,9 +15,23 @@ class RankingRecyclerviewAdapter : BaseListAdapter<IssueModel, ItemRankingBindin
         binding.addressTxt.text = data.latitude.toString()
         binding.timeTxt.text = data.created_at
         binding.viewsTxt.text = "조회수 ${data.views}회"
+
+        binding.root.setOnClickListener{
+
+            dialogClickListener.onClick(data)
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return BaseViewHolder(ItemRankingBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    }
+
+    private lateinit var dialogClickListener: OnDialogClickListener
+    interface OnDialogClickListener{
+        fun onClick(issue : IssueModel)
+    }
+    fun setDialogClickListener(onDialogClickListener: OnDialogClickListener){
+        this.dialogClickListener = onDialogClickListener
     }
 }

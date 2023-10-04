@@ -17,7 +17,7 @@ interface IssueRepository {
 
     suspend fun getIssues(
         id : Int
-    ) : List<IssueModel>?
+    ) : IssueModel?
 
     suspend fun fixIssue(
         id : Int,
