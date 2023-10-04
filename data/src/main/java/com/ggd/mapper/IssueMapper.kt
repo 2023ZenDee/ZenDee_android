@@ -4,7 +4,7 @@ import com.ggd.model.Issue.FixIssueDto
 import com.ggd.model.Issue.IssueModel
 import com.ggd.model.Issue.PostIssueDto
 import com.ggd.network.request.FixIssueRequest
-import com.ggd.network.request.PostIssueRequest
+//import com.ggd.network.request.PostIssueRequest
 import com.ggd.network.response.IssueResponse
 
 internal fun IssueResponse.toModel() = IssueModel(
@@ -19,18 +19,24 @@ internal fun IssueResponse.toModel() = IssueModel(
     deleted_at = deleted_at,
     authorIdx = authorIdx,
     postImg = postImg,
-    views = views
+    views = views,
+    tags = tags,
+    user = user,
+    likes = likes,
+    bads = bads,
+    comments = comments,
+    address = address
 
 )
 
-internal fun PostIssueDto.toRequest() = PostIssueRequest(
-    title = title,
-    content = content,
-    postImg = postImg,
-    lat = lat,
-    lng = lng,
-    tag = tag
-)
+//internal fun PostIssueDto.toRequest() = PostIssueRequest(
+//    title = title,
+//    content = content,
+//    postImg = postImg,
+//    lat = lat,
+//    lng = lng,
+//    tag = tag
+//)
 
 
 internal fun FixIssueDto.toRequest() = FixIssueRequest(

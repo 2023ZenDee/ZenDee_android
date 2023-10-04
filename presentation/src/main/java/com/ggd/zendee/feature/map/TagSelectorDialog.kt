@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.ggd.zendee.R
 import com.ggd.zendee.databinding.DialogIssueBinding
 import com.ggd.zendee.databinding.DialogTagSelectorBinding
+import com.ggd.zendee.feature.login.LoginViewModel.Companion.TAG
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import java.time.LocalDate
 
 class TagSelectorDialog(private val context : Context) {
@@ -36,8 +39,7 @@ class TagSelectorDialog(private val context : Context) {
         binding = DialogTagSelectorBinding.inflate(LayoutInflater.from(context))
 
         dialog.setContentView(binding.root)
-//
-//        dialog.getWindow()!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+
         dialog.window!!.setBackgroundDrawable( ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setGravity(Gravity.CENTER)
 
@@ -46,8 +48,6 @@ class TagSelectorDialog(private val context : Context) {
             dialog.dismiss()
 
         }
-
-        context.dialogResize(dialog,1F,0.3F)
 
     }
 
@@ -67,29 +67,34 @@ class TagSelectorDialog(private val context : Context) {
             adapter = tagAdapter
         }
 
+        Log.d(TAG, "setDialog: smoothScrollToPosition")
+
+        context.dialogResize(dialog,1F,0.3F)
+
         tagAdapter.submitList(tagDataSet)
-        binding.selectorRecyclerview.scrollToPosition(7776)
-        binding.selectorRecyclerview.scrollTo(-247,0)
 
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.selectorRecyclerview)
 
         val zoomListener = ZoomCenterItemScrollListener(linearLayoutManager)
 
+        binding.selectorRecyclerview.scrollToPosition(7773)
+        binding.selectorRecyclerview.smoothScrollToPosition(7778)
+
+
         zoomListener.setChangedListener(object : ZoomCenterItemScrollListener.OnChangedListener{
 
             override fun onChanged(position: Int) {
                 binding.guideTxt.setTextColor(binding.root.resources.getColorStateList(getColorByTag(tagDataSet[position%7])))
                 binding.selectBtn.setTextColor(binding.root.resources.getColorStateList(getColorByTag(tagDataSet[position%7])))
-                Log.d("젠디","MapFragment - onChanged() - ${tagDataSet[position%7]}")
+                //Log.d("젠디","MapFragment - onChanged() - ${tagDataSet[position%7]}")
                 currentPosition = position%7
-//
-//
-//                Log.d("젠디", "setRecyclerview: x - ${binding.selectorRecyclerview.getChildAt(0).x} ")
-//                Log.d("젠디", "setRecyclerview: y - ${binding.selectorRecyclerview.getChildAt(0).y} ")
+                Log.d(TAG, "onChanged: ${position}")
             }
 
         })
+//
+//        binding.selectorRecyclerview.smoothScrollToPosition(7776)
 
         binding.selectorRecyclerview.addOnScrollListener(zoomListener)
     }
@@ -106,7 +111,6 @@ class TagSelectorDialog(private val context : Context) {
             IssueTag.LOVE -> return R.color.love
             IssueTag.LUCKY -> return R.color.lucky
         }
-
 
     }
 

@@ -6,7 +6,8 @@ import org.w3c.dom.Comment
 interface CommentRepository {
 
     suspend fun postComment(
-        id : Int
+        id : Int,
+        content : String
     ) : Any?
 
     suspend fun deleteComment(
