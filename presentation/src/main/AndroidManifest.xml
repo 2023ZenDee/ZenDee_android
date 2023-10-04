@@ -35,6 +35,9 @@
                 android:value="" />
 
         </activity>
+        <activity
+            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+            android:exported="false"/>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID" tools:replace="android:value"

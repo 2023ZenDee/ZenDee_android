@@ -27,7 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>(R.layout.ac
         var keepSplashOnScreen = true
         val delay = 1000L
 
-        installSplashScreen().setKeepVisibleCondition() { keepSplashOnScreen }
+        installSplashScreen().setKeepOnScreenCondition { keepSplashOnScreen }
         android.os.Handler(Looper.getMainLooper()).postDelayed({ keepSplashOnScreen = false }, delay)
     }
 
