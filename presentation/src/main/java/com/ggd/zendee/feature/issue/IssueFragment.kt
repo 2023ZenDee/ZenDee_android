@@ -70,6 +70,8 @@ class IssueFragment : BaseFragment<FragmentIssueBinding,IssueViewModel>(R.layout
         try{ binding.timeTxt.text = timeToString(mainViewModel.issue.created_at) }
         catch (e : DateTimeParseException){binding.timeTxt.text = "시간을 불러오지 못했습니다"}
         binding.locationTxt.text = mainViewModel.issue.address ?: "위치 정보 없음"
+        binding.likeTxt.text = mainViewModel.issue.likes.toString()
+        binding.dislikeTxt.text = mainViewModel.issue.bads.toString()
 
         binding.reviewBtn.setOnClickListener {
             viewModel.postComment(id = mainViewModel.issue.postIdx, content = binding.reviewEdittxt.text.toString())
@@ -90,35 +92,44 @@ class IssueFragment : BaseFragment<FragmentIssueBinding,IssueViewModel>(R.layout
 
         binding.likeBtn.setOnCheckedChangeListener { compoundButton, b ->
 
+            if(b){
+                binding.likeTxt.isChecked = true
+                binding.dislikeTxt.isChecked = false
+            }
+            else binding.likeTxt.isChecked=false
+
             Log.d(TAG,"like - ${b}")
 
-            if (binding.likeBtn.isEnabled) {
+            if (binding.likeBtn.isEnabled && binding.dislikeBtn.isEnabled) {
                 binding.likeBtn.isEnabled = false
                 viewModel.postLike(mainViewModel.issue.postIdx, true)
             }
-//            if(b){
-//                binding.dislikeBtn.isChecked = false
-//                binding.likeTxt.isChecked = true
-//                binding.dislikeTxt.isChecked = false
-//            }
-//            else binding.likeTxt.isChecked=false
 
+        }
+
+        binding.likeTxt.setOnClickListener {
+            binding.likeBtn.isChecked = !binding.likeBtn.isChecked
+        }
+
+        binding.dislikeTxt.setOnClickListener {
+            binding.dislikeBtn.isChecked = !binding.dislikeBtn.isChecked
         }
 
         binding.dislikeBtn.setOnCheckedChangeListener { compoundButton, b ->
 
+            if(b){
+                binding.dislikeTxt.isChecked = true
+                binding.likeTxt.isChecked = false
+            }
+            else binding.dislikeTxt.isChecked=false
+
             Log.d(TAG,"dislike - ${b}")
 
-            if(binding.dislikeBtn.isEnabled){
+            if(binding.likeBtn.isEnabled && binding.dislikeBtn.isEnabled){
                 binding.dislikeBtn.isEnabled = false
                 viewModel.postLike(mainViewModel.issue.postIdx, false)
             }
-//            if(b){
-//                binding.likeBtn.isChecked = false
-//                binding.dislikeTxt.isChecked = true
-//                binding.likeTxt.isChecked = false
-//            }
-//            else binding.dislikeTxt.isChecked=false
+
         }
 
         binding.backBtn.setOnClickListener{

@@ -46,7 +46,10 @@ import java.time.temporal.ChronoUnit
 import java.util.Timer
 import java.util.TimerTask
 import kotlin.concurrent.timer
+import kotlin.concurrent.timerTask
 import kotlin.math.atan2
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragment_map),OnMapReadyCallback {
@@ -73,7 +76,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
     override fun start() {
 
-
+        Log.d(TAG,"MapFragment - start() called")
 
         (activity as MainActivity).handleBottomNavigation(true)
 
@@ -81,30 +84,11 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
             viewModel.eventFlow.collect{ event -> handleEvent(event) }
         }
 
-        viewModel.timer = Timer()
-        viewModel.timerTask = object : TimerTask() {
-
-            override fun run() {
-
-                Log.d(TAG, "access token - ${HiltApplication.prefs.accessToken}")
-
-                val location = getLatLng()
-
-                if(location != null){
-
-                    Log.d("젠디"," startTimer - location - ${location}")
-
-                    viewModel.getIssuesByLocation(lat = location.latitude.toFloat()  , lng = location.longitude.toFloat())
-                }
-
-            }
-
-        }
-
         val loc = IntArray(2)
 
         binding.mapView.getLocationOnScreen(loc)
 
+        mainViewModel.isNavigate = false
 
         binding.mapView.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
 
@@ -116,7 +100,6 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
                 viewModel.center_y = (binding.mapView.height / 2)
                 viewModel.mapview_height = binding.mapView.height
             }
-
         })
 
         binding.mapView.foregroundTintList = ColorStateList.valueOf(Color.parseColor("#55000000"))
@@ -131,7 +114,6 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
         binding.writeBtn.setOnClickListener {
             setDialog()
         }
-
     }
 
     fun setDialog(){
@@ -147,6 +129,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
                 Log.d("젠디", "onClicked: tag - ${viewModel.tagDataSet[position]} ")
                 mainViewModel.selectedTag = viewModel.tagDataSet[position]
                 mainViewModel.currentLocation = getLatLng()
+
                 findNavController().navigate(R.id.action_mapFragment_to_writeFragment)
             }
 
@@ -221,8 +204,14 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
     }
 
     override fun onDestroyView() {
+        if(!mainViewModel.isCancelled){
+            mainViewModel.timer.cancel()
+            mainViewModel.timerTask.cancel()
+            Log.d(TAG, "onDestroy timer cancel - ${mainViewModel.timer}")
+
+            mainViewModel.isCancelled = !mainViewModel.isCancelled
+        }
         super.onDestroyView()
-        viewModel.timer.cancel()
         onBackPressedCallback.remove()
         Log.d(TAG, "onDestroyView: ")
     }
@@ -231,6 +220,12 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
         super.onLowMemory()
         viewModel.mapView.onLowMemory()
         Log.d(TAG, "onLowMemory: ")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "onDetach: ")
+
     }
 
     @UiThread
@@ -302,21 +297,82 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
             return@setOnTouchListener false
         }
 
-        binding.mapView
+        binding.root.setOnTouchListener { view, motionEvent ->
+            return@setOnTouchListener viewModel.isntTouchable
+        }
 
         naverMap.uiSettings
 
-        //startTimer()
-        viewModel.timer.schedule(viewModel.timerTask,0,delayTime)
+        if (mainViewModel.isCancelled){
+            mainViewModel.timer = Timer()
+            mainViewModel.timerTask = object : TimerTask() {
+
+                override fun run() {
+
+                    Log.d(TAG, "access token - ${HiltApplication.prefs.accessToken}")
+
+                    val location = getLatLng()
+
+                    if (location != null) {
+
+                        Log.d("젠디", " startTimer - location - ${location}")
+
+                        viewModel.getIssuesByLocation(
+                            lat = location.latitude.toFloat(),
+                            lng = location.longitude.toFloat()
+                        )
+                    }
+
+                }
+
+            }
+
+            mainViewModel.timer.schedule(mainViewModel.timerTask, 0, delayTime)
+
+            mainViewModel.isCancelled = !mainViewModel.isCancelled
+
+        }
+        Log.d(TAG, "onMapReady timer - ${mainViewModel.timer}")
     }
 
     private fun setMarker(list : MutableList<IssueModel>?) : Boolean{
         //원근감 표시
-
         if (list == null) {
             Log.d("젠디", "setMarker: list - null입니다")
 
              return false
+        }
+
+        val closeIndexList = mutableListOf<Int>()
+
+        var clickedMarkerIndex = 0
+
+        fun findInBoundary(item : IssueModel) : List<IssueModel>{
+
+            val returnList = mutableListOf<IssueModel>()
+
+            var index = 0
+            for (i in list){
+
+                if (
+                    sqrt((item.longitude - i.longitude).pow(2)
+                            + (item.latitude - i.latitude).pow(2)) <= 0.0003
+                ){
+                    returnList.add(i)
+                    closeIndexList.add(index)
+
+                    if(item == i) {
+                        clickedMarkerIndex = index
+                    }
+
+                }
+                index++
+            }
+
+            Log.d(TAG, "findInBoundary: returnList - $returnList")
+            Log.d(TAG, "findInBoundary: closeIndexList - $closeIndexList")
+
+            return returnList
         }
 
         for (i in viewModel.markerList){
@@ -327,6 +383,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
         Log.d("젠디", "setMarker: list - ${list}")
 
+        var totalIndex = 0
         for (i in list){
 
             val marker = Marker()
@@ -348,16 +405,34 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
                 "재미" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.happy_marker)
                 "공지" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.notice_marker)
                 "활동" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.active_marker)
-                "사랑" ->currentMarker.icon = OverlayImage.fromResource(R.drawable.love_marker)
+                "사랑" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.love_marker)
                 "행운" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.lucky_marker)
             }
 
             currentMarker.setOnClickListener {
 
-                viewModel.timer.cancel()
+                if(!mainViewModel.isCancelled){
+                    mainViewModel.timer.cancel()
+                    mainViewModel.timerTask.cancel()
+                    Log.d(TAG, "MarkerClick timer cancel - ${mainViewModel.timer}")
+
+                    mainViewModel.isCancelled = !mainViewModel.isCancelled
+                }
+
+                viewModel.isntTouchable = true
+
+                binding.root.isClickable = false
+
+                viewModel.previousCameraPosition = viewModel.naverMap.cameraPosition
 
                 currentMarker.height = 400
                 currentMarker.width = 335
+                currentMarker.zIndex = 0
+
+                val closeList = findInBoundary(i)
+
+                var previousIndex = clickedMarkerIndex
+                Log.d(TAG, "setMarker - previousIndex : $previousIndex  ")
 
                 val cameraUpdate = CameraUpdate.scrollAndZoomTo(
                     LatLng(i.latitude.toDouble(),i.longitude.toDouble()), 18.0
@@ -365,71 +440,117 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
                     .animate(CameraAnimation.Linear,300)
                     .finishCallback {
 
+                        viewModel.isntTouchable = false
+
                         binding.writeBtn.visibility = View.GONE
 
                         val dialog = IssueDialog(requireContext())
 
-                        var time = ""
-
-                        try{ time = timeToString(i.created_at) }
-                        catch (e : DateTimeParseException){
-                            time = "시간을 불러오지 못했습니다"
-                        }
-
-                        dialog.showDialog(
-                            title = i.title,
-                            address = i.address,
-                            time = time,
-                            views = i.views,
-                            comment = i.comments,
-
-                        )
+                        dialog.showDialog(closeList, clickedMarkerIndex)
 
                         dialog.setOnClicklistener(object : IssueDialog.OnDialogClickListener{
 
-                            override fun onClicked() {
+                            override fun onClicked(issue: IssueModel) {
 
-                                mainViewModel.issue = i
+                                mainViewModel.isNavigate = true
+
+                                Log.d(TAG, "onClicked: ${mainViewModel.isNavigate}")
+
+                                if(!mainViewModel.isCancelled){
+                                    mainViewModel.timer.cancel()
+                                    mainViewModel.timerTask.cancel()
+
+                                    mainViewModel.isCancelled = !mainViewModel.isCancelled
+
+                                }
+
+                                mainViewModel.issue = issue
+
                                 findNavController().navigate(R.id.action_mapFragment_to_issueFragment)
                             }
 
                             override fun onDismissed() {
-                                Log.d("최희건", "$viewModel.markerList.last()")
 
-                                binding.writeBtn.visibility = View.VISIBLE
+                                if(mainViewModel.isCancelled && !mainViewModel.isNavigate){
 
-                                val cameraZoomUpdate = CameraUpdate.scrollAndZoomTo(
-                                    LatLng(viewModel.locationSource.lastLocation!!.latitude,viewModel.locationSource.lastLocation!!.longitude),
-                                    16.0 )
-                                    .animate(CameraAnimation.Linear,300)
+                                    Log.d(TAG, "onDismissed: ${mainViewModel.isNavigate}")
+                                    
+                                    mainViewModel.timer = Timer()
+                                    mainViewModel.timerTask = object : TimerTask() {
 
-                                currentMarker.height = 240
-                                currentMarker.width = 201
+                                        override fun run() {
 
-                                viewModel.naverMap.moveCamera(cameraZoomUpdate)
+                                            val location = getLatLng()
 
-                                viewModel.timer =  Timer()
-                                viewModel.timerTask = object : TimerTask() {
+                                            if (location != null) {
 
-                                    override fun run() {
+                                                Log.d("젠디", " startTimer - location - ${location}")
 
-                                        Log.d(TAG, "access token - ${HiltApplication.prefs.accessToken}")
-
-                                        val location = getLatLng()
-
-                                        if(location != null){
-
-                                            Log.d("젠디"," startTimer - location - ${location}")
-
-                                            viewModel.getIssuesByLocation(lat = location.latitude.toFloat()  , lng = location.longitude.toFloat())
+                                                viewModel.getIssuesByLocation(
+                                                    lat = location.latitude.toFloat(),
+                                                    lng = location.longitude.toFloat()
+                                                )
+                                            }
                                         }
-
                                     }
+
+                                    mainViewModel.timer.schedule(
+                                        mainViewModel.timerTask,
+                                        0,
+                                        delayTime
+                                    )
+
+                                    Log.d(TAG, "setMarker timer - ${mainViewModel.timer}")
+                                    Log.d("최희건", "$viewModel.markerList.last()")
+                                    
+                                    mainViewModel.isCancelled = !mainViewModel.isCancelled
 
                                 }
 
-                                viewModel.timer.schedule(viewModel.timerTask,0,delayTime)
+                                binding.writeBtn.visibility = View.VISIBLE
+
+                                val cameraZoomUpdate = CameraUpdate.toCameraPosition(viewModel.previousCameraPosition).animate(CameraAnimation.Linear,300)
+//                                val cameraZoomUpdate = CameraUpdate.scrollAndZoomTo(
+//                                    LatLng(viewModel.locationSource.lastLocation!!.latitude,viewModel.locationSource.lastLocation!!.longitude), 16.0 )
+//                                    .animate(CameraAnimation.Linear,300)
+
+                                viewModel.markerList[previousIndex].height = 240
+                                viewModel.markerList[previousIndex].width = 201
+                                viewModel.markerList[previousIndex].zIndex = 0
+                                viewModel.naverMap.moveCamera(cameraZoomUpdate)
+
                             }
+
+                            override fun onChanged(index: Int, length : Int) {
+
+                                Log.d(TAG, "onChanged - index : $index length : $length")
+
+                                viewModel.markerList[previousIndex].height = 240
+                                viewModel.markerList[previousIndex].width = 201
+                                viewModel.markerList[previousIndex].zIndex = 0
+                                Log.d(TAG, "onChanged previousIndex : ${previousIndex}")
+
+                                if (index <= 0) dialog.setLeftArrow(false)
+                                else dialog.setLeftArrow(true)
+
+                                if(index >= length-1) dialog.setRightArrow(false)
+                                else dialog.setRightArrow(true)
+
+                                viewModel.markerList[closeIndexList[index]].height = 400
+                                viewModel.markerList[closeIndexList[index]].width = 335
+                                viewModel.markerList[closeIndexList[index]].zIndex = 1
+                                Log.d(TAG, "onChanged closeIndex : ${index}")
+
+                                val cameraUpdate = CameraUpdate.scrollAndZoomTo(
+                                    LatLng(list[closeIndexList[index]].latitude.toDouble(),list[closeIndexList[index]].longitude.toDouble()), 18.0
+                                ).animate(CameraAnimation.Linear,300)
+
+                                viewModel.naverMap.moveCamera(cameraUpdate)
+
+                                previousIndex = closeIndexList[index]
+
+                            }
+
                         })
 
                     }
@@ -438,10 +559,10 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
                 return@setOnClickListener(true)
             }
+            totalIndex++
         }
 
         return true
-
     }
 
     private fun getLatLng() : Location?{
@@ -462,59 +583,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
         else {
             return null
         }
-
     }
-
-    fun startTimer(){
-
-        timer(period = 8000, initialDelay = 0){
-
-            Log.d(TAG, "access token - ${HiltApplication.prefs.accessToken}")
-
-            val location = getLatLng()
-
-            if(location != null){
-
-                Log.d("젠디"," startTimer - location - ${location}")
-
-                viewModel.getIssuesByLocation(lat = location.latitude.toFloat()  , lng = location.longitude.toFloat())
-            }
-
-        }
-
-    }
-
-
-    fun timeToString(time : String) : String{
-
-        try{
-            val changedUpdatedAt = time.replace("Z", "")
-            val createdTime =
-                LocalDateTime.parse(changedUpdatedAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-                    .plusHours(9)
-
-            val currentTime = LocalDateTime.now()
-            val secondDiff = ChronoUnit.SECONDS.between(createdTime, currentTime).toInt()
-            val minDiff = ChronoUnit.MINUTES.between(createdTime, currentTime).toInt()
-            val hourDiff = ChronoUnit.HOURS.between(createdTime, currentTime).toInt()
-            val dayDiff = ChronoUnit.DAYS.between(createdTime, currentTime).toInt()
-            val monthDiff = ChronoUnit.MONTHS.between(createdTime, currentTime).toInt()
-            val yearDiff = ChronoUnit.YEARS.between(createdTime, currentTime).toInt()
-            Log.d(TAG, "timeDiff - ${minDiff} ${hourDiff} ${dayDiff} ${monthDiff} ${yearDiff}")
-
-            if (minDiff == 0) return "${secondDiff}초 전"
-            else if (hourDiff == 0) return "${minDiff}분 전"
-            else if (dayDiff == 0) return "${hourDiff}시간 전"
-            else if (monthDiff == 0) return "${dayDiff}일 전"
-            else if (yearDiff == 0) return "${monthDiff}달 전"
-            else return "0초 전"
-        }catch (e : DateTimeParseException){
-            throw e
-        }
-
-    }
-
-
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000

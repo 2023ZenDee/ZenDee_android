@@ -24,8 +24,6 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
         add(IssueModel(0,"헤ㅔㅎ 이제야 되네","크아아아ㅏㅇㅇ","","",0.0F,0.0F,"",0,"",6,"활동","지미",5,6,6,"대구광역시 수성구 지산동"))
     }
 
-
-
     override fun start() {
 
         binding.recyclerView.apply {
@@ -37,5 +35,7 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
         rankingAdapter.submitList(dummies)
 
     }
+
+
 
 }

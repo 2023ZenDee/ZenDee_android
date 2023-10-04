@@ -78,7 +78,8 @@ class TagSelectorDialog(private val context : Context) {
 
         val zoomListener = ZoomCenterItemScrollListener(linearLayoutManager)
 
-        binding.selectorRecyclerview.scrollToPosition(7775)
+        binding.selectorRecyclerview.scrollToPosition(7773)
+        binding.selectorRecyclerview.smoothScrollToPosition(7778)
 
 
         zoomListener.setChangedListener(object : ZoomCenterItemScrollListener.OnChangedListener{
@@ -92,8 +93,8 @@ class TagSelectorDialog(private val context : Context) {
             }
 
         })
-
-        binding.selectorRecyclerview.smoothScrollToPosition(7776)
+//
+//        binding.selectorRecyclerview.smoothScrollToPosition(7776)
 
         binding.selectorRecyclerview.addOnScrollListener(zoomListener)
     }

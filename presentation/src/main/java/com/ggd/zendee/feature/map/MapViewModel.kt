@@ -7,6 +7,8 @@ import com.ggd.repository.IssueRepository
 import com.ggd.zendee.base.BaseViewModel
 import com.ggd.zendee.utils.MutableEventFlow
 import com.ggd.zendee.utils.asEventFlow
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
@@ -32,8 +34,15 @@ class MapViewModel @Inject constructor(
     lateinit var locationSource: FusedLocationSource
     lateinit var naverMap: NaverMap
 
-    var timer = Timer()
-    var timerTask: TimerTask? = null
+    var previousCameraPosition =  CameraPosition(
+        LatLng(0.343, 0.234), // 대상 지점
+        16.0, // 줌 레벨
+        180.0, // 기울임 각도
+        0.0 // 베어링 각도
+    )
+
+    var isntTouchable = false
+
     var center_x = 0
     var center_y = 0
 

@@ -119,6 +119,7 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
 
         binding.writeBtn.setOnClickListener {
 
+            Log.d(TAG, "WriteFragment - picture : ${pictureUri?.uriToBitmap(requireContext())?.bitmapToMultipart()} ")
 
             if (mainViewModel.currentLocation != null){
 
