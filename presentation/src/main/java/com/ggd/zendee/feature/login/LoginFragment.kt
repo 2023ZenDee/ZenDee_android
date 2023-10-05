@@ -7,6 +7,7 @@ import com.ggd.model.auth.LoginRequestModel
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentLoginBinding
+import com.ggd.zendee.feature.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +17,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
 
 
     override fun start() {
+
+        (activity as MainActivity).handleBottomNavigation(false)
 
         eventHandling()
 

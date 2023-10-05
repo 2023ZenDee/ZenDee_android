@@ -1,11 +1,13 @@
 package com.ggd.network.request
 
-data class PostIssueRequest(
+import okhttp3.MultipartBody
 
-    val title : String,
-    val content : String,
-    val postImg : String,
-    val lat : Float,
-    val lng : Float,
-    val tag : String
-)
+//data class PostIssueRequest(
+//
+//    val title : String,
+//    val content : String,
+//    val postImg : MultipartBody.Part?,
+//    val lat : Float,
+//    val lng : Float,
+//    val tag : String
+//)

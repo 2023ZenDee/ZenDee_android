@@ -4,6 +4,7 @@ import android.util.Log
 import com.ggd.mapper.toModel
 import com.ggd.model.Issue.CommentModel
 import com.ggd.network.api.CommentService
+import com.ggd.network.request.PostCommentRequest
 import com.ggd.utils.zendeeApiCall
 import javax.inject.Inject
 
@@ -11,9 +12,9 @@ class CommentRepositoryImpl @Inject constructor(
     private val commentService: CommentService
 ) : CommentRepository {
 
-    override suspend fun postComment(id: Int): Any? {
+    override suspend fun postComment(id: Int, content : String): Any? {
 
-        val response = zendeeApiCall { commentService.postComment(id) }
+        val response = zendeeApiCall { commentService.postComment(id = id, content = PostCommentRequest(content)) }
 
         Log.d("젠디", "postComment: ${response.status} - ${response.message} ")
 

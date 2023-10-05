@@ -6,6 +6,9 @@ import com.ggd.network.api.AuthApi
 import com.ggd.network.api.EmailApi
 import com.ggd.network.api.OauthApi
 import com.ggd.zendee.di.utils.BASE_URL
+import com.ggd.network.api.LikeService
+import com.ggd.qualifier.HeaderInterceptor
+import com.ggd.qualifier.LoggingInterceptor
 import com.ggd.zendee.utils.HiltApplication
 import dagger.Module
 import dagger.Provides
@@ -16,6 +19,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 //import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -52,6 +56,10 @@ class NetworkModule {
     fun provideEmailApi(retrofit: Retrofit): EmailApi =
         retrofit.create(EmailApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideLikeApi(retrofit: Retrofit): LikeService =
+        retrofit.create(LikeService::class.java)
 
     /* Retrofit Object 생성 */
 
@@ -70,8 +78,8 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(
-        headerInterceptor: Interceptor,
-        LoggerInterceptor: HttpLoggingInterceptor,
+        @HeaderInterceptor headerInterceptor: Interceptor,
+        @LoggingInterceptor LoggerInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient().newBuilder()
         okHttpClientBuilder.connectTimeout(60, TimeUnit.SECONDS)
@@ -85,15 +93,17 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    @LoggingInterceptor
     fun provideLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
     @Provides
     @Singleton
+    @HeaderInterceptor
     fun provideHeaderInterceptor() = Interceptor { chain ->
         with(chain) {
             val newRequest = request().newBuilder()
-                .addHeader("Authorization", HiltApplication.prefs.accessToken)
+                .addHeader("AccessToken", HiltApplication.prefs.accessToken)
                 .build()
             proceed(newRequest)
        }

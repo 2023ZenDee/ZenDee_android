@@ -16,23 +16,32 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ggd.model.Issue.PostIssueDto
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentWriteBinding
+import com.ggd.zendee.feature.login.LoginViewModel.Companion.TAG
 import com.ggd.zendee.feature.main.MainActivity
 import com.ggd.zendee.feature.main.MainViewModel
 import com.ggd.zendee.feature.map.IssueTag
+import com.ggd.zendee.feature.map.MapViewModel
 import com.ggd.zendee.feature.map.TagSelectorDialog
+import com.ggd.zendee.utils.repeatOnStarted
 import com.warkiz.widget.IndicatorSeekBar
 import com.warkiz.widget.OnSeekChangeListener
 import com.warkiz.widget.SeekParams
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.time.LocalDateTime
+import java.util.Calendar
+import java.util.Date
 
-
+@AndroidEntryPoint
 class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout.fragment_write) {
     override val viewModel: WriteViewModel by viewModels()
     private val mainViewModel : MainViewModel by activityViewModels()
@@ -49,22 +58,16 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
 //        val bitmap = it?.uriToBitmap(requireContext())
 //        binding.contentImg.setImageBitmap(bitmap)
         binding.contentImg.setImageURI(it)
+        pictureUri = it
         binding.removeImgBtn.visibility = View.VISIBLE
 
     }
 
-    val requestPicture = registerForActivityResult(
-        ActivityResultContracts.TakePicture()
-    ){
-        Log.d("젠디","Uri - ${it}")
-
-        if (it){
-            binding.contentImg.setImageURI(pictureUri)
-        }
-
-    }
-
     override fun start() {
+
+        repeatOnStarted {
+            viewModel.eventFlow.collect{ event -> handleEvent(event) }
+        }
 
         (activity as MainActivity).handleBottomNavigation(false)
 
@@ -79,8 +82,11 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
         binding.deadtimeSeekbar.setOnSeekChangeListener(object : OnSeekChangeListener {
 
             override fun onSeeking(seekParams: SeekParams) {
-                Log.d(TAG, "thumbPosition - ${seekParams.thumbPosition}");
+                Log.d(TAG, "thumbPosition - ${seekParams.thumbPosition}")
+
                 binding.deadtimeTxt.text = "이슈 잔류 시간 : ${getTimeString(timeList[seekParams.thumbPosition])}"
+                viewModel.minute = timeList[seekParams.thumbPosition]
+
             }
             override fun onStartTrackingTouch(seekBar: IndicatorSeekBar) {}
             override fun onStopTrackingTouch(seekBar: IndicatorSeekBar) {}
@@ -107,6 +113,39 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
 
             binding.contentImg.setImageBitmap(null)
             binding.removeImgBtn.visibility = View.GONE
+            pictureUri = null
+
+        }
+
+        binding.writeBtn.setOnClickListener {
+
+            Log.d(TAG, "WriteFragment - picture : ${pictureUri?.uriToBitmap(requireContext())?.bitmapToMultipart()} ")
+
+            if (mainViewModel.currentLocation != null){
+
+                viewModel.postIssue(
+                    PostIssueDto(
+                        title = binding.titleEdittxt.text.toString(),
+                        content = binding.contentEdittxt.text.toString(),
+                        lat = mainViewModel.currentLocation!!.latitude.toFloat(),
+                        lng = mainViewModel.currentLocation!!.longitude.toFloat(),
+                        postImg = pictureUri?.uriToBitmap(requireContext())?.bitmapToMultipart(),
+                        tag = when(mainViewModel.selectedTag){
+                            IssueTag.HOT -> "뜨거움"
+                            IssueTag.ALERT -> "경고"
+                            IssueTag.HAPPY -> "재미"
+                            IssueTag.NOTICE -> "공지"
+                            IssueTag.ACTIVE -> "활동"
+                            IssueTag.LOVE -> "사랑"
+                            IssueTag.LUCKY -> "행운"
+                        },
+                        deleted_at = viewModel.minute
+                    )
+                )
+            }
+            else {
+                Log.d(TAG,"currentLocation - null")
+            }
 
         }
 
@@ -166,8 +205,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
         }
     }
 
-
-
     private fun getDrawableByTag(issueTag: IssueTag) : Drawable? {
 
         when(issueTag){
@@ -180,5 +217,25 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
             IssueTag.LUCKY -> return binding.root.context.getDrawable(R.drawable.lucky_tag)
         }
     }
+
+    private fun Bitmap.bitmapToMultipart(): MultipartBody.Part {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        this.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val requestFile =
+            RequestBody.create("image/png".toMediaTypeOrNull(), byteArrayOutputStream.toByteArray())
+        Log.d(TAG, "bitmapToMultipart: ${pictureUri?.path}")
+        return MultipartBody.Part.createFormData("img", "image.png", requestFile)
+    }
+
+    private fun handleEvent(event: WriteViewModel.Event) =
+        when (event) {
+            WriteViewModel.Event.SuccessPostIssue -> { findNavController().popBackStack() }
+            is WriteViewModel.Event.UnknownException -> {
+                Log.d(TAG, "ERROR ERROR ERROR ERROR - ${event.error}")
+                Toast.makeText(context,"이슈 작성 실패",Toast.LENGTH_SHORT)
+            }
+        }
+
+
 
 }

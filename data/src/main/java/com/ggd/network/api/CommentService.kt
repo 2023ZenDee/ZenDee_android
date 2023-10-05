@@ -1,5 +1,6 @@
 package com.ggd.network.api
 
+import com.ggd.network.request.PostCommentRequest
 import com.ggd.network.response.CommentResponse
 import com.ggd.utils.base.BaseResponse
 import retrofit2.http.Body
@@ -12,7 +13,8 @@ interface CommentService{
 
     @POST("/comments/{id}")
     suspend fun postComment(
-        @Path("id") id : Int
+        @Path("id") id : Int,
+        @Body content : PostCommentRequest
     ) : BaseResponse<Any>
 
     @DELETE("/comments/fire/{id}")
