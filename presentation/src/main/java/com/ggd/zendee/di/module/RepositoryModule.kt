@@ -8,6 +8,8 @@ import com.ggd.repository.EmailRepository
 import com.ggd.repository.EmailRepositoryImpl
 import com.ggd.repository.IssueRepository
 import com.ggd.repository.IssueRepositoryImpl
+import com.ggd.repository.OauthRepository
+import com.ggd.repository.OauthRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +37,12 @@ class RepositoryModule {
     fun provideLoginRepository(
         impl : AuthRepositoryImpl
     ): AuthRepository = impl
+
+    @Provides
+    @Singleton
+    fun provideOauthRepository(
+        impl : OauthRepositoryImpl
+    ): OauthRepository = impl
 
     @Provides
     @Singleton

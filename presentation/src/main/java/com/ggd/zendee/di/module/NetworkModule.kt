@@ -4,6 +4,7 @@ import com.ggd.network.api.CommentService
 import com.ggd.network.api.IssueService
 import com.ggd.network.api.AuthApi
 import com.ggd.network.api.EmailApi
+import com.ggd.network.api.OauthApi
 import com.ggd.zendee.di.utils.BASE_URL
 import com.ggd.zendee.utils.HiltApplication
 import dagger.Module
@@ -43,8 +44,15 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideOauthApi(retrofit: Retrofit): OauthApi =
+        retrofit.create(OauthApi::class.java)
+
+    @Provides
+    @Singleton
     fun provideEmailApi(retrofit: Retrofit): EmailApi =
         retrofit.create(EmailApi::class.java)
+
+
     /* Retrofit Object 생성 */
 
     @Provides
