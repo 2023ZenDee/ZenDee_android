@@ -48,7 +48,6 @@ class SignupEmailFragment: BaseFragment<FragmentSignupEmailBinding, SignupViewMo
 
 //                    getEmailCode(EmailRequestModel(email.value.toString())) // 인증코드 발급?
                 }
-
             } else {
                 Toast.makeText(context, "이메일을 입력해주세요!", Toast.LENGTH_SHORT).show()
             }
