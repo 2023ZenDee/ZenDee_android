@@ -43,10 +43,18 @@
         tools:layout="@layout/fragment_start" >
         <action
             android:id="@+id/action_startFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/animation_enter"
+            app:exitAnim="@anim/animation_exit"
+            app:popEnterAnim="@anim/animation_pop_enter"
+            app:popExitAnim="@anim/animation_pop_exit"/>
         <action
             android:id="@+id/action_startFragment_to_signupNickFragment"
-            app:destination="@id/signupNickFragment" />
+            app:destination="@id/signupNickFragment"
+            app:enterAnim="@anim/animation_enter"
+            app:exitAnim="@anim/animation_exit"
+            app:popEnterAnim="@anim/animation_pop_enter"
+            app:popExitAnim="@anim/animation_pop_exit"/>
         <action
             android:id="@+id/action_startFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
@@ -70,7 +78,11 @@
         tools:layout="@layout/fragment_signup_nick" >
         <action
             android:id="@+id/signupNickFragment_to_signupIdFragment"
-            app:destination="@id/signupIdFragment" />
+            app:destination="@id/signupIdFragment"
+            app:enterAnim="@anim/animation_enter"
+            app:exitAnim="@anim/animation_exit"
+            app:popEnterAnim="@anim/animation_pop_enter"
+            app:popExitAnim="@anim/animation_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/signupIdFragment"
@@ -79,7 +91,11 @@
         tools:layout="@layout/fragment_signup_id" >
         <action
             android:id="@+id/signupIdFragment_to_signupPasswordFragment"
-            app:destination="@id/signupPasswordFragment" />
+            app:destination="@id/signupPasswordFragment"
+            app:enterAnim="@anim/animation_enter"
+            app:exitAnim="@anim/animation_exit"
+            app:popEnterAnim="@anim/animation_pop_enter"
+            app:popExitAnim="@anim/animation_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/signupPasswordFragment"
@@ -88,7 +104,11 @@
         tools:layout="@layout/fragment_signup_password" >
         <action
             android:id="@+id/signupPasswordFragment_to_signupEmailFragment"
-            app:destination="@id/signupEmailFragment" />
+            app:destination="@id/signupEmailFragment"
+            app:enterAnim="@anim/animation_enter"
+            app:exitAnim="@anim/animation_exit"
+            app:popEnterAnim="@anim/animation_pop_enter"
+            app:popExitAnim="@anim/animation_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/signupEmailFragment"

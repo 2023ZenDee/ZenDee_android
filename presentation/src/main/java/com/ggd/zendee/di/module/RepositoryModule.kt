@@ -10,8 +10,6 @@ import com.ggd.repository.IssueRepository
 import com.ggd.repository.IssueRepositoryImpl
 import com.ggd.repository.LikeRepository
 import com.ggd.repository.LikeRepositoryImpl
-import com.ggd.repository.LoginRepository
-import com.ggd.repository.LoginRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -47,15 +45,11 @@ class RepositoryModule {
         impl : EmailRepositoryImpl
     ): EmailRepository = impl
 
-    abstract fun provideLoginRepository(
-        impl : LoginRepositoryImpl
-    ): LoginRepository
-
-    @Binds
+    @Provides
     @Singleton
-    abstract fun provideLikeRepository(
+    fun provideLikeRepository(
         impl : LikeRepositoryImpl
-    ): LikeRepository
+    ): LikeRepository = impl
 }
 
 //@Module

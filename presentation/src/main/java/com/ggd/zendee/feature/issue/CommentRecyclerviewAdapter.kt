@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.ggd.model.Issue.CommentModel
-import com.ggd.utils.BASE_URL
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseListAdapter
 import com.ggd.zendee.databinding.ItemCommentBinding
+import com.ggd.zendee.di.utils.BASE_URL
 
 class CommentRecyclerviewAdapter : BaseListAdapter<CommentModel,ItemCommentBinding>(R.layout.item_comment) {
 

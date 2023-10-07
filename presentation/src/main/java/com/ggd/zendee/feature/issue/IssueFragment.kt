@@ -18,10 +18,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.ggd.model.Issue.CommentModel
-import com.ggd.utils.BASE_URL
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentIssueBinding
+import com.ggd.zendee.di.utils.BASE_URL
 import com.ggd.zendee.feature.main.MainActivity
 import com.ggd.zendee.feature.main.MainViewModel
 import com.ggd.zendee.feature.map.IssueTag
