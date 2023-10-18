@@ -1,4 +1,4 @@
-package com.ggd.zendee.feature.profile
+package com.ggd.zendee.feature.profile.viewmodel
 
 import com.ggd.zendee.base.BaseViewModel
 

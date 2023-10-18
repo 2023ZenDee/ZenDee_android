@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.ggd.zendee.feature.profile.ProfileFragment"
+        android:name="com.ggd.zendee.feature.profile.screen.ProfileFragment"
         android:label="ProfileFragment" />
     <fragment
         android:id="@+id/rankingFragment"

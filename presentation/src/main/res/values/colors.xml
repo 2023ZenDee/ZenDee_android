@@ -26,5 +26,7 @@
 
     <color name="color_zendee_background">#FFFFFF</color>
 
+    <color name="transparent">#00000000</color>
+
 
 </resources>

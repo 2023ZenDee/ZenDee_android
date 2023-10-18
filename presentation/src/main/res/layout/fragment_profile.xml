@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.ggd.zendee.feature.profile.ProfileFragment" />
+            type="com.ggd.zendee.feature.profile.screen.ProfileFragment" />
 
     </data>
 
