@@ -8,6 +8,13 @@ import android.view.ViewGroup
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 
-class ProfileCommentFragment: BaseFragment<>() {
+class ProfileCommentFragment: Fragment() {
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_profile_comment, container, false)
+    }
 }
