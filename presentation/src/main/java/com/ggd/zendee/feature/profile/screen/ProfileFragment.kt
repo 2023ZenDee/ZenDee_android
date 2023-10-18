@@ -14,14 +14,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
     override val viewModel: ProfileViewModel by viewModels()
 
     private val tabTitleArray = arrayOf(
-        "좋아요",
-        "싫어요",
-        "이슈",
-        "댓글",
+        "좋아요", "싫어요", "이슈", "댓글",
     )
 
     override fun start() {
-
         val tabLayout = binding.tabLayout
         val viewPager = binding.viewPager
         viewPager.adapter = ProfileTabAdapter(parentFragmentManager, lifecycle)
