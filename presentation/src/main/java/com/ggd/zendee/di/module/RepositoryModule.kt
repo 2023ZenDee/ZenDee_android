@@ -10,6 +10,8 @@ import com.ggd.repository.IssueRepository
 import com.ggd.repository.IssueRepositoryImpl
 import com.ggd.repository.LikeRepository
 import com.ggd.repository.LikeRepositoryImpl
+import com.ggd.repository.OauthRepository
+import com.ggd.repository.OauthRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -56,6 +58,12 @@ class RepositoryModule {
     fun provideLikeRepository(
         impl : LikeRepositoryImpl
     ): LikeRepository = impl
+
+    @Provides
+    @Singleton
+    fun provideOauthRepository(
+        impl : OauthRepositoryImpl
+    ): OauthRepository = impl
 }
 
 //@Module

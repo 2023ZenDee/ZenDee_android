@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="14dp"
+        android:elevation="10dp"
         android:background="@drawable/white_rectangle_noline">
 
         <ImageView

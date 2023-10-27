@@ -17,6 +17,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
 
 
     override fun start() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
 
         (activity as MainActivity).handleBottomNavigation(false)
 
