@@ -7,15 +7,17 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="45dp"
-        android:layout_height="45dp">
+        android:layout_width="60dp"
+        android:layout_height="70dp">
 
         <CheckBox
             android:id="@+id/tag_checkbox"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:button="@android:color/transparent"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/hot_tag"
+            android:button="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

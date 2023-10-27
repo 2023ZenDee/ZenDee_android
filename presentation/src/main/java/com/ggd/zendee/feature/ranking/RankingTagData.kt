@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable
 data class RankingTagData(
 
     val tagName : String,
-    val tagDrawble : Drawable
+    val tagDrawble : Int,
+    var isTagSelected : Boolean,
+    val index : Int
 
 )

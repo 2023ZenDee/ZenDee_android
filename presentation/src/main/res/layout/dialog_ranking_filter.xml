@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_width="200dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <TextView
         android:id="@+id/filter_txt"
@@ -42,7 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="조회수 순"
-        android:textColor="@color/black"
+        android:textColor="@drawable/filter_text_color"
+        android:checked="true"
+        android:fontFamily="@drawable/filter_text_font_family"
         android:textSize="16dp"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@+id/sort_txt"
@@ -53,7 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="좋아요 순"
-        android:textColor="@color/black"
+        android:textColor="@drawable/filter_text_color"
+        android:fontFamily="@drawable/filter_text_font_family"
         android:textSize="16dp"
         android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="@+id/sort_txt"
@@ -65,7 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="싫어요 순"
-        android:textColor="@color/black"
+        android:textColor="@drawable/filter_text_color"
+        android:fontFamily="@drawable/filter_text_font_family"
         android:textSize="16dp"
         android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="@+id/sort_txt"
@@ -85,21 +90,18 @@
         app:layout_constraintStart_toStartOf="@+id/filter_txt"
         app:layout_constraintTop_toBottomOf="@+id/dislike_filter" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tag_recyclerview"
-        android:layout_width="0dp"
+    <GridView
+        android:id="@+id/tag_gridview"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
 
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:numColumns="2"
+        android:verticalSpacing="8dp"
 
-        android:layout_marginTop="15dp"
-        tools:itemCount="7"
-        tools:listitem="@layout/item_ranking_tag"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/tag_txt"
-        app:layout_constraintTop_toBottomOf="@+id/tag_txt" />
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/tag_txt"
+        tools:listitem="@layout/item_ranking_tag" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

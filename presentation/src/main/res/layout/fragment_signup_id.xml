@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".feature.signup.screen.SignupIdFragment">
 
-    <data/>
+    <data>
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

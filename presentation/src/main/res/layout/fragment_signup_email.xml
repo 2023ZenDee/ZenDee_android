@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".feature.signup.screen.SignupEmailFragment">
 
-    <data/>
+    <data>
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -36,6 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout"
             style="@style/Widget.Design.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

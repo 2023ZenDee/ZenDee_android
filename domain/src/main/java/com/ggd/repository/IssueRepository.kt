@@ -28,4 +28,9 @@ interface IssueRepository {
         id : Int
     ) : Any?
 
+    suspend fun getRank(
+        sortBy : String,
+        tags : List<String>
+    ) : List<IssueModel>?
+
 }
