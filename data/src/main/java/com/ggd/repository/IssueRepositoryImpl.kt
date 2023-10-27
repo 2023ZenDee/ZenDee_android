@@ -7,6 +7,7 @@ import com.ggd.model.Issue.FixIssueDto
 import com.ggd.model.Issue.IssueModel
 import com.ggd.model.Issue.PostIssueDto
 import com.ggd.network.api.IssueService
+import com.ggd.network.request.RankRequest
 import com.ggd.utils.zendeeApiCall
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -83,6 +84,14 @@ class IssueRepositoryImpl @Inject constructor(
         Log.d("젠디", "deleteIssue: ${response.status} - ${response.message} ")
 
         return response.data
+    }
+
+    override suspend fun getRank(sortBy: String, tags: List<String>): List<IssueModel>? {
+
+        val response = zendeeApiCall { issueService.getRank(sortBy, RankRequest(tags)) }
+
+        return response.data?.map { it.toModel() }
+
     }
 
 }

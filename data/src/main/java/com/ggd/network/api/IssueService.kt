@@ -1,6 +1,7 @@
 package com.ggd.network.api
 
 import com.ggd.network.request.FixIssueRequest
+import com.ggd.network.request.RankRequest
 import com.ggd.network.response.IssueResponse
 import com.ggd.utils.base.BaseResponse
 import okhttp3.MultipartBody
@@ -19,7 +20,7 @@ import retrofit2.http.Query
 interface IssueService {
 
     @Multipart
-    @POST("/issues")
+    @POST("/issue")
     suspend fun postIssue(
         @Part("title") title : RequestBody,
         @Part("content") content : RequestBody,
@@ -30,18 +31,18 @@ interface IssueService {
         @Part img : MultipartBody.Part?
     ) : BaseResponse<Any>
 
-    @GET("/issues/mymap")
+    @GET("/issue/mymap")
     suspend fun getIssuesByLocation(
         @Query("lat") latitude : Float,
         @Query("lng") longitude : Float
     ) : BaseResponse<List<IssueResponse>>
 
-    @GET("/issues/board/{id}")
+    @GET("/issue/{id}")
     suspend fun getIssues(
         @Path("id") id : Int
     ) : BaseResponse<IssueResponse>
 
-    @PATCH("/issues/fix/{id}")
+    @PATCH("/issue/fix/{id}")
     suspend fun fixIssue(
         @Path("id") id : Int,
         @Body issue: FixIssueRequest
@@ -51,6 +52,12 @@ interface IssueService {
     suspend fun deleteIssue(
         @Path("id") id : Int,
     ) : BaseResponse<Any>
+
+    @POST("issue/rank/issue")
+    suspend fun getRank(
+        @Query("sortBy") sortBy : String,
+        @Body tags : RankRequest
+    ) : BaseResponse<List<IssueResponse>>
 
 
 }
