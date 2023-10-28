@@ -1,5 +1,8 @@
 package com.ggd.model.user
 
 data class MyIssueContentResponseModel(
-    val a: Int
+    val status: Int,
+    val success: Boolean,
+    val message : String,
+    val data : List<ContentData>
 )

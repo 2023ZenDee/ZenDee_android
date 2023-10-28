@@ -10,11 +10,17 @@ import com.ggd.network.response.user.MyLikeContentResponseDto
 import com.ggd.network.response.user.MyUnLikeContentResponseDto
 
 fun MyCommentContentResponseDto.toModel() = MyCommentContentResponseModel(
-    a = this.a
+    status = this.status,
+    success = this.success,
+    message = this.message,
+    data = this.data
 )
 
 fun MyIssueContentResponseDto.toModel() = MyIssueContentResponseModel(
-    a = this.a
+    status = this.status,
+    success = this.success,
+    message = this.message,
+    data = this.data
 )
 
 fun MyLikeContentResponseDto.toModel() = MyLikeContentResponseModel(
@@ -25,5 +31,8 @@ fun MyLikeContentResponseDto.toModel() = MyLikeContentResponseModel(
 )
 
 fun MyUnLikeContentResponseDto.toModel() = MyUnLikeContentResponseModel(
-    a = this.a
+    status = this.status,
+    success = this.success,
+    message = this.message,
+    data = this.data
 )
