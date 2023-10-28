@@ -9,7 +9,9 @@ import com.ggd.zendee.databinding.FragmentProfileBinding
 import com.ggd.zendee.feature.profile.adapter.ProfileTabAdapter
 import com.ggd.zendee.feature.profile.viewmodel.ProfileViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R.layout.fragment_profile) {
     override val viewModel: ProfileViewModel by viewModels()
 

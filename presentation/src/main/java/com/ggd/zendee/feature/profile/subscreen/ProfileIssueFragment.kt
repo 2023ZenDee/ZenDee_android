@@ -7,22 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ggd.model.user.ContentData
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentProfileIssueBinding
 import com.ggd.zendee.databinding.FragmentProfileLikeBinding
 import com.ggd.zendee.feature.profile.adapter.ProfileListAdapter
 import com.ggd.zendee.feature.ranking.RankingItemData
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileIssueFragment: Fragment() {
 
-    private val issueList = listOf(
-        RankingItemData("", "title", "address", "time", 100, 100),
-        RankingItemData("", "title", "address", "time", 100, 100),
-        RankingItemData("", "title", "address", "time", 100, 100),
-        RankingItemData("", "title", "address", "time", 100, 100),
-        RankingItemData("", "title", "address", "time", 100, 100),
-    )
+    private val issueList = mutableListOf<ContentData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

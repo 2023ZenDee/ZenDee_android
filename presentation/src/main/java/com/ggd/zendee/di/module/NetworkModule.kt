@@ -7,6 +7,7 @@ import com.ggd.network.api.EmailApi
 import com.ggd.network.api.OauthApi
 import com.ggd.zendee.di.utils.BASE_URL
 import com.ggd.network.api.LikeService
+import com.ggd.network.api.UserApi
 import com.ggd.qualifier.HeaderInterceptor
 import com.ggd.qualifier.LoggingInterceptor
 import com.ggd.zendee.utils.HiltApplication
@@ -60,6 +61,11 @@ class NetworkModule {
     @Singleton
     fun provideLikeApi(retrofit: Retrofit): LikeService =
         retrofit.create(LikeService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi =
+        retrofit.create(UserApi::class.java)
 
     /* Retrofit Object 생성 */
 
