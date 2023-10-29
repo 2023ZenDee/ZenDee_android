@@ -1,4 +1,4 @@
-package com.ggd.qualifier
+package com.ggd.zendee.di.qualifier
 
 import javax.inject.Qualifier
 

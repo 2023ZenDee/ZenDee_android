@@ -1,5 +1,6 @@
 package com.ggd.zendee.di.module
 
+import androidx.core.widget.AutoScrollHelper
 import com.ggd.network.api.CommentService
 import com.ggd.network.api.IssueService
 import com.ggd.network.api.AuthApi
@@ -8,19 +9,19 @@ import com.ggd.network.api.OauthApi
 import com.ggd.zendee.di.utils.BASE_URL
 import com.ggd.network.api.LikeService
 import com.ggd.network.api.UserApi
-import com.ggd.qualifier.HeaderInterceptor
-import com.ggd.qualifier.LoggingInterceptor
+import com.ggd.zendee.di.qualifier.HeaderInterceptor
+import com.ggd.zendee.di.qualifier.LoggingInterceptor
 import com.ggd.zendee.utils.HiltApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 //import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -88,11 +89,12 @@ class NetworkModule {
         @LoggingInterceptor LoggerInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient().newBuilder()
-        okHttpClientBuilder.connectTimeout(60, TimeUnit.SECONDS)
-        okHttpClientBuilder.readTimeout(60, TimeUnit.SECONDS)
-        okHttpClientBuilder.writeTimeout(60, TimeUnit.SECONDS)
-        okHttpClientBuilder.addInterceptor(LoggerInterceptor)
-        okHttpClientBuilder.addInterceptor(headerInterceptor)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(LoggerInterceptor)
+            .addInterceptor(headerInterceptor)
+            .authenticator(tokenAuthenticator)
 
         return okHttpClientBuilder.build()
     }
@@ -112,6 +114,7 @@ class NetworkModule {
                 .addHeader("AccessToken", HiltApplication.prefs.accessToken)
                 .build()
             proceed(newRequest)
-       }
+        }
     }
 }
+
