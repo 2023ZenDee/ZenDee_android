@@ -66,6 +66,7 @@ class RepositoryModule {
     fun provideUserRepository(
         impl : UserRepositoryImpl
     ): UserRepository = impl
+
 }
 
 //@Module

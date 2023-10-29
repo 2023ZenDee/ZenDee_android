@@ -39,41 +39,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.mapFragment, R.id.rankingFragment, R.id.profileFragment
-            )
-        )
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.mapFragment, R.id.rankingFragment, R.id.profileFragment
+//            )
+//        )
 
         navView.setupWithNavController(navController)
 
-
-//        checkUpdate()
-//
-//        if (!SharedPreferenceManager.getIsLogin(this)) {
-//            startActivityWithFinishAll(StartActivity::class.java)
-//            super.onCreate(savedInstanceState)
-//        } else {
-//            super.onCreate(savedInstanceState)
-//            startForMainActivity()
-//        }
-//        setStatusBarTransparent()
     }
     fun handleBottomNavigation(state : Boolean){
         if (state)binding.navView.visibility = View.VISIBLE
         else binding.navView.visibility = View.GONE
     }
-
-//    private fun Activity.setStatusBarTransparent() {
-//        window.apply {
-//            setFlags(
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-//            )
-//        }
-//        if(Build.VERSION.SDK_INT >= 30) {	// API 30 에 적용
-//            WindowCompat.setDecorFitsSystemWindows(window, false)
-//        }
-//    }
 
 }

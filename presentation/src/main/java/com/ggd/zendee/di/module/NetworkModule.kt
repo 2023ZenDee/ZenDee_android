@@ -9,6 +9,8 @@ import com.ggd.network.api.OauthApi
 import com.ggd.zendee.di.utils.BASE_URL
 import com.ggd.network.api.LikeService
 import com.ggd.network.api.UserApi
+import com.ggd.repository.AuthRepository
+import com.ggd.zendee.di.intercepter.TokenAuthenticator
 import com.ggd.zendee.di.qualifier.HeaderInterceptor
 import com.ggd.zendee.di.qualifier.LoggingInterceptor
 import com.ggd.zendee.utils.HiltApplication
@@ -68,6 +70,7 @@ class NetworkModule {
     fun provideUserApi(retrofit: Retrofit): UserApi =
         retrofit.create(UserApi::class.java)
 
+
     /* Retrofit Object 생성 */
 
     @Provides
@@ -94,7 +97,7 @@ class NetworkModule {
             .writeTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(LoggerInterceptor)
             .addInterceptor(headerInterceptor)
-            .authenticator(tokenAuthenticator)
+            .authenticator(TokenAuthenticator())
 
         return okHttpClientBuilder.build()
     }
@@ -111,7 +114,7 @@ class NetworkModule {
     fun provideHeaderInterceptor() = Interceptor { chain ->
         with(chain) {
             val newRequest = request().newBuilder()
-                .addHeader("AccessToken", HiltApplication.prefs.accessToken)
+                .addHeader("accessToken", HiltApplication.prefs.accessToken)
                 .build()
             proceed(newRequest)
         }

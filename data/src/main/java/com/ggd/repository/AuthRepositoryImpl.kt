@@ -21,7 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun register(registerRequestModel: RegisterRequestModel): RegisterResponseModel
         = authApi.register(registerRequestModel.toDto()).toModel()
 
-    override suspend fun getAccessToken(): RefreshTokenResponseModel =
-        authApi.getAccessToken().data.toModel()
+    override suspend fun getAccessToken(refreshToken: String): RefreshTokenResponseModel =
+        authApi.getAccessToken(refreshToken).data.toModel()
 
 }

@@ -8,6 +8,7 @@ import com.ggd.network.response.auth.RefreshTokenResponseDto
 import com.ggd.network.response.auth.RegisterResponse
 import com.ggd.network.response.Response
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthApi {
@@ -24,6 +25,7 @@ interface AuthApi {
 
     @POST("/auth/refreshToken")
     suspend fun getAccessToken(
+        @Header("refreshToken") refreshToken: String
     ): Response<RefreshTokenResponseDto>
 
 }

@@ -33,8 +33,8 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
     override val viewModel: StartViewModel by viewModels()
 
     private lateinit var account: GoogleSignInAccount
-    lateinit var nick: String
-    lateinit var email: String
+    private lateinit var nick: String
+    private lateinit var email: String
 
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         kotlin.runCatching {
@@ -45,9 +45,7 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
             email = account.email.toString()
         }.onSuccess {
             viewModel.googleOauthLogin(
-                GoogleOauthRequestModel(
-                    email, nick
-                )
+                GoogleOauthRequestModel(email, nick)
             )
             Log.d(TAG, "Google Oauth Success!! $nick, $email")
             Toast.makeText(requireContext(), "로그인이 되었습니다", Toast.LENGTH_SHORT).show()

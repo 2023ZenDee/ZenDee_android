@@ -17,6 +17,7 @@ interface AuthRepository {
     ): RegisterResponseModel
 
     suspend fun getAccessToken(
+        refreshToken: String
     ): RefreshTokenResponseModel
 
 }
