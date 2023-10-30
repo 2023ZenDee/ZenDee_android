@@ -33,7 +33,7 @@ class ProfileIssueFragment: Fragment() {
 
         viewModel.getMyIssueContent()
 
-        viewModel.myLikeList.observe(viewLifecycleOwner) {
+        viewModel.myIssueList.observe(viewLifecycleOwner) {
             issueList.removeAll(issueList)
             it.forEach { contentData ->
                 issueList.add(contentData)

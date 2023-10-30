@@ -33,7 +33,7 @@ class ProfileCommentFragment: Fragment() {
 
         viewModel.getMyCommentContent()
 
-        viewModel.myLikeList.observe(viewLifecycleOwner) {
+        viewModel.myCommentList.observe(viewLifecycleOwner) {
             commentList.removeAll(commentList)
             it.forEach { contentData ->
                 commentList.add(contentData)

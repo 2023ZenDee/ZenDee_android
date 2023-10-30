@@ -23,6 +23,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
     override fun start() {
         val tabLayout = binding.tabLayout
         val viewPager = binding.viewPager
+
         viewPager.adapter = ProfileTabAdapter(parentFragmentManager, lifecycle)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

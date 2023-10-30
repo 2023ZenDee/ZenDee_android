@@ -33,7 +33,7 @@ class ProfileUnLikeFragment: Fragment() {
 
         viewModel.getMyUnLikeContent()
 
-        viewModel.myLikeList.observe(viewLifecycleOwner) {
+        viewModel.myUnLikeList.observe(viewLifecycleOwner) {
             unLikeList.removeAll(unLikeList)
             it.forEach { contentData ->
                 unLikeList.add(contentData)

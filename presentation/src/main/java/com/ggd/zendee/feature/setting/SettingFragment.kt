@@ -12,7 +12,9 @@ import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentSettingBinding
 import com.ggd.zendee.utils.HiltApplication
 import com.ggd.zendee.utils.makeToast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.layout.fragment_setting) {
 
     override val viewModel: SettingViewModel by viewModels()
@@ -26,6 +28,7 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.
         with(binding) {
             btnSecurity.setOnClickListener {
                 makeToast(context, "약관 및 개인정보 처리 동의")
+//                viewModel.getMyLikeContent() // todo: test
             }
             btnAppVersion.setOnClickListener {
                 makeToast(context, "앱 버전")
