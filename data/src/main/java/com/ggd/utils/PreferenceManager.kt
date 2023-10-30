@@ -20,6 +20,7 @@ class PreferenceManager(context: Context) {
         set(value) = prefs.edit().putString(REFRESH_TOKEN, value).apply()
 
     fun deleteToken() {
+        prefs.edit().remove(AUTO_LOGIN_KEY).apply()
         prefs.edit().remove(ACCESS_TOKEN).apply()
         prefs.edit().remove(REFRESH_TOKEN).apply()
     }

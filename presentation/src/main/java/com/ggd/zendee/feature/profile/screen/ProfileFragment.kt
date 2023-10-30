@@ -1,6 +1,7 @@
 package com.ggd.zendee.feature.profile.screen
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.ggd.zendee.R
@@ -27,6 +28,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitleArray[position]
         }.attach()
+
+        binding.btnSetting.setOnClickListener {
+            val action = ProfileFragmentDirections.toSettingFragment()
+            findNavController().navigate(action)
+        }
     }
 
 }
