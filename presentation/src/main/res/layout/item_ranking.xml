@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="14dp"
-        android:elevation="10dp"
         android:background="@drawable/white_rectangle_noline">
 
         <ImageView
@@ -44,7 +43,7 @@
             app:layout_constraintStart_toEndOf="@+id/tag_img"
             app:layout_constraintTop_toTopOf="@+id/tag_img" />
 
-        <Button
+        <ImageView
             android:id="@+id/three_dot_btn"
             android:layout_width="24dp"
             android:layout_height="24dp"

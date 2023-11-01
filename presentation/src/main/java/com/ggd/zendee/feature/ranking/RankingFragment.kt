@@ -12,9 +12,12 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ggd.model.Issue.IssueModel
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
@@ -28,6 +31,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
@@ -39,7 +44,8 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
     private val mainViewModel: MainViewModel by activityViewModels()
 
 
-    private val rankingAdapter :RankingRecyclerviewAdapter by lazy{ RankingRecyclerviewAdapter(requireContext()) }
+//    private val rankingAdapter :RankingRecyclerviewAdapter by lazy{ RankingRecyclerviewAdapter(requireContext()) }
+    private val rankingAdapter = RankingPagingAdapter()
     private val rankingTagAdpater : RankingTagAdapter by lazy { RankingTagAdapter() }
 
     override fun start() {
@@ -54,23 +60,26 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
             adapter = rankingAdapter
         }
 
+
+//        lifecycleScope.launch {
+//
+//            viewModel.pagingData.collectLatest{
+//                rankingAdapter.submitData(it)
+//            }
+//        }
+
+        viewModel.pagingData.observe(this, Observer {
+            rankingAdapter.submitData(this.lifecycle,it)
+            Log.d(TAG, "list가 추가되었습니다")
+        })
+
+
         binding.tagGridview.apply {
             adapter = rankingTagAdpater
             layoutManager = GridLayoutManager(requireContext(),2)
         }
 
         rankingTagAdpater.submitList(viewModel.tagList)
-
-        fun getTagStringList() : List<String>{
-
-            val list = mutableListOf<String>()
-
-            for (i in viewModel.tagList){
-                if(i.isTagSelected) list.add(i.tagName)
-            }
-
-            return list
-        }
 
         binding.sortRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
 
@@ -89,27 +98,26 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
 
         })
 
-        CoroutineScope(Dispatchers.IO).launch{
-            if (viewModel.rankList != null) {
-                withContext(Dispatchers.Main){
-                    rankingAdapter.submitList(viewModel.rankList)
-                }
-            } else {
-                rankingTagAdpater.submitList(viewModel.tagList)
-                viewModel.getRank(viewModel.sortBy,getTagStringList())
-            }
-        }
+//        CoroutineScope(Dispatchers.IO).launch{
+//            if (viewModel.rankList != null) {
+//                withContext(Dispatchers.Main){
+//                    rankingAdapter.submitList(viewModel.rankList)
+//                }
+//            } else {
+//                rankingTagAdpater.submitList(viewModel.tagList)
+//                viewModel.getRank(viewModel.sortBy,1, viewModel.getTagStringList())
+//            }
+//        }
 
-//        viewModel.getRank()
 
-        rankingAdapter.setDialogClickListener(object : RankingRecyclerviewAdapter.OnDialogClickListener{
-            override fun onClick(issue: IssueModel) {
-
-                mainViewModel.issue = issue
-                findNavController().navigate(R.id.action_rankingFragment_to_issueFragment)
-            }
-
-        })
+//        rankingAdapter.setDialogClickListener(object : RankingRecyclerviewAdapter.OnDialogClickListener{
+//            override fun onCli+ck(issue: IssueModel) {
+//
+//                mainViewModel.issue = issue
+//                findNavController().navigate(R.id.action_rankingFragment_to_issueFragment)
+//            }
+//
+//        })
 
         binding.filterBtn.setOnClickListener {
             binding.drawerLayout.openDrawer(binding.filterLayout,true)
@@ -123,7 +131,8 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
             }
 
             override fun onDrawerClosed(drawerView: View) {
-                viewModel.getRank(viewModel.sortBy,getTagStringList())
+                viewModel.getPagingRank(viewModel.sortBy, viewModel.getTagStringList())
+//                rankingAdapter.refresh()
             }
 
             override fun onDrawerStateChanged(newState: Int) {
@@ -131,29 +140,26 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
 
         })
 
-
-
     }
 
-
-
-    fun updateRank(list : List<IssueModel>?){
-        viewModel.rankList = list
-        rankingAdapter.submitList(list)
-
-//        rankingAdapter.submitList(list)
-    }
+//    fun updateRank(list : List<IssueModel>?){
+//        if (list != null){
+//            viewModel.rankList = list
+//            rankingAdapter.submitList( viewModel.rankList )
+//        }
+//    }
 
     private fun handleEvent(event: RankingViewModel.Event) =
         when (event) {
 
             is RankingViewModel.Event.SuccessGetRank -> {
-                updateRank(event.issueModels)
+//                updateRank(event.issueModels)
             }
             is RankingViewModel.Event.UnknownException -> Log.d("젠디", "ERROR - ${event.error}")
-
+            RankingViewModel.Event.Success -> {
+                rankingAdapter.refresh()
+            }
         }
-
 
 
 }

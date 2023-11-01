@@ -86,9 +86,9 @@ class IssueRepositoryImpl @Inject constructor(
         return response.data
     }
 
-    override suspend fun getRank(sortBy: String, tags: List<String>): List<IssueModel>? {
+    override suspend fun getRank(sortBy: String, page : Int, tags: List<String>): List<IssueModel>? {
 
-        val response = zendeeApiCall { issueService.getRank(sortBy, RankRequest(tags)) }
+        val response = zendeeApiCall { issueService.getRank(sortBy, page, tags = RankRequest(tags), pageSize = 10) }
 
         return response.data?.map { it.toModel() }
 

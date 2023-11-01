@@ -30,6 +30,7 @@ interface IssueRepository {
 
     suspend fun getRank(
         sortBy : String,
+        page : Int,
         tags : List<String>
     ) : List<IssueModel>?
 
