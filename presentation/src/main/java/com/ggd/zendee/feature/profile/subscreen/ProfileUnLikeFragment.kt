@@ -38,7 +38,7 @@ class ProfileUnLikeFragment: Fragment() {
             it.forEach { contentData ->
                 unLikeList.add(contentData)
             }
-            val adapter = ProfileListAdapter(requireContext(), unLikeList)
+            val adapter = ProfileListAdapter(unLikeList)
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.recyclerView.adapter = adapter
         }

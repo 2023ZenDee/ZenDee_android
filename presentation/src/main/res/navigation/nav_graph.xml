@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.ggd.zendee.feature.map.MapFragment"
-        android:label="MapFragment" >
+        android:label="MapFragment">
         <action
             android:id="@+id/action_mapFragment_to_issueFragment"
             app:destination="@id/issueFragment"

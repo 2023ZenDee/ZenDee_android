@@ -38,7 +38,7 @@ class ProfileIssueFragment: Fragment() {
             it.forEach { contentData ->
                 issueList.add(contentData)
             }
-            val adapter = ProfileListAdapter(requireContext(), issueList)
+            val adapter = ProfileListAdapter(issueList)
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.recyclerView.adapter = adapter
         }

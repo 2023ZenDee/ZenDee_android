@@ -38,7 +38,7 @@ class ProfileCommentFragment: Fragment() {
             it.forEach { contentData ->
                 commentList.add(contentData)
             }
-            val adapter = ProfileListAdapter(requireContext(), commentList)
+            val adapter = ProfileListAdapter(commentList)
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.recyclerView.adapter = adapter
         }

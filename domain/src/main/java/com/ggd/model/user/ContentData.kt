@@ -14,5 +14,11 @@ data class ContentData(
     val authorIdx: Int,
     val postImg: String,
     val address: String,
-    val views: Int
+    val views: Int,
+    val tags: String,
+    val user: String,
+    val likes: Int,
+    val userLikesPost: Boolean,
+    val bads: Int,
+    val comments: Int
 )

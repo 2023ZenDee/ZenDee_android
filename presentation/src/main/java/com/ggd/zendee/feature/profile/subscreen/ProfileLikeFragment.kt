@@ -38,7 +38,7 @@ class ProfileLikeFragment: Fragment() {
             it.forEach { contentData ->
                 likeList.add(contentData)
             }
-            val adapter = ProfileListAdapter(requireContext(), likeList)
+            val adapter = ProfileListAdapter(likeList)
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.recyclerView.adapter = adapter
         }

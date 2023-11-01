@@ -1,6 +1,7 @@
 package com.ggd.zendee.feature.profile.adapter
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.ContentInfo
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,6 @@ import com.ggd.zendee.feature.ranking.RankingItemData
 import okhttp3.internal.immutableListOf
 
 class ProfileListAdapter(
-    private val context: Context,
     private val itemList: List<ContentData>
 ): RecyclerView.Adapter<ProfileListAdapter.ViewHolder>() {
 
@@ -42,7 +42,18 @@ class ProfileListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
 
-        Glide.with(context).load(item.postImg).into(holder.tagImage) // todo : 수정
+        val tag: Int = when(item.tags){
+            "뜨거움" -> R.drawable.hot_tag
+            "경고" -> R.drawable.alert_tag
+            "재미" -> R.drawable.happy_tag
+            "공지" -> R.drawable.notice_tag
+            "활동" -> R.drawable.active_tag
+            "사랑" -> R.drawable.love_tag
+            "행운" -> R.drawable.lucky_tag
+            else -> 0
+        }
+
+        holder.tagImage.setImageResource(tag)
         holder.issueTitle.text = item.title
         holder.issueAddress.text = item.address
         holder.issueTime.text = item.created_at.toString()
