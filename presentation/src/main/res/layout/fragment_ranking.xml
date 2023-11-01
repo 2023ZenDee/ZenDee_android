@@ -9,54 +9,198 @@
             type="com.ggd.zendee.feature.ranking.RankingViewModel" />
     </data>
 
-   <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:background="#F2F4F6"
-       >
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:id="@+id/drawer_layout"
+        >
 
-       <Button
-           android:id="@+id/filter_btn"
-           android:layout_width="24dp"
-           android:layout_height="24dp"
-           android:layout_margin="16dp"
-           android:background="@drawable/filter_icon"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
-           tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F2F4F6">
 
-       <TextView
-           android:id="@+id/ranking_txt"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/filter_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="16dp"
 
-           android:layout_marginTop="20dp"
-           android:layout_marginStart="16dp"
-           android:textSize="24dp"
-           android:fontFamily="@font/pretendard_bold"
-           android:textColor="@color/black"
+                android:background="@drawable/filter_icon"
 
-           android:text="랭킹"
-
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/filter_btn" />
-
-       <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/recycler_view"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-
-           android:layout_marginTop="36dp"
-           tools:listitem="@layout/item_ranking"
-
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/ranking_txt" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="SpeakableTextPresentCheck">
 
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/ranking_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="50dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:text="랭킹"
+                        android:textColor="@color/black"
+
+                        android:textSize="28dp"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingTop="36dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ranking_txt"
+                        tools:listitem="@layout/item_ranking" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
 
 
-   </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/filter_layout"
+            android:layout_gravity="start"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/filter_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="필터"
+
+                android:textColor="@color/black"
+                android:textSize="26dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/sort_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="정렬"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+
+                android:layout_marginTop="40dp"
+                app:layout_constraintStart_toStartOf="@+id/filter_txt"
+                app:layout_constraintTop_toBottomOf="@+id/filter_txt" />
+
+
+            <RadioGroup
+                android:id="@+id/sort_radio_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:checkedButton="@id/sort_views_radio"
+
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/sort_txt"
+                app:layout_constraintTop_toBottomOf="@+id/sort_txt">
+
+                <RadioButton
+                    android:id="@+id/sort_views_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:minHeight="0dp"
+                    android:text="조회수 순"
+                    android:textColor="@drawable/filter_text_color"
+                    android:textSize="20dp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/sort_likes_radio"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:minHeight="0dp"
+                    android:text="좋아요 순"
+                    android:textColor="@drawable/filter_text_color"
+                    android:textSize="20dp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/sort_dislikes_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:minHeight="0dp"
+                    android:text="싫어요 순"
+                    android:textColor="@drawable/filter_text_color"
+                    android:textSize="20dp"
+
+                    android:layout_marginTop="5dp"
+                    />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tag_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="태그"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="@+id/filter_txt"
+                app:layout_constraintTop_toBottomOf="@+id/sort_radio_group" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tag_gridview"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/tag_txt"
+                app:layout_constraintTop_toBottomOf="@+id/tag_txt"
+                tools:listitem="@layout/item_ranking_tag" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
 </layout>

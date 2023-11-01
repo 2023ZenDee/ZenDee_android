@@ -17,6 +17,11 @@
         <action
             android:id="@+id/action_mapFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_rankingFragment"
+            app:destination="@id/rankingFragment"
+            app:enterAnim="@anim/anim_right_first"
+            app:popExitAnim="@anim/anim_left_before" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -34,7 +39,11 @@
     <fragment
         android:id="@+id/rankingFragment"
         android:name="com.ggd.zendee.feature.ranking.RankingFragment"
-        android:label="RankingFragment" />
+        android:label="RankingFragment" >
+        <action
+            android:id="@+id/action_rankingFragment_to_issueFragment"
+            app:destination="@id/issueFragment" />
+    </fragment>
     <fragment
         android:id="@+id/issueFragment"
         android:name="com.ggd.zendee.feature.issue.IssueFragment"

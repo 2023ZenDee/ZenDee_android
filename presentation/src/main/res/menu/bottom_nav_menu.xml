@@ -3,14 +3,17 @@
 
     <item
         android:id="@+id/mapFragment"
-        android:title="지도" />
+        android:title="지도"
+        android:icon="@drawable/ic_map"/>
 
     <item
         android:id="@+id/rankingFragment"
-        android:title="랭킹" />
+        android:title="랭킹"
+        android:icon="@drawable/ic_ranking"/>
 
     <item
         android:id="@+id/profileFragment"
-        android:title="프로필" />
+        android:title="프로필"
+        android:icon="@drawable/ic_profile"/>
 
 </menu>

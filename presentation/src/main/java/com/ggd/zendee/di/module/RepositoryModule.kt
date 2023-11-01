@@ -48,6 +48,12 @@ class RepositoryModule {
     fun provideEmailRepository(
         impl : EmailRepositoryImpl
     ): EmailRepository = impl
+//
+//    @Provides
+//    @Singleton
+//    abstract fun provideLoginRepository(
+//        impl : LoginRepositoryImpl
+//    ): LoginRepository
 
     @Provides
     @Singleton
