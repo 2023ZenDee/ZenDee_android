@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -23,10 +24,19 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.
     override val viewModel: SettingViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
 
+    private val requestImage = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) {
+//        Glide.with(requireContext()).load(it).circleCrop().into(binding.ivProfile)
+        // todo 1. 내정보 수정 기능만 사용하면 저절로 수정되니께
+    }
+
     override fun start() {
         profileViewModel.getMyInfo()
 
         val context = requireContext()
+
+        // todo : error
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -39,6 +49,9 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.
         }
 
         with(binding) {
+            btnSetUserProfile.setOnClickListener {
+                requestImage.launch("image/*")
+            }
             btnSecurity.setOnClickListener {
                 //
                 makeToast(context, "약관 및 개인정보 처리 동의")

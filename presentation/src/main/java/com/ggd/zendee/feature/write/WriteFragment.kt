@@ -60,7 +60,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
         binding.contentImg.setImageURI(it)
         pictureUri = it
         binding.removeImgBtn.visibility = View.VISIBLE
-
     }
 
     val cameraImage = registerForActivityResult(

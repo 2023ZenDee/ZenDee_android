@@ -1,5 +1,7 @@
 package com.ggd.zendee.feature.profile.screen
 
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
@@ -12,6 +14,7 @@ import com.ggd.zendee.feature.profile.adapter.ProfileTabAdapter
 import com.ggd.zendee.feature.profile.viewmodel.ProfileViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.http.Url
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R.layout.fragment_profile) {
@@ -21,17 +24,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
         "좋아요", "싫어요", "이슈", "댓글"
     )
 
+    private val requestImage = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) {
+//        Glide.with(requireContext()).load(it).circleCrop().into(binding.ivProfile)
+        // todo 1. 내정보 수정 기능만 사용하면 저절로 수정되니께
+    }
+
     override fun start() {
         viewModel.getMyInfo()
-
-        val tabLayout = binding.tabLayout
-        val viewPager = binding.viewPager
-
-        viewPager.adapter = ProfileTabAdapter(parentFragmentManager, lifecycle)
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabTitleArray[position]
-        }.attach()
+        setTapRow()
 
         viewModel.myInfo.observe(viewLifecycleOwner) {
             with(binding) {
@@ -41,10 +43,27 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
         }
 
 
-        binding.btnSetting.setOnClickListener {
-            val action = ProfileFragmentDirections.toSettingFragment()
-            findNavController().navigate(action)
+        with(binding) {
+            btnSetProfile.setOnClickListener {
+                requestImage.launch("image/*")
+            }
+            btnSetting.setOnClickListener {
+                val action = ProfileFragmentDirections.toSettingFragment()
+                findNavController().navigate(action)
+            }
         }
+
+    }
+
+    private fun setTapRow() {
+        val tabLayout = binding.tabLayout
+        val viewPager = binding.viewPager
+
+        viewPager.adapter = ProfileTabAdapter(parentFragmentManager, lifecycle)
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = tabTitleArray[position]
+        }.attach()
     }
 
 }
