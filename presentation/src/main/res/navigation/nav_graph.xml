@@ -75,7 +75,8 @@
             app:popExitAnim="@anim/animation_pop_exit"/>
         <action
             android:id="@+id/action_startFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+            app:destination="@id/mapFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -84,7 +85,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+            app:destination="@id/mapFragment"
+            app:popUpTo="@id/nav_graph"/>
     </fragment>
 
     <!-- Signup Fragment -->
