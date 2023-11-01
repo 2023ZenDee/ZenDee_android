@@ -7,7 +7,7 @@ import com.ggd.network.response.oauth.GoogleOauthResponseDto
 
 fun GoogleOauthRequestModel.toDto() = GoogleOauthRequestDto(
     email = this.email,
-    name = this.name
+    nick = this.nick
 )
 
 fun GoogleOauthResponseDto.toModel() = GoogleOauthResponseModel(

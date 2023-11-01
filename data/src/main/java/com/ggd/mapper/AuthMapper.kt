@@ -3,11 +3,13 @@ package com.ggd.mapper
 
 import com.ggd.model.auth.LoginRequestModel
 import com.ggd.model.auth.LoginResponseModel
+import com.ggd.model.auth.RefreshTokenResponseModel
 import com.ggd.model.auth.RegisterRequestModel
 import com.ggd.model.auth.RegisterResponseModel
 import com.ggd.network.request.auth.LoginRequest
 import com.ggd.network.request.auth.RegisterRequest
 import com.ggd.network.response.auth.LoginResponse
+import com.ggd.network.response.auth.RefreshTokenResponseDto
 import com.ggd.network.response.auth.RegisterResponse
 
 fun LoginRequestModel.toDto(): LoginRequest = LoginRequest(
@@ -33,4 +35,8 @@ fun RegisterResponse.toModel() = RegisterResponseModel(
     message = this.message,
     accessToken = this.accessToken,
     refreshToken = this.refreshToken
+)
+
+fun RefreshTokenResponseDto.toModel() = RefreshTokenResponseModel(
+    data = this.data
 )

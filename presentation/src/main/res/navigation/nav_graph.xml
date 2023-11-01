@@ -26,7 +26,16 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ggd.zendee.feature.profile.screen.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/animation_enter"
+            app:exitAnim="@anim/animation_exit"
+            app:popEnterAnim="@anim/animation_pop_enter"
+            app:popExitAnim="@anim/animation_pop_exit"/>
+    </fragment>
     <fragment
         android:id="@+id/rankingFragment"
         android:name="com.ggd.zendee.feature.ranking.RankingFragment"
@@ -133,6 +142,19 @@
         android:name="com.ggd.zendee.feature.signup.screen.SignupEmailCheckFragment"
         android:label="fragment_signup_email_check"
         tools:layout="@layout/fragment_signup_email_check" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.ggd.zendee.feature.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/to_startFragment"
+            app:destination="@id/startFragment"
+            app:enterAnim="@anim/animation_enter"
+            app:exitAnim="@anim/animation_exit"
+            app:popEnterAnim="@anim/animation_pop_enter"
+            app:popExitAnim="@anim/animation_pop_exit"/>
+    </fragment>
 
 
 </navigation>

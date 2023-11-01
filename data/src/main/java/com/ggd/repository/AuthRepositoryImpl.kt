@@ -5,6 +5,7 @@ import com.ggd.mapper.toDto
 import com.ggd.mapper.toModel
 import com.ggd.model.auth.LoginRequestModel
 import com.ggd.model.auth.LoginResponseModel
+import com.ggd.model.auth.RefreshTokenResponseModel
 import com.ggd.model.auth.RegisterRequestModel
 import com.ggd.model.auth.RegisterResponseModel
 import com.ggd.network.api.AuthApi
@@ -20,5 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun register(registerRequestModel: RegisterRequestModel): RegisterResponseModel
         = authApi.register(registerRequestModel.toDto()).toModel()
 
+    override suspend fun getAccessToken(refreshToken: String): RefreshTokenResponseModel =
+        authApi.getAccessToken(refreshToken).toModel()
 
 }

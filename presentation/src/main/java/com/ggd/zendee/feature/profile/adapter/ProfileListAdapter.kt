@@ -1,6 +1,7 @@
 package com.ggd.zendee.feature.profile.adapter
 
 import android.content.Context
+import android.view.ContentInfo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ggd.model.user.ContentData
 import com.ggd.zendee.R
 import com.ggd.zendee.feature.ranking.RankingItemData
 import okhttp3.internal.immutableListOf
 
 class ProfileListAdapter(
     private val context: Context,
-    private val itemList: List<RankingItemData>
+    private val itemList: List<ContentData>
 ): RecyclerView.Adapter<ProfileListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -28,7 +30,7 @@ class ProfileListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_ranking, parent, false)
+            .inflate(R.layout.item_issue, parent, false)
 
         return ViewHolder(view)
     }
@@ -40,11 +42,11 @@ class ProfileListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
 
-        Glide.with(context).load(item.tag).into(holder.tagImage)
+        Glide.with(context).load(item.postImg).into(holder.tagImage) // todo : 수정
         holder.issueTitle.text = item.title
         holder.issueAddress.text = item.address
-        holder.issueTime.text = item.time
+        holder.issueTime.text = item.created_at.toString()
         holder.issueViews.text = "조회수 " + item.views + "회"
-        holder.issueComments.text = "댓글 " + item.comments
+//        holder.issueComments.text = "댓글 " + item.comments // todo : 수정
     }
 }

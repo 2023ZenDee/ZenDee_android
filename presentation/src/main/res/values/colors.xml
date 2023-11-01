@@ -4,12 +4,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="mint">#FF76D2AD</color>
     <color name="light_black">#FF535353</color>
+    <color name="text_dark_gray">#4F4F4F</color>
     <color name="text_gray">#FFA5A5A5</color>
     <color name="light_gray">#FFF5F5F5</color>
     <color name="gray">#FFE0E0E0</color>
     <color name="red">#FFF05F5F</color>
     <color name="blue">#FF6066EB</color>
-
 
     <color name="alert">#FFFF1818</color>
     <color name="hot">#FFFF9900</color>
@@ -21,6 +21,9 @@
 
 
     <color name="color_zendee_background">#FFFFFF</color>
+    <color name="background">#FFF2F4F6</color>
+
+    <color name="white_clicked">#FFEDEEEF</color>=
     <color name="color_transparent">#00FFFFFF</color>
 
     <color name="transparent">#00000000</color>
