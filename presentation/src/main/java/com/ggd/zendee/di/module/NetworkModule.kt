@@ -115,9 +115,9 @@ class NetworkModule {
         with(chain) {
             val newRequest = request().newBuilder()
                 .addHeader("accessToken", HiltApplication.prefs.accessToken)
+//                .addHeader("accessToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJ1c2VySWR4IjoxLCJ1c2VySWQiOiIxMSIsIm5pY2siOiJ6ZW5lZSIsInBhc3N3b3JkIjoiZEtTY2FZMjlQQkxqYXdzb2RFZllNL2RQT1RmL0V5Ni85d1ZMcWhoaVBEV25CYnNZdUM0cXdEaExVU2ZibHdGdVkyQ2ZjU3ZKRGpVR3o3NnBkWm4wYnc9PSIsImltYWdlIjoiaHR0cHM6Ly96ZW5kZWUxLnMzLmFwLW5vcnRoZWFzdC0yLmFtYXpvbmF3cy5jb20vdW5kZWZpbmVkLzE2OTgyNDQzMzcwNjFfJUVDJThBJUE0JUVEJTgxJUFDJUVCJUE2JUIwJUVDJTgzJUI3JTIwMjAyMy0wOC0zMSUyMDIyMDcwOC5wbmciLCJlbWFpbCI6InRlc3QxMUB0ZXN0LmNvbSIsImVtYWlsX2NoZWNrIjpmYWxzZSwicHJvdmlkZXIiOiJMT0NBTCIsInJvbGUiOiJVU0VSIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDktMTVUMDM6MTk6MTkuMzc2WiIsInVwZGF0ZWRfYXQiOiIyMDIzLTA5LTE1VDAzOjE5OjE5LjM3M1oifSwiaWF0IjoxNjk4NzU3MDYwLCJleHAiOjE2OTg3NTcxMjB9.ytDs_Jl_axRgKN926UQCfOPKkIu1wPNXwsdb1c4KlFA")
                 .build()
             proceed(newRequest)
         }
     }
 }
-

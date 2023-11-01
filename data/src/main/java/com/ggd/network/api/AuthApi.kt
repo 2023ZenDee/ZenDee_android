@@ -25,7 +25,7 @@ interface AuthApi {
 
     @POST("/auth/refreshToken")
     suspend fun getAccessToken(
-        @Header("refreshToken") refreshToken: String
-    ): Response<RefreshTokenResponseDto>
+        @Header("refreshToken") refreshtoken: String
+    ): RefreshTokenResponseDto
 
 }

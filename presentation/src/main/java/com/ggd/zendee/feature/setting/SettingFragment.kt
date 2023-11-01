@@ -1,6 +1,7 @@
 package com.ggd.zendee.feature.setting
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +28,10 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.
 
         with(binding) {
             btnSecurity.setOnClickListener {
+                //
                 makeToast(context, "약관 및 개인정보 처리 동의")
-//                viewModel.getMyLikeContent() // todo: test
+                Log.d("Token", "my Token : ${HiltApplication.prefs.accessToken}")
+                viewModel.getMyLikeContent()
             }
             btnAppVersion.setOnClickListener {
                 makeToast(context, "앱 버전")

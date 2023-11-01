@@ -20,6 +20,7 @@ import okhttp3.Route
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
 import javax.inject.Inject
 
 // todo 1. accessToken 유효기간 줄여주세요
@@ -46,24 +47,26 @@ class TokenAuthenticator: Authenticator {
         Log.i("Authenticator", response.toString())
         Log.i("Authenticator", "토큰 재발급 시도")
         var newAccessToken = ""
-        kotlin.runCatching {
-            GlobalScope.launch {
-//                newAccessToken = authService.getAccessToken(
-//                    HiltApplication.prefs.refreshToken
-//                ).data.toString()
+        var request:Request? = null
+
+        GlobalScope.launch {
+            try {
+                Log.i("Authenticator", "orgToken: ${HiltApplication.prefs.accessToken}")
+                newAccessToken = authService.getAccessToken(
+                    HiltApplication.prefs.refreshToken
+                ).data
+                Log.i("Authenticator", "토큰 재발급 성공 : $newAccessToken")
+                HiltApplication.prefs.deleteAccessToken()
+                HiltApplication.prefs.accessToken = newAccessToken
+                request = response.request.newBuilder()
+                    .removeHeader("accessToken").apply {
+                        addHeader("accessToken", newAccessToken)
+                    }.build()
+                Log.i("Authenticator", "accessToken in header ${request!!.headers["accessToken"]}")
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-//            newAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Impvc2V1bmd3YW42MTNAZ21haWwuY29tIiwiaWF0IjoxNjk4NTgyMzk5LCJleHAiOjE2OTg1ODI0MDR9.gQs6QM-czT1Ma8NIJa0ZU39mWOntOhW44VNliE4NI-4"
-        }.onSuccess {
-            Log.i("Authenticator", "토큰 재발급 성공 : $newAccessToken")
-            HiltApplication.prefs.deleteToken()
-            HiltApplication.prefs.accessToken = newAccessToken
-            response.request.newBuilder()
-                .removeHeader("X-AUTH-TOKEN").apply {
-                    addHeader("X-AUTH-TOKEN", newAccessToken)
-                }.build() // 토큰 재발급이 성공했다면, 기존 헤더를 지우고, 새로운 해더를 단다.
-        }.onFailure { e ->
-            e.printStackTrace()
         }
-        return null
+        return request
     }
 }
