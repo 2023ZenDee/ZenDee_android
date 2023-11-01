@@ -45,6 +45,17 @@ class IssueFragment : BaseFragment<FragmentIssueBinding,IssueViewModel>(R.layout
 
     override fun start() {
 
+        if (mainViewModel.issue.userLikesPost!=null){
+            if (mainViewModel.issue.userLikesPost!!){
+                binding.likeBtn.isChecked = true
+                binding.likeTxt.isChecked = true
+            }
+            else{
+                binding.dislikeBtn.isChecked = true
+                binding.dislikeTxt.isChecked = true
+            }
+        }
+
         repeatOnStarted {
             viewModel.eventFlow.collect{ event -> handleEvent(event) }
         }

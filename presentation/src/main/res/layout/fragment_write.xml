@@ -52,6 +52,7 @@
                     android:background="@null"
                     android:fontFamily="@font/pretendard_semibold"
                     android:hint="제목을 입력해주세요"
+                    android:maxLines="1"
                     android:textColorHint="@color/gray"
                     android:textSize="25dp"
                     app:layout_constraintEnd_toEndOf="parent"

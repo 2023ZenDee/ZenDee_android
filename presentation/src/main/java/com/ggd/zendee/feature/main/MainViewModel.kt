@@ -14,7 +14,7 @@ class MainViewModel @Inject constructor(
 
 ): BaseViewModel() {
 
-    var issue : IssueModel = IssueModel(0,"","","","",0.0F,0.0F,"",0,"",0,"","",0,0,0,"")
+    var issue : IssueModel = IssueModel(0,"","","","",0.0F,0.0F,"",0,"",0,"","",0,0,0,"",null)
 
     var selectedTag : IssueTag = IssueTag.ALERT
 

@@ -25,7 +25,8 @@ internal fun IssueResponse.toModel() = IssueModel(
     likes = likes,
     bads = bads,
     comments = comments,
-    address = address
+    address = address,
+    userLikesPost = userLikesPost
 
 )
 

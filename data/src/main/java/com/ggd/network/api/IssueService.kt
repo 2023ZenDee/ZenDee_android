@@ -56,6 +56,8 @@ interface IssueService {
     @POST("issue/rank/issue")
     suspend fun getRank(
         @Query("sortBy") sortBy : String,
+        @Query("page") page : Int,
+        @Query("pageSize") pageSize : Int,
         @Body tags : RankRequest
     ) : BaseResponse<List<IssueResponse>>
 

@@ -20,6 +20,7 @@ data class IssueResponse(
     val likes : Int,
     val bads : Int,
     val comments : Int,
-    val address : String?
+    val address : String?,
+    val userLikesPost : Boolean?
 
 )

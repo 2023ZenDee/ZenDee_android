@@ -8,13 +8,13 @@ plugins {
 
 android {
     namespace 'com.ggd.zendee'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
 
         applicationId "com.ggd.zendee"
         minSdk 28
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -85,6 +85,9 @@ dependencies {
 
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
+
+    implementation "androidx.paging:paging-runtime:3.0.0"
+    testImplementation "androidx.paging:paging-common:3.0.0"
 
 }
 

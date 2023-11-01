@@ -63,6 +63,13 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
 
     }
 
+    val cameraImage = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ){
+
+    }
+
+
     override fun start() {
 
         repeatOnStarted {
@@ -121,7 +128,13 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
 
             Log.d(TAG, "WriteFragment - picture : ${pictureUri?.uriToBitmap(requireContext())?.bitmapToMultipart()} ")
 
-            if (mainViewModel.currentLocation != null){
+            if (binding.titleEdittxt.text.isEmpty()){
+                Toast.makeText(context,"제목을 입력해주세요",Toast.LENGTH_SHORT).show()
+            }
+            else if (binding.contentEdittxt.text.isEmpty()){
+                Toast.makeText(context,"내용을 입력해주세요",Toast.LENGTH_SHORT).show()
+            }
+            else if (mainViewModel.currentLocation != null){
 
                 viewModel.postIssue(
                     PostIssueDto(
