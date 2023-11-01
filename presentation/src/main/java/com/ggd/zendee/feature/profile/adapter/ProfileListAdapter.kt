@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.ggd.model.user.ContentData
 import com.ggd.zendee.R
 import com.ggd.zendee.feature.ranking.RankingItemData
+import com.ggd.zendee.utils.timeToString
 import okhttp3.internal.immutableListOf
 
 class ProfileListAdapter(
@@ -56,7 +57,7 @@ class ProfileListAdapter(
         holder.tagImage.setImageResource(tag)
         holder.issueTitle.text = item.title
         holder.issueAddress.text = item.address
-        holder.issueTime.text = item.created_at.toString()
+        holder.issueTime.text = timeToString(item.created_at)
         holder.issueViews.text = "조회수 " + item.views + "회"
 //        holder.issueComments.text = "댓글 " + item.comments // todo : 수정
     }

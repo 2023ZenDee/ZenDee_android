@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentSettingBinding
+import com.ggd.zendee.feature.profile.viewmodel.ProfileViewModel
 import com.ggd.zendee.utils.HiltApplication
 import com.ggd.zendee.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,11 +21,21 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.layout.fragment_setting) {
 
     override val viewModel: SettingViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun start() {
+        profileViewModel.getMyInfo()
+
         val context = requireContext()
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
+        }
+
+        profileViewModel.myInfo.observe(viewLifecycleOwner) {
+            with(binding) {
+                Glide.with(requireContext()).load(it.image).circleCrop().into(ivProfile)
+                tvUserNick.text = it.nick
+            }
         }
 
         with(binding) {

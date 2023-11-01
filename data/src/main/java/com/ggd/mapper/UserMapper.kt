@@ -1,14 +1,22 @@
 package com.ggd.mapper
 
 import com.ggd.model.user.MyCommentContentResponseModel
+import com.ggd.model.user.MyInfoResponseModel
 import com.ggd.model.user.MyIssueContentResponseModel
 import com.ggd.model.user.MyLikeContentResponseModel
 import com.ggd.model.user.MyUnLikeContentResponseModel
 import com.ggd.network.response.user.MyCommentContentResponseDto
+import com.ggd.network.response.user.MyInfoResponseDto
 import com.ggd.network.response.user.MyIssueContentResponseDto
 import com.ggd.network.response.user.MyLikeContentResponseDto
 import com.ggd.network.response.user.MyUnLikeContentResponseDto
 
+fun MyInfoResponseDto.toModel() = MyInfoResponseModel(
+    status = this.status,
+    success = this.success,
+    message = this.message,
+    data = this.data
+)
 fun MyCommentContentResponseDto.toModel() = MyCommentContentResponseModel(
     status = this.status,
     success = this.success,

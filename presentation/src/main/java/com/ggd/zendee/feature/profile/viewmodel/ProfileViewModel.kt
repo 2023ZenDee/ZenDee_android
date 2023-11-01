@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ggd.model.user.ContentData
+import com.ggd.model.user.MyInfo
 import com.ggd.repository.UserRepository
 import com.ggd.zendee.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,9 @@ class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 
+    private var _myInfo = MutableLiveData<MyInfo>()
+    val myInfo: LiveData<MyInfo> = _myInfo
+
     private var _myLikeList = MutableLiveData<List<ContentData>>()
     val myLikeList: LiveData<List<ContentData>> = _myLikeList
 
@@ -28,6 +32,17 @@ class ProfileViewModel @Inject constructor(
 
     private var _myCommentList = MutableLiveData<List<ContentData>>()
     val myCommentList: LiveData<List<ContentData>> = _myCommentList
+
+    fun getMyInfo() = viewModelScope.launch {
+        kotlin.runCatching {
+            userRepository.getMyInfo()
+        }.onSuccess {
+            Log.d(TAG, "getMyInfo: success!! $it")
+            _myInfo.value = it.data
+        }.onFailure { e ->
+            Log.d(TAG, "getMyInfo: failed.. $e")
+        }
+    }
 
     fun getMyLikeContent() = viewModelScope.launch {
         kotlin.runCatching {

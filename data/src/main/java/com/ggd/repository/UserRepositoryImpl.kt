@@ -2,6 +2,7 @@ package com.ggd.repository
 
 import com.ggd.mapper.toModel
 import com.ggd.model.user.MyCommentContentResponseModel
+import com.ggd.model.user.MyInfoResponseModel
 import com.ggd.model.user.MyIssueContentResponseModel
 import com.ggd.model.user.MyLikeContentResponseModel
 import com.ggd.model.user.MyUnLikeContentResponseModel
@@ -11,6 +12,9 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userApi: UserApi
 ): UserRepository {
+
+    override suspend fun getMyInfo(): MyInfoResponseModel =
+        userApi.getMyInfo().toModel()
 
     override suspend fun getMyLikeContent(): MyLikeContentResponseModel =
         userApi.getMyLikeContent().toModel()
