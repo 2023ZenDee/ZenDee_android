@@ -25,27 +25,31 @@ class ProfileLikeFragment: Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
+    lateinit var binding: FragmentProfileLikeBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentProfileLikeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_like, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_like, container, false)
 
         viewModel.getMyLikeContent()
 
         viewModel.myLikeList.observe(viewLifecycleOwner) {
-            likeList.removeAll(likeList)
-            it.forEach { contentData ->
-                likeList.add(contentData)
-            }
-            val adapter = ProfileListAdapter(likeList)
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.adapter = adapter
+            setLikeList(it)
         }
 
-
-
         return binding.root
+    }
+
+    private fun setLikeList(contentList: List<ContentData>) {
+        likeList.removeAll(likeList)
+        contentList.forEach { contentData ->
+            likeList.add(contentData)
+        }
+        val adapter = ProfileListAdapter(likeList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
     }
 
 }
