@@ -61,8 +61,6 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
             findNavController().navigate(R.id.action_startFragment_to_mapFragment)
         }
 
-        (activity as MainActivity).handleBottomNavigation(false)
-
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_loginFragment)
 //            findNavController().navigate(R.id.mapFragment)

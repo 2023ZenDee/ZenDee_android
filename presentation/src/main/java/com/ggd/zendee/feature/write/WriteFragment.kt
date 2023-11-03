@@ -77,8 +77,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
             viewModel.eventFlow.collect{ event -> handleEvent(event) }
         }
 
-        (activity as MainActivity).handleBottomNavigation(false)
-
         binding.tagBtn.background = getDrawableByTag(mainViewModel.selectedTag)
 
         binding.tagBtn.setOnClickListener {
@@ -163,11 +161,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
 
         }
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        (activity as MainActivity).handleBottomNavigation(true)
     }
 
     fun setDialog(){

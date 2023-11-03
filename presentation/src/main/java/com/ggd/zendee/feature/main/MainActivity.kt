@@ -1,8 +1,10 @@
 package com.ggd.zendee.feature.main
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.Build
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -47,10 +49,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
         navView.setupWithNavController(navController)
 
-    }
-    fun handleBottomNavigation(state : Boolean){
-        if (state)binding.navView.visibility = View.VISIBLE
-        else binding.navView.visibility = View.GONE
+        /** Bottom Navigation */
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.mapFragment || destination.id == R.id.rankingFragment || destination.id == R.id.profileFragment) {
+                navView.visibility = View.VISIBLE
+            } else {
+                navView.visibility = View.GONE
+            }
+        }
     }
 
 }
