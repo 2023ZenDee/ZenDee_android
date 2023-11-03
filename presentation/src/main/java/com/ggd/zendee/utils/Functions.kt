@@ -1,9 +1,18 @@
 package com.ggd.zendee.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import com.ggd.zendee.feature.login.LoginViewModel
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -40,4 +49,25 @@ fun timeToString(time : String) : String{
         throw e
     }
 
+}
+
+fun Uri.uriToBitmap(context: Context): Bitmap {
+    return when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        true -> {
+            val source = ImageDecoder.createSource(context.contentResolver, this)
+            ImageDecoder.decodeBitmap(source)
+        }
+        else -> {
+            MediaStore.Images.Media.getBitmap(context.contentResolver, this)
+        }
+    }
+}
+
+fun Bitmap.bitmapToMultipart(): MultipartBody.Part {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    this.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+    val requestFile =
+        RequestBody.create("image/png".toMediaTypeOrNull(), byteArrayOutputStream.toByteArray())
+//    Log.d(LoginViewModel.TAG, "bitmapToMultipart: ${pictureUri?.path}")
+    return MultipartBody.Part.createFormData("img", "image.png", requestFile)
 }

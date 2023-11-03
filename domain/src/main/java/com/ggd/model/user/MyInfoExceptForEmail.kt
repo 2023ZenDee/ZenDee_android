@@ -1,7 +1,6 @@
 package com.ggd.model.user
 
-data class MyInfo(
+data class MyInfoExceptForEmail(
     val nick: String,
     val image: String?,
-    val email: String
 )
