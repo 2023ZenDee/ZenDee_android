@@ -27,6 +27,7 @@ class StartViewModel @Inject constructor(
         }.onSuccess {
             Log.d(TAG, "googleOauthLogin: success $it")
             _oauthLoginState.emit(OauthLoginState(isSuccess = true))
+            HiltApplication.prefs.deleteToken()
             HiltApplication.prefs.autoLogin = true
             HiltApplication.prefs.accessToken = it.accessToken
             HiltApplication.prefs.refreshToken = it.refreshToken

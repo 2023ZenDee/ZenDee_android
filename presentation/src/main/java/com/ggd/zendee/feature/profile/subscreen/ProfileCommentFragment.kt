@@ -23,26 +23,32 @@ class ProfileCommentFragment: Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
+    lateinit var binding: FragmentProfileCommentBinding
+
     private val commentList = mutableListOf<ContentData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentProfileCommentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_comment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_comment, container, false)
 
         viewModel.getMyCommentContent()
 
         viewModel.myCommentList.observe(viewLifecycleOwner) {
-            commentList.removeAll(commentList)
-            it.forEach { contentData ->
-                commentList.add(contentData)
-            }
-            val adapter = ProfileListAdapter(requireContext(), commentList)
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.adapter = adapter
+            setCommentList(it)
         }
 
         return binding.root
+    }
+
+    private fun setCommentList(contentList: List<ContentData>) {
+        commentList.removeAll(commentList)
+        contentList.forEach { contentData ->
+            commentList.add(contentData)
+        }
+        val adapter = ProfileListAdapter(commentList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
     }
 }

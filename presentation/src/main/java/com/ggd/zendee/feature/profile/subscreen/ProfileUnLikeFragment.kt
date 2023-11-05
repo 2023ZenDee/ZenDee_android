@@ -25,24 +25,29 @@ class ProfileUnLikeFragment: Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
+    lateinit var binding: FragmentProfileUnLikeBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentProfileUnLikeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_un_like, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_un_like, container, false)
 
         viewModel.getMyUnLikeContent()
 
         viewModel.myUnLikeList.observe(viewLifecycleOwner) {
-            unLikeList.removeAll(unLikeList)
-            it.forEach { contentData ->
-                unLikeList.add(contentData)
-            }
-            val adapter = ProfileListAdapter(requireContext(), unLikeList)
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.adapter = adapter
+            setUnLikeList(it)
         }
 
         return binding.root
+    }
+
+    private fun setUnLikeList(contentList: List<ContentData>) {
+        unLikeList.removeAll(unLikeList)
+        contentList.forEach { contentData ->
+            unLikeList.add(contentData)
+        }
+        val adapter = ProfileListAdapter(unLikeList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
     }
 }

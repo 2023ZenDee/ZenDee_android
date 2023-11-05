@@ -21,8 +21,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
             findNavController().popBackStack()
         }
 
-        (activity as MainActivity).handleBottomNavigation(false)
-
         eventHandling()
 
         binding.btnLogin.setOnClickListener {

@@ -23,26 +23,31 @@ class ProfileIssueFragment: Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
+    lateinit var binding: FragmentProfileIssueBinding
     private val issueList = mutableListOf<ContentData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentProfileIssueBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_issue, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_issue, container, false)
 
         viewModel.getMyIssueContent()
 
         viewModel.myIssueList.observe(viewLifecycleOwner) {
-            issueList.removeAll(issueList)
-            it.forEach { contentData ->
-                issueList.add(contentData)
-            }
-            val adapter = ProfileListAdapter(requireContext(), issueList)
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.adapter = adapter
+            setIssueList(it)
         }
 
         return binding.root
+    }
+
+    private fun setIssueList(contentList: List<ContentData>) {
+        issueList.removeAll(issueList)
+        contentList.forEach { contentData ->
+            issueList.add(contentData)
+        }
+        val adapter = ProfileListAdapter(issueList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
     }
 }

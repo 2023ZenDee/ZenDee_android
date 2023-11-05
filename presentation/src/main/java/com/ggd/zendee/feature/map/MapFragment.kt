@@ -61,11 +61,11 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
     val delayTime = 10000L
 
-    val onBackPressedCallback = object : OnBackPressedCallback(true) {
+    /*val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             findNavController().popBackStack()
         }
-    }
+    }*/
 
     var cameraPosition = CameraPosition(
         LatLng(0.343, 0.234), // 대상 지점
@@ -77,8 +77,6 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
     override fun start() {
 
         Log.d(TAG,"MapFragment - start() called")
-
-        (activity as MainActivity).handleBottomNavigation(true)
 
         repeatOnStarted {
             viewModel.eventFlow.collect{ event -> handleEvent(event) }
@@ -140,7 +138,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+        //requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -212,7 +210,7 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
             mainViewModel.isCancelled = !mainViewModel.isCancelled
         }
         super.onDestroyView()
-        onBackPressedCallback.remove()
+        //onBackPressedCallback.remove()
         Log.d(TAG, "onDestroyView: ")
     }
 
