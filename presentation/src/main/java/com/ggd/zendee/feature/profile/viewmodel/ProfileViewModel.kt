@@ -1,14 +1,22 @@
 package com.ggd.zendee.feature.profile.viewmodel
 
+import android.provider.ContactsContract.Profile
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.ggd.model.user.ContentData
+import com.ggd.model.user.FixedInfo
+import com.ggd.model.user.MyInfo
+import com.ggd.model.user.MyInfoExceptForEmail
 import com.ggd.repository.UserRepository
 import com.ggd.zendee.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import java.io.File
 import javax.inject.Inject
 import kotlin.math.log
 
@@ -16,6 +24,11 @@ import kotlin.math.log
 class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
+
+    private var _myImage = MutableLiveData<String?>()
+    val myImage: LiveData<String?> = _myImage
+    private var _myNick = MutableLiveData<String>()
+    val myNick: LiveData<String> = _myNick
 
     private var _myLikeList = MutableLiveData<List<ContentData>>()
     val myLikeList: LiveData<List<ContentData>> = _myLikeList
@@ -28,6 +41,29 @@ class ProfileViewModel @Inject constructor(
 
     private var _myCommentList = MutableLiveData<List<ContentData>>()
     val myCommentList: LiveData<List<ContentData>> = _myCommentList
+
+    fun getMyInfo() = viewModelScope.launch {
+        kotlin.runCatching {
+            userRepository.getMyInfo()
+        }.onSuccess {
+            Log.d(TAG, "getMyInfo: success!! $it")
+            _myImage.value = it.data.image
+            _myNick.value = it.data.nick
+        }.onFailure { e ->
+            Log.d(TAG, "getMyInfo: failed.. $e")
+        }
+    }
+
+    fun editMyImage(img: MultipartBody.Part?) = viewModelScope.launch {
+        kotlin.runCatching {
+            userRepository.editMyImage(img)
+        }.onSuccess {
+            Log.d(TAG, "editMyInfo: success!! $it")
+            _myImage.value = it.data
+        }.onFailure { e ->
+            Log.d(TAG, "editMyInfo: failed.. $e")
+        }
+    }
 
     fun getMyLikeContent() = viewModelScope.launch {
         kotlin.runCatching {

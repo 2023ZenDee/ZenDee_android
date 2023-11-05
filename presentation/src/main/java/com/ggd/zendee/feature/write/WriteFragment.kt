@@ -26,7 +26,9 @@ import com.ggd.zendee.feature.main.MainViewModel
 import com.ggd.zendee.feature.map.IssueTag
 import com.ggd.zendee.feature.map.MapViewModel
 import com.ggd.zendee.feature.map.TagSelectorDialog
+import com.ggd.zendee.utils.bitmapToMultipart
 import com.ggd.zendee.utils.repeatOnStarted
+import com.ggd.zendee.utils.uriToBitmap
 import com.warkiz.widget.IndicatorSeekBar
 import com.warkiz.widget.OnSeekChangeListener
 import com.warkiz.widget.SeekParams
@@ -43,8 +45,10 @@ import java.util.Date
 
 @AndroidEntryPoint
 class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout.fragment_write) {
+
     override val viewModel: WriteViewModel by viewModels()
     private val mainViewModel : MainViewModel by activityViewModels()
+
     val timeList = listOf<Int>(5,10,20,40,60,120,240,480,720,1080,1440,2880,4320,5760)
 
     var pictureUri : Uri? = null
@@ -60,7 +64,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
         binding.contentImg.setImageURI(it)
         pictureUri = it
         binding.removeImgBtn.visibility = View.VISIBLE
-
     }
 
     val cameraImage = registerForActivityResult(
@@ -75,8 +78,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
         repeatOnStarted {
             viewModel.eventFlow.collect{ event -> handleEvent(event) }
         }
-
-        (activity as MainActivity).handleBottomNavigation(false)
 
         binding.tagBtn.background = getDrawableByTag(mainViewModel.selectedTag)
 
@@ -165,24 +166,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        (activity as MainActivity).handleBottomNavigation(true)
-
-    }
-
-    private fun Uri.uriToBitmap(context: Context): Bitmap {
-        return when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            true -> {
-                val source = ImageDecoder.createSource(context.contentResolver, this)
-                ImageDecoder.decodeBitmap(source)
-            }
-            else -> {
-                MediaStore.Images.Media.getBitmap(context.contentResolver, this)
-            }
-        }
-    }
-
     fun setDialog(){
 
         val dialog = TagSelectorDialog(requireContext())
@@ -230,15 +213,6 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
             IssueTag.LOVE -> return binding.root.context.getDrawable(R.drawable.love_tag)
             IssueTag.LUCKY -> return binding.root.context.getDrawable(R.drawable.lucky_tag)
         }
-    }
-
-    private fun Bitmap.bitmapToMultipart(): MultipartBody.Part {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        this.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        val requestFile =
-            RequestBody.create("image/png".toMediaTypeOrNull(), byteArrayOutputStream.toByteArray())
-        Log.d(TAG, "bitmapToMultipart: ${pictureUri?.path}")
-        return MultipartBody.Part.createFormData("img", "image.png", requestFile)
     }
 
     private fun handleEvent(event: WriteViewModel.Event) =

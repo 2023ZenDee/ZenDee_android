@@ -60,8 +60,6 @@ class IssueFragment : BaseFragment<FragmentIssueBinding,IssueViewModel>(R.layout
             viewModel.eventFlow.collect{ event -> handleEvent(event) }
         }
 
-        (activity as MainActivity).handleBottomNavigation(false)
-
         binding.commentRecyclerview.apply {
 
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
@@ -201,11 +199,6 @@ class IssueFragment : BaseFragment<FragmentIssueBinding,IssueViewModel>(R.layout
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        (activity as MainActivity).handleBottomNavigation(true)
-
-    }
 
     private fun handleEvent(event: IssueViewModel.Event) =
         when (event) {

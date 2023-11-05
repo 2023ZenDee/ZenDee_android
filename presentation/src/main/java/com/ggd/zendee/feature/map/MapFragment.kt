@@ -78,8 +78,6 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
         Log.d(TAG,"MapFragment - start() called")
 
-        (activity as MainActivity).handleBottomNavigation(true)
-
         repeatOnStarted {
             viewModel.eventFlow.collect{ event -> handleEvent(event) }
         }

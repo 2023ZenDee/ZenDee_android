@@ -1,11 +1,23 @@
 package com.ggd.repository
 
+import com.ggd.model.user.FixedInfo
+import com.ggd.model.user.FixedInfoResponseModel
 import com.ggd.model.user.MyCommentContentResponseModel
+import com.ggd.model.user.MyInfoResponseModel
 import com.ggd.model.user.MyIssueContentResponseModel
 import com.ggd.model.user.MyLikeContentResponseModel
 import com.ggd.model.user.MyUnLikeContentResponseModel
+import okhttp3.MultipartBody
+import java.io.File
 
 interface UserRepository {
+
+    suspend fun getMyInfo(
+    ): MyInfoResponseModel
+
+    suspend fun editMyImage(
+        img: MultipartBody.Part?,
+    ): FixedInfoResponseModel
 
     suspend fun getMyLikeContent(
     ): MyLikeContentResponseModel
