@@ -45,8 +45,10 @@ import java.util.Date
 
 @AndroidEntryPoint
 class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout.fragment_write) {
+
     override val viewModel: WriteViewModel by viewModels()
     private val mainViewModel : MainViewModel by activityViewModels()
+
     val timeList = listOf<Int>(5,10,20,40,60,120,240,480,720,1080,1440,2880,4320,5760)
 
     var pictureUri : Uri? = null
