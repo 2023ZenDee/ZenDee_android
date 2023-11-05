@@ -150,13 +150,21 @@ class IssueFragment : BaseFragment<FragmentIssueBinding,IssueViewModel>(R.layout
     private fun getDrawableByTag(tag : String) : Drawable? {
 
         when(tag){
-            "뜨거움" -> return binding.root.context.getDrawable(R.drawable.hot_tag)
-            "경고" -> return binding.root.context.getDrawable(R.drawable.alert_tag)
-            "재미" -> return binding.root.context.getDrawable(R.drawable.happy_tag)
-            "공지" -> return binding.root.context.getDrawable(R.drawable.notice_tag)
-            "활동" -> return binding.root.context.getDrawable(R.drawable.active_tag)
-            "사랑" -> return binding.root.context.getDrawable(R.drawable.love_tag)
-            "행운" -> return binding.root.context.getDrawable(R.drawable.lucky_tag)
+//            "뜨거움" -> return binding.root.context.getDrawable(R.drawable.hot_tag)
+//            "경고" -> return binding.root.context.getDrawable(R.drawable.alert_tag)
+//            "재미" -> return binding.root.context.getDrawable(R.drawable.happy_tag)
+//            "공지" -> return binding.root.context.getDrawable(R.drawable.notice_tag)
+//            "활동" -> return binding.root.context.getDrawable(R.drawable.active_tag)
+//            "사랑" -> return binding.root.context.getDrawable(R.drawable.love_tag)
+//            "행운" -> return binding.root.context.getDrawable(R.drawable.lucky_tag)
+
+            "뜨거움" -> return binding.root.context.getDrawable(R.drawable.tag_new_hot)
+            "경고" -> return binding.root.context.getDrawable(R.drawable.tag_new_alert)
+            "재미" -> return binding.root.context.getDrawable(R.drawable.tag_new_happy)
+            "공지" -> return binding.root.context.getDrawable(R.drawable.tag_new_notice)
+            "활동" -> return binding.root.context.getDrawable(R.drawable.tag_new_active)
+            "사랑" -> return binding.root.context.getDrawable(R.drawable.tag_new_love)
+            "행운" -> return binding.root.context.getDrawable(R.drawable.tag_new_lucky)
         }
 
         return binding.root.context.getDrawable(R.drawable.lucky_tag)

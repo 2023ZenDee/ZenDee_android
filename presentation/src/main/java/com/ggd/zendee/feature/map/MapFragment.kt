@@ -398,13 +398,21 @@ class MapFragment : BaseFragment<FragmentMapBinding,MapViewModel>(R.layout.fragm
 
             when(i.tags){
 
-                "뜨거움" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.hot_marker)
-                "경고" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.alert_marker)
-                "재미" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.happy_marker)
-                "공지" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.notice_marker)
-                "활동" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.active_marker)
-                "사랑" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.love_marker)
-                "행운" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.lucky_marker)
+//                "뜨거움" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.hot_marker)
+//                "경고" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.alert_marker)
+//                "재미" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.happy_marker)
+//                "공지" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.notice_marker)
+//                "활동" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.active_marker)
+//                "사랑" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.love_marker)
+//                "행운" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.lucky_marker)
+
+                "뜨거움" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.marker_new_hot)
+                "경고" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.marker_new_alert)
+                "재미" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.marker_new_happy)
+                "공지" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.marker_new_notice)
+                "활동" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.marker_new_active)
+                "사랑" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.marker_new_love)
+                "행운" -> currentMarker.icon = OverlayImage.fromResource(R.drawable.marker_new_lucky)
             }
 
             currentMarker.setOnClickListener {
