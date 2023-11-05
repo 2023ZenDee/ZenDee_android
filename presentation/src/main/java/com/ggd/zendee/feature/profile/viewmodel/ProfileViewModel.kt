@@ -1,9 +1,12 @@
 package com.ggd.zendee.feature.profile.viewmodel
 
+import android.provider.ContactsContract.Profile
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.ggd.model.user.ContentData
 import com.ggd.model.user.FixedInfo
 import com.ggd.model.user.MyInfo
@@ -22,8 +25,10 @@ class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 
-    private var _myInfo = MutableLiveData<MyInfoExceptForEmail>()
-    val myInfo: LiveData<MyInfoExceptForEmail> = _myInfo
+    private var _myImage = MutableLiveData<String?>()
+    val myImage: LiveData<String?> = _myImage
+    private var _myNick = MutableLiveData<String>()
+    val myNick: LiveData<String> = _myNick
 
     private var _myLikeList = MutableLiveData<List<ContentData>>()
     val myLikeList: LiveData<List<ContentData>> = _myLikeList
@@ -42,18 +47,19 @@ class ProfileViewModel @Inject constructor(
             userRepository.getMyInfo()
         }.onSuccess {
             Log.d(TAG, "getMyInfo: success!! $it")
-            _myInfo.value = MyInfoExceptForEmail(it.data.nick, it.data.image)
+            _myImage.value = it.data.image
+            _myNick.value = it.data.nick
         }.onFailure { e ->
             Log.d(TAG, "getMyInfo: failed.. $e")
         }
     }
 
-    fun editMyInfo(img: MultipartBody.Part?, nick: String) = viewModelScope.launch {
+    fun editMyImage(img: MultipartBody.Part?) = viewModelScope.launch {
         kotlin.runCatching {
-            userRepository.editMyInfo(img, nick)
+            userRepository.editMyImage(img)
         }.onSuccess {
             Log.d(TAG, "editMyInfo: success!! $it")
-            _myInfo.value = MyInfoExceptForEmail(it.data.nick, it.data.image)
+            _myImage.value = it.data
         }.onFailure { e ->
             Log.d(TAG, "editMyInfo: failed.. $e")
         }

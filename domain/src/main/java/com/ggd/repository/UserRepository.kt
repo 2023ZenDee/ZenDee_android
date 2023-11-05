@@ -15,9 +15,8 @@ interface UserRepository {
     suspend fun getMyInfo(
     ): MyInfoResponseModel
 
-    suspend fun editMyInfo(
+    suspend fun editMyImage(
         img: MultipartBody.Part?,
-        nick: String
     ): FixedInfoResponseModel
 
     suspend fun getMyLikeContent(

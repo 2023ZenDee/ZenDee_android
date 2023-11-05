@@ -24,10 +24,9 @@ interface UserApi {
     ): MyInfoResponseDto
 
     @Multipart
-    @PATCH("/auth/my/fix")
-    suspend fun editMyInfo(
+    @PATCH("/auth/my/img/fix")
+    suspend fun editMyImage(
         @Part img: MultipartBody.Part?,
-        @Part("nick") nick: String
     ): FixedInfoResponseModel
 
     @GET("/auth/my/like")

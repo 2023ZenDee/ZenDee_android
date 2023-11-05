@@ -24,50 +24,27 @@ import java.io.File
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R.layout.fragment_profile) {
+
     override val viewModel: ProfileViewModel by viewModels()
 
-    private val tabTitleArray = arrayOf(
-        "좋아요", "싫어요", "이슈", "댓글"
-    )
+    private val tabTitleArray = arrayOf("좋아요", "싫어요", "이슈", "댓글")
 
     private val requestImage = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) {
         val imagePath = it?.uriToBitmap(requireContext())?.bitmapToMultipart()
-        Log.i(TAG, "imageFile : $imagePath")
 
-        viewModel.editMyInfo(
-            imagePath,
-            viewModel.myInfo.value!!.nick
-        )
+        viewModel.editMyImage(imagePath)
     }
 
     override fun start() {
         viewModel.getMyInfo()
+
         setTapRow()
 
-        viewModel.myInfo.observe(viewLifecycleOwner) {
-            with(binding) {
-                val sampleImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png"
-                if (it.image == null) {
-                    Glide.with(requireContext()).load(sampleImage).circleCrop().into(ivProfile)
-                } else {
-                    Glide.with(requireContext()).load(it.image).circleCrop().into(ivProfile)
-                }
-                tvUserNick.text = it.nick
-            }
-        }
+        observeMyInfo()
 
-        with(binding) {
-            btnSetProfile.setOnClickListener {
-                requestImage.launch("image/*")
-            }
-            btnSetting.setOnClickListener {
-                val action = ProfileFragmentDirections.toSettingFragment()
-                findNavController().navigate(action)
-            }
-        }
-
+        buttonsHandling()
     }
 
     private fun setTapRow() {
@@ -79,6 +56,34 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitleArray[position]
         }.attach()
+    }
+
+    private fun observeMyInfo() {
+        viewModel.myImage.observe(viewLifecycleOwner) {
+            with(binding) {
+                val sampleImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png"
+                if (it != null) {
+                    Glide.with(requireContext()).load(it).circleCrop().into(ivProfile) // todo : 아마 인터넷 에러일거임
+                } else {
+                    Glide.with(requireContext()).load(sampleImage).circleCrop().into(ivProfile)
+                }
+            }
+        }
+        viewModel.myNick.observe(viewLifecycleOwner) {
+            binding.tvUserNick.text = it
+        }
+    }
+
+    private fun buttonsHandling() {
+        with(binding) {
+            btnSetProfile.setOnClickListener {
+                requestImage.launch("image/*")
+            }
+            btnSetting.setOnClickListener {
+                val action = ProfileFragmentDirections.toSettingFragment()
+                findNavController().navigate(action)
+            }
+        }
     }
 
     companion object {

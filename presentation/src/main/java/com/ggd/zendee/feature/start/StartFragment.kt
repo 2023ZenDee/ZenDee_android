@@ -1,12 +1,7 @@
 package com.ggd.zendee.feature.start
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -16,7 +11,6 @@ import com.ggd.model.oauth.GoogleOauthRequestModel
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentStartBinding
-import com.ggd.zendee.feature.main.MainActivity
 import com.ggd.zendee.utils.GOOGLE_CLIENT_ID
 import com.ggd.zendee.utils.HiltApplication
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -35,14 +29,19 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
     private lateinit var account: GoogleSignInAccount
     private lateinit var nick: String
     private lateinit var email: String
+    private lateinit var code: String
 
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val intent =  printIntent(result.data)
+        Log.d(TAG, "result: $intent")
         kotlin.runCatching {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             account = task.getResult(ApiException::class.java)
 
             nick = account.displayName.toString()
             email = account.email.toString()
+            code = account.serverAuthCode.toString()
+            Log.i(TAG, "nick: ${nick}, email: ${email}, code: $code")
         }.onSuccess {
             viewModel.googleOauthLogin(
                 GoogleOauthRequestModel(email, nick)
@@ -68,8 +67,7 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
 
         /** Google Oauth */
         binding.btnGoogle.setOnClickListener {
-            val googleOauth = GoogleOauth(requireActivity(), googleAuthLauncher)
-            googleOauth.requestGoogleLogin()
+            requestGoogleLogin()
         }
 
         lifecycleScope.launchWhenStarted {
@@ -92,4 +90,48 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>(R.layou
         const val TAG = "StartFragment"
     }
 
+    private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
+
+
+    private fun requestGoogleLogin() {
+        googleSignInClient.signOut()
+        val signInIntent = googleSignInClient.signInIntent
+        googleAuthLauncher.launch(signInIntent)
+    }
+
+    private fun getGoogleClient(): GoogleSignInClient {
+        val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestScopes(Scope("https://www.googleapis.com/auth/pubsub")) // todo ?
+            .requestServerAuthCode(GOOGLE_CLIENT_ID)
+            .requestEmail()
+            .build()
+
+        return GoogleSignIn.getClient(requireActivity(), googleSignInOption)
+    }
+
+    fun printIntent(i: Intent?) {
+        try {
+            Log.i(TAG, "-------------------------------------------------------")
+            Log.i(TAG, "intent = $i")
+            if (i != null) {
+                val extras = i.extras
+                Log.i(TAG, "extras = $extras")
+                if (extras != null) {
+                    val keys: Set<*> = extras.keySet()
+                    Log.i(TAG, "++ bundle key count = " + keys.size)
+                    for (_key in extras.keySet()) {
+                        Log.i(TAG, "key=" + _key + " : " + extras[_key])
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.i(TAG, "$e")
+        } finally {
+            Log.i(TAG, "-------------------------------------------------------")
+        }
+    }
 }
+
+// SHA1: DF:C3:91:7A:AD:CD:82:4B:C0:8E:9C:8D:24:20:E9:7C:8C:EE:19:F5
+// SHA1: DF:C3:91:7A:AD:CD:82:4B:C0:8E:9C:8D:24:20:E9:7C:8C:EE:19:F5
+// SHA1: DF:C3:91:7A:AD:CD:82:4B:C0:8E:9C:8D:24:20:E9:7C:8C:EE:19:F5

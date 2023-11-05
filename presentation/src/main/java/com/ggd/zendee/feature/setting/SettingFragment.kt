@@ -39,84 +39,57 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.
     override val viewModel: SettingViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
 
+    private lateinit var context: Context
+
     private val requestImage = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) {
         val imagePath = it?.uriToBitmap(requireContext())?.bitmapToMultipart()
         Log.i(TAG, "imageFile : $imagePath")
 
-        profileViewModel.editMyInfo(
-            imagePath,
-            profileViewModel.myInfo.value!!.nick
-        )
+        profileViewModel.editMyImage(imagePath)
     }
 
     override fun start() {
         profileViewModel.getMyInfo()
+        context = requireContext()
 
-        val context = requireContext()
+        observeMyInfo()
 
-        // todo : error
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        profileViewModel.myInfo.observe(viewLifecycleOwner) {
-            with(binding) {
-                val sampleImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png"
-                if (it.image == null) {
-                    Glide.with(requireContext()).load(sampleImage).circleCrop().into(ivProfile)
-                } else {
-                    Glide.with(requireContext()).load(it.image).circleCrop().into(ivProfile)
-                }
-                tvUserNick.text = it.nick
-            }
-        }
-
-        /** Buttons */
-        with(binding) {
-            btnSetUserProfile.setOnClickListener {
-                requestImage.launch("image/*")
-            }
-            btnSecurity.setOnClickListener {
-                //
-                makeToast(context, "약관 및 개인정보 처리 동의")
-            }
-            btnAppVersion.setOnClickListener {
-                makeToast(context, "앱 버전")
-            }
-            btnLogout.setOnClickListener {
-                makeToast(context, "로그아웃 되었습니다.")
-                HiltApplication.prefs.deleteToken()
-                val action = SettingFragmentDirections.toStartFragment()
-                findNavController().navigate(action)
-            }
-        }
+        buttonsHandling()
     }
 
     companion object {
         private const val TAG = "SettingFragment"
     }
 
-    @SuppressLint("Range")
-    fun Uri.asMultipart(name: String, contentResolver: ContentResolver): MultipartBody.Part? {
-        return contentResolver.query(this, null, null, null, null)?.let {
-            if (it.moveToNext()) {
-                val displayName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                val requestBody = object : RequestBody() {
-                    override fun contentType(): MediaType? {
-                        return contentResolver.getType(this@asMultipart)?.toMediaType()
-                    }
-
-                    override fun writeTo(sink: BufferedSink) {
-                        sink.writeAll(contentResolver.openInputStream(this@asMultipart)?.source()!!)
-                    }
+    private fun observeMyInfo() {
+        profileViewModel.myImage.observe(viewLifecycleOwner) {
+            with(binding) {
+                val sampleImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png"
+                if (it != null) {
+                    Glide.with(requireContext()).load(it).circleCrop().into(ivProfile) // todo : 아마 인터넷 에러일거임
+                } else {
+                    Glide.with(requireContext()).load(sampleImage).circleCrop().into(ivProfile)
                 }
-                it.close()
-                MultipartBody.Part.createFormData(name, displayName, requestBody)
-            } else {
-                it.close()
-                null
+            }
+        }
+        profileViewModel.myNick.observe(viewLifecycleOwner) {
+            binding.tvUserNick.text = it
+        }
+    }
+
+    private fun buttonsHandling() {
+        with(binding) {
+            toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+            btnSetUserProfile.setOnClickListener { requestImage.launch("image/*") }
+            btnSecurity.setOnClickListener { makeToast(context, "약관 및 개인정보 처리 동의") }
+            btnAppVersion.setOnClickListener { makeToast(context, "앱 버전") }
+            btnLogout.setOnClickListener {
+                makeToast(context, "로그아웃 되었습니다.")
+                HiltApplication.prefs.deleteToken()
+                val action = SettingFragmentDirections.toStartFragment()
+                findNavController().navigate(action)
             }
         }
     }

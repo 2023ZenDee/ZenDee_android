@@ -20,8 +20,8 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getMyInfo(): MyInfoResponseModel =
         userApi.getMyInfo().toModel()
 
-    override suspend fun editMyInfo(img: MultipartBody.Part?, nick: String): FixedInfoResponseModel =
-        userApi.editMyInfo(img, nick)
+    override suspend fun editMyImage(img: MultipartBody.Part?): FixedInfoResponseModel =
+        userApi.editMyImage(img)
 
     override suspend fun getMyLikeContent(): MyLikeContentResponseModel =
         userApi.getMyLikeContent().toModel()
