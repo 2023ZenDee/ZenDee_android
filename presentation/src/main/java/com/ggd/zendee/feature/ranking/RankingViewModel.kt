@@ -47,6 +47,7 @@ class RankingViewModel @Inject constructor(
         RankingTagData("활동", R.drawable.tag_checkbox_active,true,5),
         RankingTagData("사랑",R.drawable.tag_checkbox_love,true,6),
 
+
     )
 
     private val _eventFlow = MutableEventFlow<RankingViewModel.Event>()

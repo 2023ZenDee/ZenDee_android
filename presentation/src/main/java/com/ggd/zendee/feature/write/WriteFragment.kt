@@ -158,6 +158,7 @@ class WriteFragment : BaseFragment<FragmentWriteBinding,WriteViewModel>(R.layout
             }
             else {
                 Log.d(TAG,"currentLocation - null")
+                Toast.makeText(context,"위치를 특정할 수 없습니다",Toast.LENGTH_SHORT).show()
             }
 
         }

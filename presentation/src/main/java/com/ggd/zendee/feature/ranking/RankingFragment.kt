@@ -60,19 +60,10 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
             adapter = rankingAdapter
         }
 
-
-//        lifecycleScope.launch {
-//
-//            viewModel.pagingData.collectLatest{
-//                rankingAdapter.submitData(it)
-//            }
-//        }
-
         viewModel.pagingData.observe(this, Observer {
             rankingAdapter.submitData(this.lifecycle,it)
             Log.d(TAG, "list가 추가되었습니다")
         })
-
 
         binding.tagGridview.apply {
             adapter = rankingTagAdpater
@@ -98,26 +89,14 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
 
         })
 
-//        CoroutineScope(Dispatchers.IO).launch{
-//            if (viewModel.rankList != null) {
-//                withContext(Dispatchers.Main){
-//                    rankingAdapter.submitList(viewModel.rankList)
-//                }
-//            } else {
-//                rankingTagAdpater.submitList(viewModel.tagList)
-//                viewModel.getRank(viewModel.sortBy,1, viewModel.getTagStringList())
-//            }
-//        }
+        rankingAdapter.setDialogClickListener(object : RankingPagingAdapter.OnDialogClickListener{
+            override fun onClick(issue: IssueModel) {
 
+                mainViewModel.issue = issue
+                findNavController().navigate(R.id.action_rankingFragment_to_issueFragment)
+            }
 
-//        rankingAdapter.setDialogClickListener(object : RankingRecyclerviewAdapter.OnDialogClickListener{
-//            override fun onCli+ck(issue: IssueModel) {
-//
-//                mainViewModel.issue = issue
-//                findNavController().navigate(R.id.action_rankingFragment_to_issueFragment)
-//            }
-//
-//        })
+        })
 
         binding.filterBtn.setOnClickListener {
             binding.drawerLayout.openDrawer(binding.filterLayout,true)
@@ -142,12 +121,6 @@ class RankingFragment : BaseFragment<FragmentRankingBinding,RankingViewModel>(R.
 
     }
 
-//    fun updateRank(list : List<IssueModel>?){
-//        if (list != null){
-//            viewModel.rankList = list
-//            rankingAdapter.submitList( viewModel.rankList )
-//        }
-//    }
 
     private fun handleEvent(event: RankingViewModel.Event) =
         when (event) {

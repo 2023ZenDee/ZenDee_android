@@ -19,7 +19,30 @@ import java.time.temporal.ChronoUnit
 
 class RankingPagingAdapter : PagingDataAdapter<IssueModel,RankingPagingAdapter.RankingViewHolder>(RankingItemDiffCallback()) {
 
+    override fun onBindViewHolder(holder: RankingViewHolder, position: Int) {
+        val item = getItem(position)
+        if (item != null){
+            holder.bind(item)
+            holder.itemView.setOnClickListener {
+                dialogClickListener.onClick(item)
+            }
+        }
+    }
+
+    private lateinit var dialogClickListener: OnDialogClickListener
+
+    interface OnDialogClickListener{
+        fun onClick(issue : IssueModel)
+    }
+    fun setDialogClickListener(onDialogClickListener: OnDialogClickListener){
+        this.dialogClickListener = onDialogClickListener
+    }
+
+    fun onDialogClick(data : IssueModel){
+        dialogClickListener.onClick(data)
+    }
     class RankingViewHolder(private val binding: ItemRankingBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(data: IssueModel) {
             binding.titleTxt.text = data.title
             binding.addressTxt.text = data.address
@@ -27,21 +50,24 @@ class RankingPagingAdapter : PagingDataAdapter<IssueModel,RankingPagingAdapter.R
             binding.viewsTxt.text = "조회수 ${data.views}회"
             binding.commentsTxt.text = "댓글 ${data.comments}개"
 
-//            binding.root.setOnClickListener{
-//
-//                dialogClickListener.onClick(data)
-//            }
-
             fun getDrawableByTag(tag : String, context: Context) : Drawable? {
 
                 when(tag){
-                    "뜨거움" -> return context.getDrawable(R.drawable.hot_tag)
-                    "경고" -> return context.getDrawable(R.drawable.alert_tag)
-                    "재미" -> return context.getDrawable(R.drawable.happy_tag)
-                    "공지" -> return context.getDrawable(R.drawable.notice_tag)
-                    "활동" -> return context.getDrawable(R.drawable.active_tag)
-                    "사랑" -> return context.getDrawable(R.drawable.love_tag)
-                    "행운" -> return context.getDrawable(R.drawable.lucky_tag)
+//                    "뜨거움" -> return context.getDrawable(R.drawable.hot_tag)
+//                    "경고" -> return context.getDrawable(R.drawable.alert_tag)
+//                    "재미" -> return context.getDrawable(R.drawable.happy_tag)
+//                    "공지" -> return context.getDrawable(R.drawable.notice_tag)
+//                    "활동" -> return context.getDrawable(R.drawable.active_tag)
+//                    "사랑" -> return context.getDrawable(R.drawable.love_tag)
+//                    "행운" -> return context.getDrawable(R.drawable.lucky_tag)
+
+                    "뜨거움" -> return binding.root.context.getDrawable(R.drawable.tag_new_hot)
+                    "경고" -> return binding.root.context.getDrawable(R.drawable.tag_new_alert)
+                    "재미" -> return binding.root.context.getDrawable(R.drawable.tag_new_happy)
+                    "공지" -> return binding.root.context.getDrawable(R.drawable.tag_new_notice)
+                    "활동" -> return binding.root.context.getDrawable(R.drawable.tag_new_active)
+                    "사랑" -> return binding.root.context.getDrawable(R.drawable.tag_new_love)
+                    "행운" -> return binding.root.context.getDrawable(R.drawable.tag_new_lucky)
                 }
 
                 return context.getDrawable(R.drawable.lucky_tag)
@@ -52,12 +78,8 @@ class RankingPagingAdapter : PagingDataAdapter<IssueModel,RankingPagingAdapter.R
         }
     }
 
-    override fun onBindViewHolder(holder: RankingViewHolder, position: Int) {
-        val item = getItem(position)
-        if (item != null){
-            holder.bind(item)
-        }
-    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
         val binding = ItemRankingBinding.inflate(LayoutInflater.from(parent.context),parent,false)
