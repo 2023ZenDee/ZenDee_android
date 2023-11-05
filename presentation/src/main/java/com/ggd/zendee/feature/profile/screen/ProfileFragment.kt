@@ -3,6 +3,7 @@ package com.ggd.zendee.feature.profile.screen
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
@@ -12,6 +13,7 @@ import com.ggd.model.user.FixedInfo
 import com.ggd.zendee.R
 import com.ggd.zendee.base.BaseFragment
 import com.ggd.zendee.databinding.FragmentProfileBinding
+import com.ggd.zendee.feature.main.MainViewModel
 import com.ggd.zendee.feature.profile.adapter.ProfileTabAdapter
 import com.ggd.zendee.feature.profile.viewmodel.ProfileViewModel
 import com.ggd.zendee.feature.setting.SettingFragment

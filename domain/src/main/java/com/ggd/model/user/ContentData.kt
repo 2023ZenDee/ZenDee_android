@@ -10,7 +10,7 @@ data class ContentData(
     val updated_at: String,
     val latitude: Float,
     val longitude: Float,
-    val deleted_at: Date,
+    val deleted_at: String,
     val authorIdx: Int,
     val postImg: String,
     val address: String,
