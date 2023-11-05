@@ -68,7 +68,7 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.
             with(binding) {
                 val sampleImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png"
                 if (it != null) {
-                    Glide.with(requireContext()).load(it).circleCrop().into(ivProfile) // todo : 아마 인터넷 에러일거임
+                    Glide.with(requireContext()).load(it).circleCrop().into(ivProfile)
                 } else {
                     Glide.with(requireContext()).load(sampleImage).circleCrop().into(ivProfile)
                 }
@@ -81,7 +81,7 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>(R.
 
     private fun buttonsHandling() {
         with(binding) {
-            toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+            toolbar.setNavigationOnClickListener { findNavController().popBackStack() } // todo : 이건 왜 이럼
             btnSetUserProfile.setOnClickListener { requestImage.launch("image/*") }
             btnSecurity.setOnClickListener { makeToast(context, "약관 및 개인정보 처리 동의") }
             btnAppVersion.setOnClickListener { makeToast(context, "앱 버전") }

@@ -51,7 +51,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
         val tabLayout = binding.tabLayout
         val viewPager = binding.viewPager
 
-        viewPager.adapter = ProfileTabAdapter(parentFragmentManager, lifecycle)
+        val profileTabAdapter = ProfileTabAdapter(childFragmentManager, lifecycle)
+        viewPager.adapter = profileTabAdapter // todo : back arrow error
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitleArray[position]
