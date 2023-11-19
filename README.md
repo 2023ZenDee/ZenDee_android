@@ -13,5 +13,5 @@
 
 # Team
 
-[@PRAOOO](https://github.com/PRAOOO) - 희건이 수정 바람 </br>
+[@PRAOOO](https://github.com/PARAOOO) - 희건이 수정 바람 </br>
 [@stev3j](https://www.notion.so/stev3j/845cb047a86443e9847078b25a54f204)
